@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Денис Кац | Нейро-Экосистема</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="deep-space"></div>
+    <canvas id="matrix-rain"></canvas>
+    <canvas id="matrix-3d"></canvas>
+
+    <!-- КИБЕР-ГОЛОГРАММА -->
+    <main id="hologram-container">
+        <div class="holo-layer holo-base"></div>
+        <div class="holo-layer holo-glitch-cyan"></div>
+        <div class="holo-layer holo-glitch-magenta"></div>
+        <div class="holo-scanline-fast"></div>
+        <div class="ai-chip"><div class="chip-core"></div><div class="chip-pulse"></div></div>
+    </main>
+
+    <!-- ИНИЦИАЛИЗАЦИЯ -->
+    <div id="boot-terminal">
+        <h1 class="glitch-text" data-text="ИНИЦИАЛИЗАЦИЯ">ИНИЦИАЛИЗАЦИЯ</h1>
+        <div class="progress-wrapper">
+            <div id="progress-bar"></div>
+        </div>
+        <div id="progress-text">0%</div>
+        <div id="skip-btn">[SKIP INTRO]</div>
+    </div>
+
+    <div id="black-hole-event"></div>
+    <div id="big-bang-flash"></div>
+
+    <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
+    <main id="core-ui" class="hidden">
+        <header class="hero-section glass-panel">
+            <h2 class="ultra-thin-text main-title">ДЕНИС КАЦ</h2>
+            <p class="cyber-subtitle neon-pulse">АРХИТЕКТУРА МАСС • ТОТАЛЬНЫЙ КОНТРОЛЬ • AI-МОНОПОЛИЯ</p>
+        </header>
+
+        <section class="grid-container">
+            <div class="xray-card glass-panel tilt-effect">
+                <div class="card-front">
+                    <h3 class="ultra-thin-text">РАНХИГС: ЗАПАД</h3>
+                    <div class="divider"></div>
+                    <p>Пирамида конверсий</p>
+                </div>
+                <div class="xray-layer">
+                    <h3 class="neon-cyan">[СТАТУС: ВЕРХНЯЯ СТУПЕНЬ]</h3>
+                    <p>8 000+ заявителей<br>Конверсия +29%<br>Digital-архитектура</p>
+                </div>
+            </div>
+            <div class="xray-card glass-panel tilt-effect">
+                <div class="card-front">
+                    <h3 class="ultra-thin-text">КОТ ПРИЕМНОЙ КОМИССИИ</h3>
+                    <div class="divider"></div>
+                    <p>Невидимая рука системы</p>
+                </div>
+                <div class="xray-layer">
+                    <h3 class="neon-magenta">[АБСОЛЮТНАЯ АВТОНОМИЯ]</h3>
+                    <p>10 000+ операций<br>24/7 обработка<br>Замена ФОТ: 5+ единиц</p>
+                </div>
+            </div>
+            <div class="xray-card glass-panel tilt-effect">
+                <div class="card-front">
+                    <h3 class="ultra-thin-text">КОЛЛЕДЖ НЕЙРОСЕТЕЙ</h3>
+                    <div class="divider"></div>
+                    <p>Проект Нового Порядка</p>
+                </div>
+                <div class="xray-layer">
+                    <h3 class="neon-blue">[ВЕЛИКИЙ АРХИТЕКТОР]</h3>
+                    <p>Интеграция ИИ в умы<br>Монополия на кадры<br>Управление рынком</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ АРХИТЕКТОР -->
+        <section id="architect-section" class="glass-panel">
+            <h2 class="ultra-thin-text">АРХИТЕКТОР</h2>
+            <p class="cyber-subtitle">ХОЛОДНЫЙ РАСЧЕТ • СИСТЕМНОЕ ДОМИНИРОВАНИЕ</p>
+            <div class="manifesto-text">
+                <p>Меня зовут Адер Пил. Мой подход — гибрид психологии, журналистской точности и системного маркетинга. Я проектирую системы, которые интегрируются в рынок и генерируют результат автономно.</p>
+                <p>Я не делаю рекламу. Я создаю доминирование. Если вы готовы к масштабу — добро пожаловать в терминал.</p>
+            </div>
+
+            <div class="terminal-gate">
+                <h3 class="neon-magenta">[ВХОДНОЙ ШЛЮЗ]</h3>
+                <form id="qual-form" action="https://formspree.io/f/mppadlbb" method="POST">
+                    <input type="text" name="Имя" placeholder="ИМЯ" required>
+                    <input type="email" name="Email" placeholder="EMAIL" required>
+                    <input type="tel" name="Телефон" placeholder="ТЕЛЕФОН (НЕОБЯЗАТЕЛЬНО)">
+                    <input type="text" name="Задача" placeholder="ЗАДАЧА (СУТЬ)" required>
+                    <input type="number" name="Бюджет" placeholder="ПРИМЕРНЫЙ БЮДЖЕТ (НЕОБЯЗАТЕЛЬНО)">
+                    <button type="submit" class="glitch-button">ЗАПРОСИТЬ ДОСТУП</button>
+                </form>
+
+                <div class="or-separator">ИЛИ</div>
+
+                <a href="https://t.me/dnk_pr03" class="tg-button">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.24-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.05-.2-.06-.06-.15-.04-.21-.02-.09.04-1.49.95-4.22 2.79-.4.27-.76.4-1.08.39-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.12.02.19z"/>
+                    </svg>
+                    СВЯЗЬ В TELEGRAM
+                </a>
+            </div>
+        </section>
+    </main>
+    <script src="app.js"></script>
+<!-- МОДАЛЬНОЕ ОКНО "ЭПИЗОД" -->
+<div id="modal-overlay" class="hidden">
+    <div class="modal-content glass-panel">
+        <span id="close-modal">&times;</span>
+        <div id="modal-inner"></div>
+    </div>
+</div></body>
+</html>
