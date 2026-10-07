@@ -5,7 +5,8 @@ const DATA = {
     lead: "Приёмные кампании, digital, PR, бот, данные, ДПО и внутренние сервисы. Не один проект — длинная история системной работы внутри образовательной организации.",
     metrics: [["6 лет","практики"],["15 000+","заявлений в 2025*"],["+75%","рост заявлений г/г*"],["1 469","зачисленных в 2025*"]],
     files: ["zapad-bot / zapad-bot-v2","ranepa-dpo-site","ranepa-dpo-backend","cdo-staff-guide"],
-    note: "* Публичные показатели относятся к Западному филиалу РАНХиГС в целом. Они показывают масштаб среды, внутри которой создавались digital- и коммуникационные решения."
+    note: "* Публичные показатели относятся к Западному филиалу РАНХиГС в целом. Они показывают масштаб среды, внутри которой создавались digital- и коммуникационные решения.",
+    links: [["Открыть сайт филиала","https://zf.ranepa.ru/"],["Открыть приёмную","https://zf-priem.ru/"],["Онлайн-системы","https://www.zf-ranepa.ru/"]]
   },
   cat: {
     tag: "ADMISSIONS / PRODUCTION",
@@ -13,7 +14,8 @@ const DATA = {
     lead: "Telegram-система для реальной приёмной: данные, fuzzy-поиск, баллы, списки, дедлайны, экзамены, история диалогов, исправления и передача оператору.",
     metrics: [["10 000+","вопросов"],["24/7","доступность"],["v2","эволюция"],["6 типов","контента"]],
     files: ["zapad-bot/bot.py","zapad-bot-v2/bot.py","Google Sheets data layer","RapidFuzz + pandas + Telegram"],
-    note: "В публичной версии показываем только агрегированную механику и обезличенные примеры — без персональных данных абитуриентов."
+    note: "В публичной версии показываем только агрегированную механику и обезличенные примеры — без персональных данных абитуриентов.",
+    links: [["Запустить Кот-бота","https://t.me/zapad_ranepa_cat_bot"]]
   },
   landing: {
     tag: "ORIGIN",
@@ -29,7 +31,8 @@ const DATA = {
     lead: "Программы, новости, расписание, слушатели, оплата, AI, CMS, SEO, материалы и автоматизации собраны в единую пользовательскую среду.",
     metrics: [["End-to-end","маршрут"],["CMS","операционка"],["AI","Сова"],["tests","security / SEO / motion"]],
     files: ["ranepa-dpo-site/index.html","students.html + pay/index.html","site-admin-*","tests/*"],
-    note: "Ключевой коммерческий кейс: сайт здесь — интерфейс системы, а не конечный продукт."
+    note: "Ключевой коммерческий кейс: сайт здесь — интерфейс системы, а не конечный продукт.",
+    links: [["Открыть DPO","https://ranepa-dpo39.ru/"],["AI-лаборатория","https://ranepa-dpo39.ru/ai-lecture.html"],["Слушателям","https://ranepa-dpo39.ru/students.html"],["Оплата","https://ranepa-dpo39.ru/pay/"],["GitHub","https://github.com/aderpil21-source/ranepa-dpo-site"]]
   },
   backend: {
     tag: "INFRA / PRODUCTION",
@@ -61,7 +64,8 @@ const DATA = {
     lead: "Авторская live-платформа: большой экран, преподавательский control, телефоны участников и mic endpoint синхронизируются в одном сеансе.",
     metrics: [["4","surfaces"],["Next.js 15","platform"],["Supabase","realtime"],["AUTOPILOT","90-min mode"]],
     files: ["immersive-lecture-os/PROJECT_SPEC.md","app/stage/page.js","app/control/page.js","app/personal/page.js"],
-    note: "Это отдельный продуктовый вектор: не автоматизация бэк-офиса, а новый интерактивный формат самого обучения."
+    note: "Это отдельный продуктовый вектор: не автоматизация бэк-офиса, а новый интерактивный формат самого обучения.",
+    links: [["Открыть live-preview","https://immersive-lecture-os.vercel.app"]]
   },
   guide: {
     tag: "INTERNAL UX",
@@ -69,7 +73,8 @@ const DATA = {
     lead: "Служебное руководство v3.2 с автопубликацией через GitHub Pages — внутренние знания превращены в кликабельный интерфейс.",
     metrics: [["v3.2","current"],["Pages","autopublish"],["0 secrets","repo policy"],["staff","UX"]],
     files: ["cdo-staff-guide/README.md","guide.zip"],
-    note: "Сильный кейс внутренней цифровизации: автоматизировать можно не только клиента, но и путь сотрудника к нужному действию."
+    note: "Сильный кейс внутренней цифровизации: автоматизировать можно не только клиента, но и путь сотрудника к нужному действию.",
+    links: [["Открыть инструкцию","https://aderpil21-source.github.io/cdo-staff-guide/"],["GitHub","https://github.com/aderpil21-source/cdo-staff-guide"]]
   },
   vk: {
     tag: "AUTOMATION",
@@ -100,6 +105,7 @@ function renderCase(key){
       ${d.files.map(f => `<code>${f}</code>`).join("")}
     </div>
     <p class="dialog-note">${d.note}</p>
+    ${d.links?.length ? `<div class="dialog-live">${d.links.map(([label,url]) => `<a href="${url}" target="_blank" rel="noreferrer">${label} ↗</a>`).join("")}</div>` : ""}
   `;
   $("#case-dialog").showModal();
   document.body.classList.add("dialog-open");
