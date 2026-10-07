@@ -1,118 +1,306 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Денис Кац | Нейро-Экосистема</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07090d">
+  <meta name="description" content="Денис Кац — цифровые системы для образования: приёмная, ДПО, AI, автоматизация и интерактивные образовательные продукты.">
+  <title>Денис Кац — цифровые системы для образования</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="deep-space"></div>
-    <canvas id="matrix-rain"></canvas>
-    <canvas id="matrix-3d"></canvas>
+  <canvas id="ambient" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
 
-    <!-- КИБЕР-ГОЛОГРАММА -->
-    <main id="hologram-container">
-        <div class="holo-layer holo-base"></div>
-        <div class="holo-layer holo-glitch-cyan"></div>
-        <div class="holo-layer holo-glitch-magenta"></div>
-        <div class="holo-scanline-fast"></div>
-        <div class="ai-chip"><div class="chip-core"></div><div class="chip-pulse"></div></div>
-    </main>
+  <header class="nav" aria-label="Главная навигация">
+    <a class="brand" href="#top" aria-label="К началу">
+      <span class="brand-dot"></span>
+      <span>DENIS KATS</span>
+    </a>
+    <nav class="nav-links" aria-label="Разделы">
+      <a href="#work">Кейсы</a>
+      <button class="link-button" data-open-system>Система</button>
+      <a href="#capabilities">Что умею</a>
+    </nav>
+    <button class="nav-cta" data-open-contact>
+      <span>Обсудить задачу</span><i>↗</i>
+    </button>
+  </header>
 
-    <!-- ИНИЦИАЛИЗАЦИЯ -->
-    <div id="boot-terminal">
-        <h1 class="glitch-text" data-text="ИНИЦИАЛИЗАЦИЯ">ИНИЦИАЛИЗАЦИЯ</h1>
-        <div class="progress-wrapper">
-            <div id="progress-bar"></div>
+  <main id="top">
+    <section class="hero scene" data-scene="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="overline">6 лет внутри образования · Калининград</p>
+        <h1>Строю системы,<br><em>которые работают сами.</em></h1>
+        <p class="hero-lead">
+          Сайты, AI, данные, заявки, оплата и внутренние процессы становятся одним цифровым организмом.
+          Человек подключается только там, где действительно нужен.
+        </p>
+        <div class="hero-actions">
+          <a class="primary" href="#work"><span>Смотреть реальные системы</span><i>↓</i></a>
+          <button class="secondary" data-tour-start><span>Запустить экскурсию</span><i>▶</i></button>
         </div>
-        <div id="progress-text">0%</div>
-        <div id="skip-btn">[SKIP INTRO]</div>
+      </div>
+
+      <div class="hero-orbit" aria-hidden="true">
+        <div class="orbit-shell orbit-a"><span></span><span></span><span></span></div>
+        <div class="orbit-shell orbit-b"><span></span><span></span></div>
+        <div class="orbit-core">
+          <b>HUMAN</b>
+          <small>ON EXCEPTION</small>
+        </div>
+        <div class="orbit-label label-a">AI</div>
+        <div class="orbit-label label-b">DATA</div>
+        <div class="orbit-label label-c">PAY</div>
+        <div class="orbit-label label-d">OPS</div>
+      </div>
+
+      <div class="hero-proof" aria-label="Ключевые факты">
+        <div><b>10 000+</b><span>вопросов обработал Кот приёмной комиссии</span></div>
+        <div><b>15 000+</b><span>заявлений в кампании филиала в 2025 году*</span></div>
+        <div><b>End-to-end</b><span>ДПО: от первого визита до обучения</span></div>
+      </div>
+
+      <button class="scroll-hint" aria-label="Прокрутить к кейсам" onclick="document.querySelector('#work').scrollIntoView({behavior:'smooth'})">
+        <span></span> scroll
+      </button>
+    </section>
+
+    <section class="manifesto scene">
+      <div class="manifesto-index">01</div>
+      <div class="manifesto-copy">
+        <p class="overline">Не сайт. Не бот. Не CRM.</p>
+        <h2 class="scrub-text">Я проектирую путь целиком — от первого касания до результата.</h2>
+        <p>
+          Интерфейс — только поверхность. Под ним работают данные, автоматизации, AI, контроль,
+          handoff человеку и следующий шаг пользователя.
+        </p>
+        <button class="text-cta" data-open-system>Посмотреть, как устроена система <i>↗</i></button>
+      </div>
+    </section>
+
+    <section id="work" class="chapter scene chapter-ranepa" data-chapter="ranepa">
+      <div class="chapter-sticky">
+        <div class="chapter-number">01</div>
+        <div class="chapter-copy">
+          <p class="overline">FLAGSHIP · REAL SYSTEM</p>
+          <h2>РАНХиГС:<br>шесть лет внутри процесса.</h2>
+          <p>
+            Не внешний подрядчик, который «изучил образование». Приёмные кампании, digital, PR,
+            бот, данные, ДПО и внутренние сервисы — работа изнутри реальной организации.
+          </p>
+          <button class="primary compact" data-case="ranepa"><span>Открыть кейс</span><i>↗</i></button>
+        </div>
+      </div>
+
+      <div class="chapter-film">
+        <article class="film-frame frame-dark">
+          <div class="frame-meta"><span>CAMPAIGN / 2025</span><span>PUBLIC DATA</span></div>
+          <div class="metric-cinema">
+            <b>15 000+</b>
+            <span>заявлений</span>
+          </div>
+          <p>Рост количества заявлений — 75% год к году; 1 469 человек зачислены.</p>
+          <a class="source-link" href="https://www.newkaliningrad.ru/news/business/24135978.html?erid=2VSb5wc4bX7" target="_blank" rel="noreferrer">Публичный источник ↗</a>
+        </article>
+
+        <article class="film-frame frame-cat">
+          <div class="frame-meta"><span>ADMISSIONS BOT</span><span>PRODUCTION</span></div>
+          <div class="cat-eye" aria-hidden="true"><i></i></div>
+          <div class="metric-cinema small">
+            <b>10 000+</b>
+            <span>вопросов</span>
+          </div>
+          <p>Поиск в данных приёмной, баллы, списки, дедлайны, экзамены, история диалогов и передача человеку.</p>
+          <button class="ghost-action" data-case="cat">Разобрать механику ↗</button>
+        </article>
+
+        <article class="film-frame frame-flow">
+          <div class="frame-meta"><span>HUMAN HANDOFF</span><span>CONTROLLED</span></div>
+          <div class="flow-line">
+            <span>вопрос</span><i></i><span>данные</span><i></i><span>ответ</span><i></i><span class="accent">человек</span>
+          </div>
+          <p>Автоматизация не «заменяет всех». Она доводит типовую ситуацию до конца и отдаёт сотруднику только исключение.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="chapter scene chapter-dpo" data-chapter="dpo">
+      <div class="chapter-sticky">
+        <div class="chapter-number">02</div>
+        <div class="chapter-copy">
+          <p class="overline">PLATFORM · END-TO-END</p>
+          <h2>ДПО:<br>из лендинга в автопилот.</h2>
+          <p>
+            От каталога программ выросла связанная среда: слушатель, расписание, материалы,
+            оплата, контент, AI, CMS и отдельный production-backend.
+          </p>
+          <button class="primary compact" data-case="dpo"><span>Показать эволюцию</span><i>↗</i></button>
+        </div>
+      </div>
+
+      <div class="chapter-film">
+        <article class="film-frame frame-evolution">
+          <div class="frame-meta"><span>EVOLUTION</span><span>LANDING → PLATFORM</span></div>
+          <div class="evolution-track">
+            <button data-case="landing"><b>1</b><span>Landing</span></button>
+            <i></i>
+            <button data-case="dpo"><b>2</b><span>Platform</span></button>
+            <i></i>
+            <button data-case="backend"><b>3</b><span>Backend</span></button>
+            <i></i>
+            <button data-case="owl"><b>4</b><span>AI layer</span></button>
+          </div>
+          <p>Каждый следующий слой убирал ещё один ручной переход.</p>
+        </article>
+
+        <article class="film-frame frame-route">
+          <div class="frame-meta"><span>USER ROUTE</span><span>END-TO-END</span></div>
+          <div class="route-visual">
+            <span>программа</span><span>заявка</span><span>оплата</span><span>материалы</span><span>обучение</span>
+          </div>
+          <p>Пользователь двигается по одному маршруту, а система сама меняет состояния и запускает следующие действия.</p>
+        </article>
+
+        <article class="film-frame frame-owl">
+          <div class="frame-meta"><span>OWL</span><span>AI + LEARNING</span></div>
+          <div class="owl-core" aria-hidden="true">
+            <div></div><div></div><div></div>
+          </div>
+          <h3>Сова знает, ищет, учится и передаёт.</h3>
+          <p>Локальные ответы, подбор программ, learned rules, контекст и human handoff.</p>
+          <button class="ghost-action" data-case="owl">Внутрь мозга ↗</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="chapter scene chapter-lecture" data-chapter="lecture">
+      <div class="chapter-sticky">
+        <div class="chapter-number">03</div>
+        <div class="chapter-copy">
+          <p class="overline">AUTHOR R&D · REALTIME</p>
+          <h2>Обучение<br>как live-система.</h2>
+          <p>
+            Immersive Lecture OS синхронизирует сцену, преподавателя и телефоны участников.
+            Занятие становится управляемым цифровым событием.
+          </p>
+          <button class="primary compact" data-case="lecture"><span>Открыть Lecture OS</span><i>↗</i></button>
+        </div>
+      </div>
+
+      <div class="chapter-film">
+        <article class="film-frame frame-stage">
+          <div class="frame-meta"><span>STAGE</span><span>ROOM DISPLAY</span></div>
+          <div class="stage-screen">
+            <div class="scanbar"></div>
+            <strong>СИСТЕМА В СЕТИ</strong>
+            <span>участники синхронизированы</span>
+          </div>
+        </article>
+
+        <article class="film-frame frame-devices">
+          <div class="frame-meta"><span>4 SURFACES</span><span>ONE SESSION</span></div>
+          <div class="devices">
+            <div class="screen large"><span>STAGE</span></div>
+            <div class="screen"><span>CONTROL</span></div>
+            <div class="phone"><span>PERSONAL</span></div>
+            <div class="phone mini"><span>MIC</span></div>
+          </div>
+          <p>Stage · Control · Personal · Mic — один realtime-сеанс.</p>
+        </article>
+
+        <article class="film-frame frame-autopilot">
+          <div class="frame-meta"><span>AUTOPILOT</span><span>90 MIN</span></div>
+          <div class="autopilot-ring"><span>AUTO</span></div>
+          <p>Сценарий способен сам двигать 90-минутную сессию, сохраняя ручной override преподавателя.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="capabilities" class="capabilities scene">
+      <div class="cap-head">
+        <p class="overline">Что я уже умею делать</p>
+        <h2>Не обещания.<br>Это уже есть в коде.</h2>
+      </div>
+      <div class="cap-list">
+        <button data-case="cat"><span>01</span><b>Автоматизировать приёмную и массовые обращения</b><i>↗</i></button>
+        <button data-case="dpo"><span>02</span><b>Строить end-to-end образовательные платформы</b><i>↗</i></button>
+        <button data-case="owl"><span>03</span><b>Встраивать AI с памятью, правилами и handoff человеку</b><i>↗</i></button>
+        <button data-case="backend"><span>04</span><b>Выносить продукт в production API + PostgreSQL</b><i>↗</i></button>
+        <button data-case="lecture"><span>05</span><b>Создавать realtime-обучение на нескольких устройствах</b><i>↗</i></button>
+        <button data-case="guide"><span>06</span><b>Превращать внутренние инструкции в интерактивные продукты</b><i>↗</i></button>
+      </div>
+    </section>
+
+    <section class="closing scene">
+      <div class="closing-copy">
+        <p class="overline">Следующая система может быть вашей</p>
+        <h2>Если процесс можно описать —<br>его можно попробовать автоматизировать.</h2>
+        <p>Начинаем с одного узкого сценария. Доказываем эффект. Дальше система растёт модульно.</p>
+        <button class="primary large" data-open-contact><span>Обсудить процесс</span><i>↗</i></button>
+      </div>
+      <div class="closing-orb" aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Denis Kats · Digital Education Systems</span>
+    <span>* Показатели кампании 2025 относятся к Западному филиалу РАНХиГС в целом; в портфолио они используются как контекст работы внутри цифрового и коммуникационного контура.</span>
+  </footer>
+
+  <dialog id="case-dialog" class="case-dialog">
+    <button class="dialog-close" data-close-dialog aria-label="Закрыть">×</button>
+    <div id="dialog-content"></div>
+  </dialog>
+
+  <dialog id="system-dialog" class="system-dialog">
+    <button class="dialog-close light" data-close-system aria-label="Закрыть">×</button>
+    <div class="system-head">
+      <p class="overline">DEEP DIVE</p>
+      <h2>Система под поверхностью</h2>
+      <p>Этот слой специально спрятан. Он нужен тем, кому мало красивого результата и хочется понять, как всё связано.</p>
     </div>
-
-    <div id="black-hole-event"></div>
-    <div id="big-bang-flash"></div>
-
-    <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
-    <main id="core-ui" class="hidden">
-        <header class="hero-section glass-panel">
-            <h2 class="ultra-thin-text main-title">ДЕНИС КАЦ</h2>
-            <p class="cyber-subtitle neon-pulse">АРХИТЕКТУРА МАСС • ТОТАЛЬНЫЙ КОНТРОЛЬ • AI-МОНОПОЛИЯ</p>
-        </header>
-
-        <section class="grid-container">
-            <div class="xray-card glass-panel tilt-effect">
-                <div class="card-front">
-                    <h3 class="ultra-thin-text">РАНХИГС: ЗАПАД</h3>
-                    <div class="divider"></div>
-                    <p>Пирамида конверсий</p>
-                </div>
-                <div class="xray-layer">
-                    <h3 class="neon-cyan">[СТАТУС: ВЕРХНЯЯ СТУПЕНЬ]</h3>
-                    <p>8 000+ заявителей<br>Конверсия +29%<br>Digital-архитектура</p>
-                </div>
-            </div>
-            <div class="xray-card glass-panel tilt-effect">
-                <div class="card-front">
-                    <h3 class="ultra-thin-text">КОТ ПРИЕМНОЙ КОМИССИИ</h3>
-                    <div class="divider"></div>
-                    <p>Невидимая рука системы</p>
-                </div>
-                <div class="xray-layer">
-                    <h3 class="neon-magenta">[АБСОЛЮТНАЯ АВТОНОМИЯ]</h3>
-                    <p>10 000+ операций<br>24/7 обработка<br>Замена ФОТ: 5+ единиц</p>
-                </div>
-            </div>
-            <div class="xray-card glass-panel tilt-effect">
-                <div class="card-front">
-                    <h3 class="ultra-thin-text">КОЛЛЕДЖ НЕЙРОСЕТЕЙ</h3>
-                    <div class="divider"></div>
-                    <p>Проект Нового Порядка</p>
-                </div>
-                <div class="xray-layer">
-                    <h3 class="neon-blue">[ВЕЛИКИЙ АРХИТЕКТОР]</h3>
-                    <p>Интеграция ИИ в умы<br>Монополия на кадры<br>Управление рынком</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- СЕКЦИЯ АРХИТЕКТОР -->
-        <section id="architect-section" class="glass-panel">
-            <h2 class="ultra-thin-text">АРХИТЕКТОР</h2>
-            <p class="cyber-subtitle">ХОЛОДНЫЙ РАСЧЕТ • СИСТЕМНОЕ ДОМИНИРОВАНИЕ</p>
-            <div class="manifesto-text">
-                <p>Меня зовут Адер Пил. Мой подход — гибрид психологии, журналистской точности и системного маркетинга. Я проектирую системы, которые интегрируются в рынок и генерируют результат автономно.</p>
-                <p>Я не делаю рекламу. Я создаю доминирование. Если вы готовы к масштабу — добро пожаловать в терминал.</p>
-            </div>
-
-            <div class="terminal-gate">
-                <h3 class="neon-magenta">[ВХОДНОЙ ШЛЮЗ]</h3>
-                <form id="qual-form" action="https://formspree.io/f/mppadlbb" method="POST">
-                    <input type="text" name="Имя" placeholder="ИМЯ" required>
-                    <input type="email" name="Email" placeholder="EMAIL" required>
-                    <input type="tel" name="Телефон" placeholder="ТЕЛЕФОН (НЕОБЯЗАТЕЛЬНО)">
-                    <input type="text" name="Задача" placeholder="ЗАДАЧА (СУТЬ)" required>
-                    <input type="number" name="Бюджет" placeholder="ПРИМЕРНЫЙ БЮДЖЕТ (НЕОБЯЗАТЕЛЬНО)">
-                    <button type="submit" class="glitch-button">ЗАПРОСИТЬ ДОСТУП</button>
-                </form>
-
-                <div class="or-separator">ИЛИ</div>
-
-                <a href="https://t.me/dnk_pr03" class="tg-button">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.24-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.05-.2-.06-.06-.15-.04-.21-.02-.09.04-1.49.95-4.22 2.79-.4.27-.76.4-1.08.39-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.12.02.19z"/>
-                    </svg>
-                    СВЯЗЬ В TELEGRAM
-                </a>
-            </div>
-        </section>
-    </main>
-    <script src="app.js"></script>
-<!-- МОДАЛЬНОЕ ОКНО "ЭПИЗОД" -->
-<div id="modal-overlay" class="hidden">
-    <div class="modal-content glass-panel">
-        <span id="close-modal">&times;</span>
-        <div id="modal-inner"></div>
+    <div class="system-map">
+      <svg viewBox="0 0 1000 620" aria-hidden="true">
+        <path d="M500 305 C390 305 360 170 245 170"/>
+        <path d="M500 305 C390 305 350 440 235 440"/>
+        <path d="M500 305 C610 305 650 165 770 165"/>
+        <path d="M500 305 C620 305 650 445 780 445"/>
+        <path d="M245 170 C180 170 170 90 110 90"/>
+        <path d="M235 440 C170 440 160 530 105 530"/>
+        <path d="M770 165 C850 165 855 85 920 85"/>
+        <path d="M780 445 C860 445 860 540 925 540"/>
+      </svg>
+      <button class="map-node core-node" style="--x:50%;--y:49%" data-case="dpo"><b>CORE</b><span>автопилот</span></button>
+      <button class="map-node" style="--x:24.5%;--y:27%" data-case="cat"><b>Admissions</b><span>Кот-бот</span></button>
+      <button class="map-node" style="--x:23.5%;--y:71%" data-case="backend"><b>Backend</b><span>API + DB</span></button>
+      <button class="map-node" style="--x:77%;--y:26%" data-case="owl"><b>AI layer</b><span>Сова</span></button>
+      <button class="map-node" style="--x:78%;--y:72%" data-case="lecture"><b>Realtime</b><span>Lecture OS</span></button>
+      <button class="map-node small" style="--x:11%;--y:14%" data-case="ranepa"><b>RANEPA</b></button>
+      <button class="map-node small" style="--x:10.5%;--y:85%" data-case="guide"><b>Staff UX</b></button>
+      <button class="map-node small" style="--x:92%;--y:13%" data-case="admin"><b>CMS</b></button>
+      <button class="map-node small" style="--x:92.5%;--y:86%" data-case="vk"><b>VK API</b></button>
     </div>
-</div></body>
+  </dialog>
+
+  <dialog id="contact-dialog" class="contact-dialog">
+    <button class="dialog-close" data-close-contact aria-label="Закрыть">×</button>
+    <p class="overline">START SMALL</p>
+    <h2>Разберём один процесс.</h2>
+    <p>В финальной версии здесь будут твои рабочие контакты и короткая форма. Пока блок специально не отправляет данные.</p>
+    <div class="contact-fake">
+      <span>01</span><b>Опиши, что сейчас делают руками</b>
+      <span>02</span><b>Мы найдём узкий сценарий для пилота</b>
+      <span>03</span><b>Покажем работающий прототип</b>
+    </div>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
 </html>

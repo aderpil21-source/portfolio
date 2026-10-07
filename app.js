@@ -1,178 +1,238 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let isRunning = true;
+const DATA = {
+  ranepa: {
+    tag: "FLAGSHIP / REAL",
+    title: "РАНХиГС: шесть лет внутри цифрового контура",
+    lead: "Приёмные кампании, digital, PR, бот, данные, ДПО и внутренние сервисы. Не один проект — длинная история системной работы внутри образовательной организации.",
+    metrics: [["6 лет","практики"],["15 000+","заявлений в 2025*"],["+75%","рост заявлений г/г*"],["1 469","зачисленных в 2025*"]],
+    files: ["zapad-bot / zapad-bot-v2","ranepa-dpo-site","ranepa-dpo-backend","cdo-staff-guide"],
+    note: "* Публичные показатели относятся к Западному филиалу РАНХиГС в целом. Они показывают масштаб среды, внутри которой создавались digital- и коммуникационные решения."
+  },
+  cat: {
+    tag: "ADMISSIONS / PRODUCTION",
+    title: "Кот приёмной комиссии",
+    lead: "Telegram-система для реальной приёмной: данные, fuzzy-поиск, баллы, списки, дедлайны, экзамены, история диалогов, исправления и передача оператору.",
+    metrics: [["10 000+","вопросов"],["24/7","доступность"],["v2","эволюция"],["6 типов","контента"]],
+    files: ["zapad-bot/bot.py","zapad-bot-v2/bot.py","Google Sheets data layer","RapidFuzz + pandas + Telegram"],
+    note: "В публичной версии показываем только агрегированную механику и обезличенные примеры — без персональных данных абитуриентов."
+  },
+  landing: {
+    tag: "ORIGIN",
+    title: "DPO Landing: точка старта",
+    lead: "Ранний самостоятельный слой ДПО: каталог программ, оффер и маршруты пользователя. Ценность кейса — в контрасте с тем, во что эта ветка выросла дальше.",
+    metrics: [["v1","начало"],["catalog","программы"],["conversion","контакты"],["→","platform"]],
+    files: ["ranepa-dpo-landing/index.html"],
+    note: "На сайте это будет первый кадр эволюции: «было» рядом с полноценной современной платформой."
+  },
+  dpo: {
+    tag: "PLATFORM / END-TO-END",
+    title: "Автономное ДПО",
+    lead: "Программы, новости, расписание, слушатели, оплата, AI, CMS, SEO, материалы и автоматизации собраны в единую пользовательскую среду.",
+    metrics: [["End-to-end","маршрут"],["CMS","операционка"],["AI","Сова"],["tests","security / SEO / motion"]],
+    files: ["ranepa-dpo-site/index.html","students.html + pay/index.html","site-admin-*","tests/*"],
+    note: "Ключевой коммерческий кейс: сайт здесь — интерфейс системы, а не конечный продукт."
+  },
+  backend: {
+    tag: "INFRA / PRODUCTION",
+    title: "Production backend",
+    lead: "Отдельный stateless API на Fastify/PostgreSQL: заявки, расписание, материалы, публичные снимки данных и обучение Совы.",
+    metrics: [["Fastify 5","API"],["PostgreSQL","storage"],["200 conn","load-test config"],["rate-limit","security"]],
+    files: ["ranepa-dpo-backend/README.md","src/routes/leads.js","src/routes/owl.js","migrations/*"],
+    note: "Архитектура специально отделяет CDN-friendly публичный сайт от динамики и позволяет масштабировать API независимо."
+  },
+  owl: {
+    tag: "AI / LEARNING / HANDOFF",
+    title: "Сова: AI как часть процесса",
+    lead: "Не отдельное окно с чатом. Сова встроена в платформу: распознаёт контекст, ищет программы, использует learned rules и умеет передать сложный случай оператору.",
+    metrics: [["brain","контекст"],["learning","правила"],["handoff","оператор"],["semantic","program search"]],
+    files: ["owl-engine.js","owl-brain.js","owl-learning.js","operator/app.py"],
+    note: "На финальном сайте этот слой будет показан как визуальный brain-map: local resolve → AI → human."
+  },
+  admin: {
+    tag: "CMS / OPS",
+    title: "Контент без разработчика",
+    lead: "Редактирование структуры, программ, медиа, SEO, preview и workflow вынесено в административный слой.",
+    metrics: [["8+","admin modules"],["preview","before publish"],["SEO","built-in"],["workflow","operational"]],
+    files: ["site-admin-workflow.js","site-admin-structure.js","site-admin-entities.js","site-admin-media.js"],
+    note: "После внедрения система должна жить без постоянного вызова разработчика — это часть продукта, а не дополнительная услуга."
+  },
+  lecture: {
+    tag: "AUTHOR R&D / REALTIME",
+    title: "Immersive Lecture OS",
+    lead: "Авторская live-платформа: большой экран, преподавательский control, телефоны участников и mic endpoint синхронизируются в одном сеансе.",
+    metrics: [["4","surfaces"],["Next.js 15","platform"],["Supabase","realtime"],["AUTOPILOT","90-min mode"]],
+    files: ["immersive-lecture-os/PROJECT_SPEC.md","app/stage/page.js","app/control/page.js","app/personal/page.js"],
+    note: "Это отдельный продуктовый вектор: не автоматизация бэк-офиса, а новый интерактивный формат самого обучения."
+  },
+  guide: {
+    tag: "INTERNAL UX",
+    title: "Интерактивная инструкция ЦДО",
+    lead: "Служебное руководство v3.2 с автопубликацией через GitHub Pages — внутренние знания превращены в кликабельный интерфейс.",
+    metrics: [["v3.2","current"],["Pages","autopublish"],["0 secrets","repo policy"],["staff","UX"]],
+    files: ["cdo-staff-guide/README.md","guide.zip"],
+    note: "Сильный кейс внутренней цифровизации: автоматизировать можно не только клиента, но и путь сотрудника к нужному действию."
+  },
+  vk: {
+    tag: "AUTOMATION",
+    title: "VK publishing pipeline",
+    lead: "Автоматизированный контур публикации: медиа, upload, VK API, worker и статусы заданий.",
+    metrics: [["VK API","integration"],["media","upload"],["worker","jobs"],["status","flow"]],
+    files: ["vk-poster-api/app.py","ranepa-dpo-site/vk_poster.py","worker/vk_worker.py"],
+    note: "Не главный кейс, а supporting-proof: система умеет сама перемещать контент между инструментами."
+  }
+};
 
-    // 1. 2D ДОЖДЬ
-    const canvasRain = document.getElementById('matrix-rain');
-    const ctxRain = canvasRain.getContext('2d');
-    function resizeRain() { canvasRain.width = window.innerWidth; canvasRain.height = window.innerHeight; }
-    window.addEventListener('resize', resizeRain); resizeRain();
-    const rainSnippets = ["01001", "system.hack", "def exploit():", "0xFA21", "void()", "matrix.flow", "import python"];
-    const fontSize = 14;
-    const columns = Math.floor(canvasRain.width / fontSize);
-    const drops = Array(columns).fill(1);
-    function drawRain() {
-        if(!isRunning) return;
-        ctxRain.fillStyle = 'rgba(0, 0, 0, 0.15)'; ctxRain.fillRect(0, 0, canvasRain.width, canvasRain.height);
-        ctxRain.font = fontSize + 'px monospace';
-        for(let i = 0; i < drops.length; i++) {
-            const char = rainSnippets[Math.floor(Math.random() * rainSnippets.length)];
-            ctxRain.fillStyle = '#005555'; ctxRain.fillText(char, i * fontSize, drops[i] * fontSize);
-            if(drops[i] * fontSize > canvasRain.height && Math.random() > 0.95) drops[i] = 0;
-            drops[i]++;
-        }
-        requestAnimationFrame(drawRain);
-    }
-    drawRain();
+const $ = (s, root=document) => root.querySelector(s);
+const $$ = (s, root=document) => [...root.querySelectorAll(s)];
 
-    // 2. 3D ТЕКСТ
-    const canvas3D = document.getElementById('matrix-3d');
-    const ctx3D = canvas3D.getContext('2d');
-    function resize3D() { canvas3D.width = window.innerWidth; canvas3D.height = window.innerHeight; }
-    window.addEventListener('resize', resize3D); resize3D();
-    const nlpTriggers = ["ВЫГОРАНИЕ", "ТОТАЛЬНЫЙ КОНТРОЛЬ", "НЕВИДИМАЯ РУКА", "НОВЫЙ ПОРЯДОК", "ИЛЛЮМИНАЦИЯ", "УПРАВЛЕНИЕ РАЗУМОМ"];
-    const codeSnippets = ["import mass_control", "def eye_of_providence():", "yield silent_power", "sys.monopoly = True", "for x in range(100): scale()"];
-    const particles = []; const meteors = []; const fov = 300; 
-    for(let i = 0; i < 150; i++) {
-        particles.push({ x: (Math.random() - 0.5) * 2500, y: (Math.random() - 0.5) * 2500, z: Math.random() * 2000, text: Math.random() > 0.85 ? nlpTriggers[Math.floor(Math.random() * nlpTriggers.length)] : codeSnippets[Math.floor(Math.random() * codeSnippets.length)], isNlp: Math.random() > 0.85 });
-    }
-    for(let i=0; i<10; i++) { meteors.push({ x: Math.random()*canvas3D.width*2, y: -200, length: Math.random()*150+50, speed: Math.random()*15+10, opacity: Math.random()*0.5+0.1 }); }
-    function draw3D() {
-        if(!isRunning) return;
-        ctx3D.clearRect(0, 0, canvas3D.width, canvas3D.height);
-        meteors.forEach(m => {
-            m.x -= m.speed; m.y += m.speed;
-            if(m.y > canvas3D.height + 200 || m.x < -200) { m.x = Math.random()*canvas3D.width*1.5; m.y = -200; }
-            const grad = ctx3D.createLinearGradient(m.x, m.y, m.x + m.length, m.y - m.length);
-            grad.addColorStop(0, `rgba(0, 243, 255, ${m.opacity})`); grad.addColorStop(1, 'rgba(0, 243, 255, 0)');
-            ctx3D.beginPath(); ctx3D.moveTo(m.x, m.y); ctx3D.lineTo(m.x + m.length, m.y - m.length); ctx3D.strokeStyle = grad; ctx3D.lineWidth = 2; ctx3D.stroke();
-        });
-        particles.forEach(p => {
-            p.z -= 12; if(p.z <= 0) { p.z = 2000; p.x = (Math.random() - 0.5) * 2500; p.y = (Math.random() - 0.5) * 2500; }
-            const scale = fov / (fov + p.z); const x2d = (p.x * scale) + canvas3D.width / 2; const y2d = (p.y * scale) + canvas3D.height / 2;
-            if (scale > 0 && scale < 8) {
-                ctx3D.textAlign = "center";
-                if(p.isNlp) { ctx3D.font = `${Math.floor(60 * scale)}px -apple-system, sans-serif`; ctx3D.fillStyle = Math.random() > 0.5 ? `rgba(255, 0, 100, ${scale/2})` : `rgba(150, 0, 255, ${scale/2})`; }
-                else { ctx3D.font = `${Math.floor(20 * scale)}px monospace`; ctx3D.fillStyle = `rgba(0, 243, 255, ${scale/1.5})`; }
-                ctx3D.fillText(p.text, x2d, y2d);
-            }
-        });
-        requestAnimationFrame(draw3D);
-    } draw3D();
+function renderCase(key){
+  const d = DATA[key];
+  if(!d) return;
+  const content = $("#dialog-content");
+  content.innerHTML = `
+    <p class="overline">${d.tag}</p>
+    <h2 class="dialog-title">${d.title}</h2>
+    <p class="dialog-lead">${d.lead}</p>
+    <div class="dialog-grid">
+      ${d.metrics.map(([v,l]) => `<div class="dialog-metric"><b>${v}</b><span>${l}</span></div>`).join("")}
+    </div>
+    <div class="dialog-files">
+      <b>GITHUB / SYSTEM PROOF</b>
+      ${d.files.map(f => `<code>${f}</code>`).join("")}
+    </div>
+    <p class="dialog-note">${d.note}</p>
+  `;
+  $("#case-dialog").showModal();
+  document.body.classList.add("dialog-open");
+}
 
-    // 3. РЕЖИССУРА
-    const hologram = document.getElementById('hologram-container');
-    const bootTerminal = document.getElementById('boot-terminal');
-    const skipBtn = document.getElementById('skip-btn');
-    const blackHole = document.getElementById('black-hole-event');
-    const bigBang = document.getElementById('big-bang-flash');
-    const coreUI = document.getElementById('core-ui');
-    const progressBar = document.getElementById('progress-bar');
-    const progressText = document.getElementById('progress-text');
-    let isFinished = false;
+$$("[data-case]").forEach(el => el.addEventListener("click", () => {
+  if($("#system-dialog").open) $("#system-dialog").close();
+  renderCase(el.dataset.case);
+}));
 
-    function finishLoad() {
-        if (isFinished) return;
-        isFinished = true; isRunning = false;
-        canvasRain.style.display = 'none'; canvas3D.style.display = 'none'; hologram.style.display = 'none'; bootTerminal.style.display = 'none';
-        document.body.style.overflow = 'auto'; coreUI.classList.remove('hidden');
-        coreUI.animate([{ opacity: 0, filter: 'blur(10px)' }, { opacity: 1, filter: 'blur(0)' }], { duration: 1000, easing: 'ease-out', fill: 'forwards' });
-    }
-    if (skipBtn) skipBtn.addEventListener('click', finishLoad);
-
-    let loadValue = 0; const intervalTime = 45; const loadStep = 100 / (4500 / intervalTime);
-    const loadTimer = setInterval(() => {
-        if (isFinished) { clearInterval(loadTimer); return; }
-        loadValue += loadStep;
-        if(loadValue >= 100) { loadValue = 100; clearInterval(loadTimer); finishLoad(); }
-        progressBar.style.width = loadValue + '%'; progressText.innerText = Math.floor(loadValue) + '%';
-        if (loadValue >= 60) hologram.style.opacity = '0.75';
-    }, intervalTime);
-    setTimeout(() => { hologram.classList.add('smear-and-shatter'); }, 4000);
-    setTimeout(() => { isRunning = false; canvasRain.style.display = 'none'; canvas3D.style.display = 'none'; hologram.style.display = 'none'; bootTerminal.style.display = 'none'; if(blackHole) blackHole.classList.add('collapse-anim'); }, 4500);
-    setTimeout(() => { if(blackHole) blackHole.style.display = 'none'; if(bigBang) bigBang.classList.add('explode-anim'); }, 5800);
-    setTimeout(() => { document.body.style.overflow = 'auto'; coreUI.classList.remove('hidden'); coreUI.animate([{ transform: 'scale(0.5) translateZ(-1000px)', opacity: 0, filter: 'blur(30px)' }, { transform: 'scale(1) translateZ(0)', opacity: 1, filter: 'blur(0)' }], { duration: 2000, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' }); }, 6000);
-
-    // Валидация
-    const qualForm = document.getElementById('qual-form');
-    if (qualForm) {
-        qualForm.addEventListener('submit', (e) => {
-            const email = document.querySelector('input[name="Email"]').value;
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { e.preventDefault(); alert('ОШИБКА: НЕВЕРНЫЙ EMAIL.'); }
-        });
-    }
-
-    // 4. ТИЛТ КАРТОЧЕК
-    document.querySelectorAll('.tilt-effect').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-            card.style.setProperty('--x', `${x}px`); card.style.setProperty('--y', `${y}px`);
-            const rotateX = ((y - rect.height/2) / (rect.height/2)) * -15; const rotateY = ((x - rect.width/2) / (rect.width/2)) * 15;
-            card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-            card.style.boxShadow = `${-rotateY*2}px ${rotateX*2}px 40px rgba(0, 243, 255, 0.3)`;
-        });
-        card.addEventListener('mouseleave', () => { card.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`; card.style.boxShadow = `0 30px 60px rgba(0,0,0,0.9)`; });
-    });
-
-    // 5. КОНТЕНТНАЯ БАЗА И МОДАЛЬНЫЕ ОКНА
-    const projectData = {
-        'ranhigs': {
-            title: 'РАНХИГС: ЗАПАД',
-            body: `
-                <h3>СИСТЕМНЫЙ АТЛАС</h3>
-                <p>Задача: Тотальное доминирование в приемной кампании.</p>
-                <table class="modal-data-table">
-                    <tr><td>Уникальных заявителей</td><td>8 000+</td></tr>
-                    <tr><td>Всего заявлений</td><td>20 000+</td></tr>
-                    <tr><td>Рост конверсии</td><td>+29% год к году</td></tr>
-                    <tr><td>Снижение CPL</td><td>-18%</td></tr>
-                </table>
-                <p style="margin-top:20px; color: var(--neon-cyan);"><b>РЕАКЦИЯ ЗАКАЗЧИКА:</b> «Ты гений» (цитата из рабочих чатов при виде итоговых цифр по воронке).</p>
-                <p style="margin-top:10px;">Реализована 100% digital-архитектура: от алгоритмического парсинга 1.8 млн ID до виральных ИИ-роликов и точечного микрогео-таргетинга.</p>
-            `
-        },
-        'cat': {
-            title: 'КОТ ПРИЕМНОЙ КОМИССИИ',
-            body: `
-                <h3>АРХИТЕКТУРА ИИ-АГЕНТА</h3>
-                <p>Автономный бот-администратор, заменивший штат колл-центра.</p>
-                <table class="modal-data-table">
-                    <tr><td>Автоматических операций</td><td>10 000+</td></tr>
-                    <tr><td>Доступность системы</td><td>24 / 7 / 365</td></tr>
-                    <tr><td>Экономия ФОТ</td><td>5+ операторов</td></tr>
-                    <tr><td>Лояльность аудитории</td><td>95%</td></tr>
-                </table>
-                <p style="margin-top:20px;">Реализован прямой парсинг таблиц Google Sheets, выдача статусов по ФИО, сверка баллов ЕГЭ и шлюз прямой связи с живой комиссией через команду «Позвать кота».</p>
-            `
-        },
-        'college': {
-            title: 'КОЛЛЕДЖ НЕЙРОСЕТЕЙ',
-            body: `
-                <h3>ПРОЕКТ НОВОГО ПОРЯДКА</h3>
-                <p>Статус: <b>Секретный архив / Разработка концепции.</b></p>
-                <p style="margin-top:15px;">Фундамент будущей монополии на подготовку кадров на стыке маркетинга, ИИ и прикладной психологии в Калининграде.</p>
-            `
-        }
-    };
-
-    const modal = document.getElementById('modal-overlay');
-    const modalInner = document.getElementById('modal-inner');
-
-    document.querySelectorAll('.xray-card').forEach((card, index) => {
-        const ids = ['ranhigs', 'cat', 'college'];
-        card.addEventListener('click', () => {
-            const data = projectData[ids[index]];
-            if (data && modalInner && modal) {
-                modalInner.innerHTML = `<h2>${data.title}</h2>${data.body}`;
-                modal.classList.remove('hidden');
-            }
-        });
-    });
-
-    const closeModal = document.getElementById('close-modal');
-    if (closeModal) {
-        closeModal.addEventListener('click', () => modal.classList.add('hidden'));
-    }
-    if (modal) {
-        modal.addEventListener('click', (e) => { if(e.target === modal) modal.classList.add('hidden'); });
-    }
+$("[data-close-dialog]").addEventListener("click", () => {
+  $("#case-dialog").close(); document.body.classList.remove("dialog-open");
 });
+$("#case-dialog").addEventListener("click", e => {
+  if(e.target === $("#case-dialog")) { $("#case-dialog").close(); document.body.classList.remove("dialog-open"); }
+});
+
+$$("[data-open-system]").forEach(el => el.addEventListener("click", () => {
+  $("#system-dialog").showModal(); document.body.classList.add("dialog-open");
+}));
+$("[data-close-system]").addEventListener("click", () => {
+  $("#system-dialog").close(); document.body.classList.remove("dialog-open");
+});
+$("#system-dialog").addEventListener("click", e => {
+  if(e.target === $("#system-dialog")) { $("#system-dialog").close(); document.body.classList.remove("dialog-open"); }
+});
+
+$$("[data-open-contact]").forEach(el => el.addEventListener("click", () => {
+  $("#contact-dialog").showModal(); document.body.classList.add("dialog-open");
+}));
+$("[data-close-contact]").addEventListener("click", () => {
+  $("#contact-dialog").close(); document.body.classList.remove("dialog-open");
+});
+$("#contact-dialog").addEventListener("click", e => {
+  if(e.target === $("#contact-dialog")) { $("#contact-dialog").close(); document.body.classList.remove("dialog-open"); }
+});
+
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") document.body.classList.remove("dialog-open");
+});
+
+function runTour(){
+  const stops = ["#work",".chapter-dpo",".chapter-lecture","#capabilities"];
+  let i = 0;
+  const next = () => {
+    if(i >= stops.length) return;
+    const target = document.querySelector(stops[i++]);
+    target?.scrollIntoView({behavior:"smooth",block:"start"});
+    if(i < stops.length) setTimeout(next, 2600);
+  };
+  next();
+}
+$("[data-tour-start]").addEventListener("click", runTour);
+
+const canvas = $("#ambient");
+const ctx = canvas.getContext("2d", {alpha:true});
+let W=0,H=0,DPR=1,points=[],raf=0,visible=true;
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function resize(){
+  DPR = Math.min(devicePixelRatio || 1, 1.5);
+  W = innerWidth; H = innerHeight;
+  canvas.width = Math.round(W*DPR); canvas.height = Math.round(H*DPR);
+  canvas.style.width = W+"px"; canvas.style.height = H+"px";
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  const count = reduceMotion ? 0 : Math.max(26, Math.min(W < 700 ? 38 : 72, Math.floor(W/18)));
+  points = Array.from({length:count},()=>({
+    x:Math.random()*W,y:Math.random()*H,
+    vx:(Math.random()-.5)*.13,vy:(Math.random()-.5)*.13,
+    r:Math.random()*1.4+.25,a:Math.random()*.35+.08
+  }));
+}
+function draw(){
+  if(!visible || reduceMotion) return;
+  ctx.clearRect(0,0,W,H);
+  const mx = W*.72, my = H*.28;
+  for(const p of points){
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<-20)p.x=W+20;if(p.x>W+20)p.x=-20;if(p.y<-20)p.y=H+20;if(p.y>H+20)p.y=-20;
+    const dx=p.x-mx,dy=p.y-my,dist=Math.hypot(dx,dy);
+    if(dist<260){
+      ctx.strokeStyle=`rgba(125,118,255,${(1-dist/260)*.055})`;
+      ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(mx,my);ctx.stroke();
+    }
+    ctx.fillStyle=`rgba(190,202,226,${p.a})`;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+  }
+  raf=requestAnimationFrame(draw);
+}
+document.addEventListener("visibilitychange",()=>{
+  visible=!document.hidden;
+  if(visible && !reduceMotion){cancelAnimationFrame(raf);draw()}else cancelAnimationFrame(raf);
+});
+addEventListener("resize",()=>{clearTimeout(resize._t);resize._t=setTimeout(resize,140)},{passive:true});
+resize(); if(!reduceMotion) draw();
+
+import("https://cdn.jsdelivr.net/npm/motion@12.23.24/+esm").then(({animate,stagger})=>{
+  animate(".hero-copy > *",{opacity:[0,1],y:[24,0]},{duration:.75,delay:stagger(.07),easing:[.2,.8,.2,1]});
+  animate(".hero-proof > div",{opacity:[0,1],y:[14,0]},{duration:.65,delay:stagger(.06,{startDelay:.35})});
+  $$(".map-node,.cap-list button").forEach(el=>{
+    el.addEventListener("pointerenter",()=>animate(el,{scale:1.018},{duration:.22,easing:[.2,.8,.2,1]}));
+    el.addEventListener("pointerleave",()=>animate(el,{scale:1},{duration:.3,easing:[.2,.8,.2,1]}));
+  });
+}).catch(()=>{});
+
+if(window.gsap && window.ScrollTrigger && !reduceMotion){
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".manifesto-copy",{
+    opacity:.18,y:70,filter:"blur(10px)",
+    scrollTrigger:{trigger:".manifesto",start:"top 75%",end:"center 45%",scrub:.8}
+  });
+
+  $$(".chapter-film .film-frame").forEach((frame)=>{
+    gsap.fromTo(frame,
+      {scale:.88,opacity:.28,y:80},
+      {scale:1,opacity:1,y:0,ease:"none",
+       scrollTrigger:{trigger:frame,start:"top 90%",end:"center 55%",scrub:.7}}
+    );
+    gsap.to(frame,{
+      opacity:.20,scale:.96,
+      scrollTrigger:{trigger:frame,start:"bottom 52%",end:"bottom 12%",scrub:.55}
+    });
+  });
+
+  gsap.from(".closing-copy",{
+    scale:.9,opacity:.18,
+    scrollTrigger:{trigger:".closing",start:"top 75%",end:"center 50%",scrub:.8}
+  });
+}
+
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add("in-view");
+  });
+},{threshold:.12});
+$$(".cap-list button,.film-frame,.chapter-copy").forEach(el=>io.observe(el));
