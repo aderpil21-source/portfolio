@@ -853,6 +853,160 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
 .dk-la-launch-icon{font-size:25px!important}
 .dk-la-greeting-icon{font-size:17px!important;color:#f7fbff!important}
 @media(prefers-reduced-motion:reduce){.creative-mini-button{transition:none}}
+
+/* Discoverable demos: short hints in normal document flow, never overlays. */
+.demo-action-hint{display:flex;align-items:flex-start;gap:9px;min-width:0;padding:11px 12px;margin:11px 0 12px;border:1px solid #d2e2f8;border-radius:12px;background:#f0f6ff;color:#526f94;font-size:12px;line-height:1.55;overflow-wrap:break-word}
+.demo-action-hint strong{color:#295a92;font-weight:800}
+.demo-action-hint-icon{display:grid;place-items:center;flex:0 0 23px;width:23px;height:23px;background:#2f74b6;border-radius:8px;color:white;font-size:14px}
+.demo-action-hint--dark{background:#ffffff12;border-color:#b9cef639;color:#c7d9f2}
+.demo-action-hint--dark strong{color:#f4f8ff}
+.demo-action-hint--dark .demo-action-hint-icon{background:#ffffff25}
+.case-cat .demo-action-hint{margin-inline:13px;margin-bottom:0}
+.case-form .demo-action-hint{margin-top:8px}
+.case-guide .demo-action-hint{margin-top:15px}
+.case-creative .demo-action-hint{margin:9px 12px 1px;font-size:11px}
+.news-save-hint{text-align:center;color:#6182b0;font-size:11px;font-weight:660;line-height:1.5;margin:8px 0 0}
+.news-channel-option:has(input:checked){border-color:#bad3f3;box-shadow:inset 3px 0 0 #3786da}
+.news-channel-option:focus-within{outline:2px solid #3684d6;outline-offset:2px}
+.news-channel-option:active,.dpo-pill:active,.guide-switch:active,.form-tab:active,.pay-bank:active,.quick-reply:active{filter:brightness(.95)}
+@media(max-width:900px){
+  .project.case.feature:not(.case-news){display:grid!important;grid-template-columns:minmax(0,1fr)!important}
+  .case-news.feature{display:block!important}
+  .case .copy h3{line-height:1.2;letter-spacing:-.043em;overflow-wrap:anywhere}
+  .news-flow-grid,.news-platform-stack{display:grid;grid-template-columns:minmax(0,1fr)!important}
+  .news-platform{padding-left:26px}
+  .news-platform:before,.news-platform-stack:before{display:block}
+  .news-distribution-results[data-revealed="false"]{display:none!important}
+  .news-distribution-results[data-revealed="true"]{display:block;min-width:0}
+}
+@media(max-width:700px){
+  html,body{max-width:100%;overflow-x:clip}
+  .wrap{width:100%;padding-inline:clamp(13px,4vw,21px)}
+  .nav{width:calc(100% - 20px);top:7px;margin:8px auto;padding:11px 12px;border-radius:16px;gap:8px;min-width:0}
+  .nav strong{font-size:clamp(12px,3.5vw,15px);white-space:nowrap}
+  .nav-links{font-size:clamp(10px,2.9vw,12px);gap:clamp(5px,2vw,11px);white-space:nowrap;flex-wrap:nowrap}
+  .hero{min-height:unset;padding:74px 16px 65px}
+  .hero h1{font-size:clamp(37px,9vw,58px);letter-spacing:-.058em;line-height:1.16;overflow-wrap:break-word}
+  .hero .lead{font-size:16px;line-height:1.65}
+  .hero .btn{max-width:100%;white-space:normal;text-align:center;line-height:1.45}
+  .section{padding-block:clamp(34px,9vw,58px)}
+  .section h2{font-size:clamp(29px,7.9vw,44px)!important;line-height:1.21!important;letter-spacing:-.044em!important;overflow-wrap:break-word;hyphens:auto}
+  .case .copy h3{font-size:clamp(25px,7.5vw,36px)!important;line-height:1.23!important}
+  .news-distribution-heading h4{font-size:clamp(31px,8vw,44px)!important;line-height:1.17!important;letter-spacing:-.045em!important}
+  .section h2,.case .copy h3,.news-distribution-heading h4{padding-block:.08em .11em}
+  :where(.project,.case,.case-visual,.case-copy,.form-visual,.pay-visual,.guide-visual,.news-author-panel,.news-distribution,.news-platform,.news-platform-card){min-width:0;max-width:100%;overflow-wrap:break-word}
+  .projects,.sales-solutions-grid,.sales-offers-grid,.engineering-grid,.services-grid,.trust-grid{grid-template-columns:minmax(0,1fr)!important}
+  .case-grid{gap:17px}
+  .case,.project{border-radius:19px}
+  .case .copy{padding:22px 19px}
+  .case .copy p,.section>.muted{font-size:15px;line-height:1.7}
+  .case-chips,.case .links,.workflow,.sales-path-bridge{flex-wrap:wrap}
+  .sales-education-bridge>a{margin-left:0!important;width:100%;white-space:normal;text-align:center}
+  .sales-education-bridge>div{min-width:0;flex:1 1 190px}
+  .sales-path-bridge a{margin-left:0!important;white-space:normal}
+  .sales-steps span{flex:1 1 100%;min-width:0}
+  .sales-offer,.sales-solution-card{min-width:0;min-height:0;padding:20px}
+  .news-flow-grid{gap:15px}
+  .case-news .news-distribution{padding:21px 12px}
+  .news-distribution-heading{padding:0 2px;gap:9px;margin-bottom:17px}
+  .news-distribution-eyebrow{max-width:100%;font-size:10px;letter-spacing:.09em;white-space:normal}
+  .news-author-panel{border-radius:15px}
+  .news-author-top{padding:13px;gap:8px;min-width:0}
+  .news-author-icon{width:30px;height:30px;flex:0 0 30px}
+  .news-author-top>div{min-width:0;overflow-wrap:anywhere}
+  .news-author-body{padding:13px}
+  .news-author-body>textarea{font-size:16px;width:100%;max-width:100%;min-width:0;line-height:1.55}
+  .news-media-caption,.news-channels-label{flex-wrap:wrap;align-items:start;gap:5px;line-height:1.5}
+  .news-media-caption span,.news-channels-label span{font-size:11px}
+  .news-attachment-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .news-attachment-strip>div{padding:4px;min-width:0}
+  .news-attach-thumb{height:clamp(52px,18vw,81px)}
+  .news-attachment-strip small{font-size:10px!important;line-height:1.35;overflow-wrap:anywhere}
+  .news-channel-option{min-height:64px;padding:10px;gap:9px}
+  .news-channel-option input{flex:0 0 19px;width:19px;height:19px}
+  .news-channel-option>span:nth-last-child(2){min-width:0;overflow-wrap:anywhere}
+  .news-channel-option small{font-size:11px!important;line-height:1.4}
+  .news-publish-action{min-height:52px;font-size:13px;line-height:1.35;padding:12px}
+  .news-platform-stack{grid-template-columns:minmax(0,1fr)!important;gap:13px}
+  .news-platform-card{padding:10px;min-width:0;overflow:hidden}
+  .news-vk-media,.news-tg-media{height:clamp(175px,51vw,255px)}
+  .news-dzen-preview{grid-template-columns:minmax(0,1fr)!important}
+  .news-dzen-media{height:clamp(160px,48vw,230px)}
+  .news-social-text p,.news-tg-body p,.news-dzen-preview p{font-size:12px!important;line-height:1.6}
+  .news-sim-link{flex-wrap:wrap;align-items:start}
+  .news-sim-link span{flex:1 1 100%;min-width:0;overflow-wrap:anywhere;word-break:break-word}
+  .news-sim-link button{margin-left:auto;min-height:35px}
+  .news-results-top{flex-wrap:wrap;gap:8px}
+  .news-distribution-results[data-revealed="true"]{margin-top:15px}
+  .case-dpo .dpo-showcase{padding:14px 11px;min-height:0}
+  .dpo-stage-window{height:clamp(445px,116vw,520px)!important;min-height:clamp(445px,116vw,520px)!important;max-width:100%}
+  .dpo-scene{padding:clamp(12px,3.5vw,19px)!important;min-width:0}
+  .dpo-scene.is-active{overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;padding-bottom:50px!important}
+  .dpo-scene .dpo-screen-top{flex-wrap:wrap;gap:7px}
+  .dpo-screen-brand{flex-wrap:wrap;min-width:0;font-size:12px!important;overflow-wrap:anywhere}
+  .dpo-screen-brand small{font-size:9px!important}
+  .dpo-stage-controls{flex-wrap:wrap;gap:8px}
+  .dpo-stage-current{max-width:calc(100% - 98px)}
+  .dpo-stage-current b{white-space:normal;overflow-wrap:anywhere}
+  .dpo-stage-controls-actions button{width:44px;height:42px}
+  .dpo-pills{flex-wrap:nowrap;overflow-x:auto;max-width:100%;scrollbar-width:thin;padding-bottom:6px}
+  .dpo-pill{flex:0 0 auto;min-height:42px;white-space:nowrap;font-size:12px;padding:9px 13px}
+  .dpo-feature{padding:13px 14px;overflow-wrap:anywhere}
+  .dpo-operator-path{margin:13px 0;gap:5px}
+  .dpo-operator-path>span{padding:6px 7px;font-size:10px}
+  .dpo-chat-input{font-size:11px}
+  .form-visual,.pay-visual,.guide-visual{padding:16px!important;min-width:0}
+  .form-tabs{flex-wrap:wrap;gap:3px;padding:4px}
+  .form-tab{flex:1 1 28%;min-width:0;min-height:44px;white-space:normal;font-size:12px}
+  .form-branch,.branch-area,.mock-field,.mail-stage{min-width:0;max-width:100%;overflow-wrap:anywhere}
+  .pay-window{max-width:100%;width:100%;min-width:0;padding:16px}
+  .pay-inputs{grid-template-columns:minmax(0,1fr)}
+  .pay-inputs .pay-full{grid-column:1/-1}
+  .pay-bank{min-height:48px;min-width:0;line-height:1.3;flex-wrap:wrap}
+  .pay-recipient,.pay-recipient b,.pay-recipient span{overflow-wrap:anywhere}
+  .status-list span{align-items:start;flex-wrap:wrap;gap:4px 12px}
+  .status-list b{max-width:100%;text-align:left;overflow-wrap:anywhere}
+  .guide-switches{max-width:100%;overflow-x:auto}
+  .guide-switch{min-height:42px}
+  .guide-live,.guide-live iframe{width:100%;max-width:100%;min-width:0}
+  .guide-visual-bottom,.creative-chapters,.creative-frame-bottom{flex-wrap:wrap}
+  .creative-chapter{flex:1 1 30%;min-width:0;min-height:42px}
+  .freshman-mini-content{min-width:0}
+  .freshman-mini-links{flex-direction:column;align-items:stretch}
+  .freshman-mini-links a{white-space:normal;max-width:100%;overflow-wrap:anywhere;text-align:center}
+  .contact-stage{border-radius:22px;padding:20px 16px}
+  .contact-stage-main{grid-template-columns:minmax(0,1fr);gap:20px}
+  .contact-stage-copy h2{font-size:clamp(36px,9vw,50px)!important;line-height:1.22!important}
+  .contact-stage .contact-options{grid-template-columns:minmax(0,1fr)}
+  .contact-stage-primary{min-height:50px;white-space:normal;text-align:center}
+  .contact-stage .contact-option{min-width:0;overflow-wrap:anywhere}
+  .contact-stage .contact-option strong{font-size:clamp(17px,5vw,24px)}
+  .about-profile{padding:22px 18px;border-radius:23px}
+  .profile-head>div{min-width:0;max-width:100%}
+  .experience-stamp{width:100%;max-width:100%;gap:10px}
+  .experience-stamp small{max-width:100%;overflow-wrap:anywhere}
+  .cinematic-scene{min-height:clamp(500px,146vw,630px)}
+  .cinematic-content{padding:55px 20px 95px}
+  .cinematic-content h2{font-size:clamp(30px,7.8vw,43px);line-height:1.18;overflow-wrap:anywhere}
+  .cinematic-content p{font-size:14px;line-height:1.65}
+  .cinematic-actions,.cinematic-bottom{flex-wrap:wrap;gap:9px}
+  .portfolio-wayback{bottom:calc(env(safe-area-inset-bottom) + 89px);z-index:115;max-width:calc(100vw - 24px)}
+  .dk-lead-assistant{right:12px;bottom:calc(env(safe-area-inset-bottom) + 10px)}
+  .dk-la-panel{width:min(392px,calc(100vw - 24px));max-height:calc(100dvh - 100px);min-height:0}
+  .dk-la-form input:not([type=checkbox]),.dk-la-form textarea,.dk-la-followup textarea{font-size:16px}
+}
+@media(max-width:380px){
+  .nav{width:calc(100% - 14px);padding:10px 9px}
+  .nav strong{font-size:12px}.nav-links{gap:6px;font-size:10px}
+  .news-author-top{flex-wrap:wrap}.news-author-draft{margin-left:auto}
+  .news-platform{padding-left:22px}
+  .dpo-stage-window{height:485px!important;min-height:485px!important}
+  .dk-la-tasks{grid-template-columns:minmax(0,1fr)}
+}
+@media(hover:none) and (pointer:coarse){
+  .dpo-pill,.form-tab,.guide-switch,.pay-bank,.quick-reply,.news-channel-option{touch-action:manipulation}
+  .news-channel-option:has(input:checked){background:#f3f8ff}
+}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов<br><span class="gradient">Автоматизирую бизнес</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Направления работы ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#contact">Обсудить свою задачу ↗</a></p></header>
@@ -932,7 +1086,7 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
         <div class="bubble visitor">Как узнать уникальный код?</div>
         <div class="bubble bot">Мяу! Помогу найти код по ФИО и разобраться в конкурсных списках. Выбирай нужную задачу ниже 🐾</div>
       </div>
-      <div class="quick-replies" aria-label="Примеры сценариев бота">
+      <p class="demo-action-hint" role="note"><span class="demo-action-hint-icon" aria-hidden="true">↗</span><span><strong>Попробуй сам:</strong> нажми на команду — кот ответит по выбранному сценарию.</span></p><div class="quick-replies" aria-label="Примеры сценариев бота">
         <button class="quick-reply is-active" type="button" data-bot="admission" aria-pressed="true">Поиск по ФИО</button>
         <button class="quick-reply" type="button" data-bot="lists" aria-pressed="false">Конкурсные списки</button>
         <button class="quick-reply" type="button" data-bot="scores" aria-pressed="false">Баллы и экзамены</button>
@@ -1031,7 +1185,7 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
   <div class="visual-caption visual-caption-dark">Интерактивные макеты интерфейсов · реальные продукты доступны по ссылкам</div>
 </div>
 <div class="copy case-copy"><div class="tag">Сайт под ключ · AI · Интеграции</div><h3 id="dpo-h">Экосистема ДПО<br>Больше, чем сайт</h3><p>Моя комплексная разработка: интерфейсы, каталог программ, расписание, новости, AI-помощник «Сова», живой оператор, выдача лекционных материалов по коду, панель PRO, серверная логика и интеграции.</p>
-<div class="dpo-pills" role="group" aria-label="Изучить возможности экосистемы">
+<p class="demo-action-hint" role="note"><span class="demo-action-hint-icon" aria-hidden="true">↗</span><span><strong>Нажимай на вкладки:</strong> «Сова», «Оператор», «Лекции» и другие — слева сменится экран.</span></p><div class="dpo-pills" role="group" aria-label="Изучить возможности экосистемы">
 <button class="dpo-pill is-active" type="button" data-feature="overview" aria-pressed="true">Обзор</button><button class="dpo-pill" type="button" data-feature="owl" aria-pressed="false">🦉 Сова</button><button class="dpo-pill" type="button" data-feature="human" aria-pressed="false">Оператор</button><button class="dpo-pill" type="button" data-feature="lecture" aria-pressed="false">Лекции</button><button class="dpo-pill" type="button" data-feature="news" aria-pressed="false">Новости</button><button class="dpo-pill" type="button" data-feature="admin" aria-pressed="false">PRO</button><button class="dpo-pill" type="button" data-feature="schedule" aria-pressed="false">Расписание</button></div>
 <div class="dpo-feature" aria-live="polite"><strong id="dpo-feature-title">Экосистема ДПО — всё связано</strong><p id="dpo-feature-desc">Начните с обзора платформы, затем переключайте вкладки: слева появятся интерфейсы «Совы», оператора, лекций, новостей, PRO и расписания.</p><a id="dpo-feature-link" href="https://ranepa-dpo39.ru/" target="_blank" rel="noopener noreferrer">Посмотреть в работе ↗</a><a id="dpo-publishing-walkthrough" class="dpo-publishing-walkthrough" href="#news" hidden>Посмотреть публикацию в трёх каналах ↓</a></div>
 <p class="muted">Не оставляю сотрудников один на один с новой системой: разрабатываю наглядные инструкции и сопровождаю внедрение от первого входа до результата.</p>
@@ -1049,7 +1203,7 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
     <div class="demo-title"><span class="tiny-spark">◉</span><span>Заявка на обучение<small>Западный филиал Президентской академии</small></span></div>
     <div class="demo-progress"><span></span></div>
     <div class="demo-eyebrow">01 / ВЫБЕРИТЕ ЦЕЛЬ ОБРАЩЕНИЯ</div>
-    <div class="form-tabs" role="group" aria-label="Выберите сценарий формы">
+    <p class="demo-action-hint" role="note"><span class="demo-action-hint-icon" aria-hidden="true">↗</span><span><strong>Переключай варианты:</strong> вкладки меняют вопросы и следующий шаг.</span></p><div class="form-tabs" role="group" aria-label="Выберите сценарий формы">
       <button class="form-tab is-active" type="button" data-branch="enroll" aria-pressed="true">Записаться</button>
       <button class="form-tab" type="button" data-branch="consult" aria-pressed="false">Подобрать</button>
       <button class="form-tab" type="button" data-branch="company" aria-pressed="false">Для компании</button>
@@ -1084,7 +1238,7 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
 <article class="project feature case case-payment reveal" id="payment" aria-labelledby="payment-heading">
 <div class="copy case-copy"><div class="tag">Онлайн-оплата · UX · Платёжные маршруты</div><h3 id="payment-heading">Получил договор<br>Выбрал банк · Оплатил</h3><p>Разработал отдельный платёжный маршрут для слушателей: четыре официальных банка, реквизиты организации, переход к банковской форме и понятная инструкция для тех, кто оплачивает впервые.</p><p class="muted">Сайт не собирает карточные данные. Слушатель проверяет получателя, указывает сумму и сведения по договору, а платёж подтверждает уже в банке.</p><div class="case-chips"><span>Т-Банк</span><span>Сбер</span><span>Альфа-Банк</span><span>ВТБ</span></div><div class="links"><a class="link" href="https://ranepa-dpo39.ru/pay/" target="_blank" rel="noopener noreferrer">Открыть настоящую оплату ↗</a><a class="link" href="https://ranepa-dpo39.ru/students.html" target="_blank" rel="noopener noreferrer">Инструкция слушателям ↗</a></div></div>
 <div class="pay-visual"><div class="pay-window"><div class="pay-top"><span><i></i> ДЕМО ОПЛАТЫ</span><span>02 / 03</span></div>
-<div id="pay-input-step"><h4>Выберите свой банк</h4><div class="pay-banks" role="group" aria-label="Демонстрационные банки">
+<div id="pay-input-step"><h4>Выберите свой банк</h4><p class="demo-action-hint" role="note"><span class="demo-action-hint-icon" aria-hidden="true">↗</span><span><strong>Нажимай на банк:</strong> можно изменить реквизиты и смоделировать оплату, без списания денег.</span></p><div class="pay-banks" role="group" aria-label="Демонстрационные банки">
 <button type="button" data-bank="t" class="pay-bank is-active" aria-pressed="true"><b class="bank-icon b-t">Т</b>Т-Банк</button>
 <button type="button" data-bank="sber" class="pay-bank" aria-pressed="false"><b class="bank-icon b-sber">✓</b>Сбер</button>
 <button type="button" data-bank="alfa" class="pay-bank" aria-pressed="false"><b class="bank-icon b-alfa">А</b>Альфа</button>
@@ -1097,7 +1251,7 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
 
 <article class="project feature case case-news" id="news" aria-labelledby="news-heading">
  <div class="news-distribution" id="news-distribution-board">
-  <div class="news-distribution-heading"><div><span class="news-distribution-eyebrow"><span class="news-live-light"></span> КОНТЕНТ ДЛЯ НЕСКОЛЬКИХ КАНАЛОВ</span><h4>Одна новость<br><span>Три площадки</span></h4><p>Создайте новость один раз, отметьте каналы и посмотрите, как выглядят итоговые публикации.</p></div></div>
+  <div class="news-distribution-heading"><div><span class="news-distribution-eyebrow"><span class="news-live-light"></span> КОНТЕНТ ДЛЯ НЕСКОЛЬКИХ КАНАЛОВ</span><h4>Одна новость<br><span>Три площадки</span></h4><p>Попробуй сам: отредактируй новость, выбери площадки и нажми «Сохранить и показать публикации».</p></div></div>
   <div class="news-flow-grid">
    <div class="news-author-panel">
     <div class="news-author-top"><span class="news-author-icon">▤</span><div><b>Редактор новостей</b><small>Западный филиал Президентской академии</small></div><span class="news-author-draft">Черновик</span></div>
@@ -1115,13 +1269,13 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
        <div><span class="news-attach-thumb news-attach-tg"><img src="assets/demo-news-tg.webp" alt="Добро пожаловать в Западный филиал Президентской академии" loading="lazy"></span><small class="news-attachment-label"><img src="assets/brand-telegram.webp" class="brand-logo" alt="" aria-hidden="true" width="13" height="13" decoding="async"> Telegram · обложка</small></div>
        <div><span class="news-attach-thumb news-attach-dzen"><img src="assets/demo-news-dzen.webp" alt="Кадр из видеоролика для Дзена" loading="lazy"></span><small class="news-attachment-label"><img src="assets/brand-dzen.png" class="brand-logo" alt="" aria-hidden="true" width="13" height="13" decoding="async"> Дзен · видео</small></div>
      </div>
-     <div class="news-channels-label">КАНАЛЫ ПУБЛИКАЦИИ <span>Выберите получателей</span></div>
-     <div class="news-publish-options">
+     <div class="news-channels-label">КАНАЛЫ ПУБЛИКАЦИИ <span>Нажми для выбора</span></div>
+     <p class="demo-action-hint" role="note"><span class="demo-action-hint-icon" aria-hidden="true">↗</span><span><strong>Выбери площадки:</strong> нажми на карточку, чтобы включить или выключить её.</span></p><div class="news-publish-options">
        <label class="news-channel-option" for="news-publish-vk"><input type="checkbox" id="news-publish-vk" checked><span class="news-channel-icon news-icon-vk"><img src="assets/brand-vk.svg" class="brand-logo" alt="" aria-hidden="true" width="32" height="32" decoding="async"></span><span><b>ВКонтакте</b><small>Пост с изображением «Очная форма»</small></span><span class="news-option-check">✓</span></label>
        <label class="news-channel-option" for="news-publish-tg"><input type="checkbox" id="news-publish-tg" checked><span class="news-channel-icon news-icon-tg"><img src="assets/brand-telegram.webp" class="brand-logo" alt="" aria-hidden="true" width="32" height="32" decoding="async"></span><span><b>Telegram</b><small>Пост с обложкой Академии</small></span><span class="news-option-check">✓</span></label>
        <label class="news-channel-option" for="news-publish-dzen"><input type="checkbox" id="news-publish-dzen" checked><span class="news-channel-icon news-icon-dzen"><img src="assets/brand-dzen.png" class="brand-logo" alt="" aria-hidden="true" width="32" height="32" decoding="async"></span><span><b>Яндекс Дзен</b><small>Превью видеопубликации</small></span><span class="news-option-check">✓</span></label>
      </div>
-     <button type="button" class="news-publish-action" id="news-preview-button"><span>↗</span> Сохранить и показать публикации</button>
+     <button type="button" class="news-publish-action" id="news-preview-button" aria-describedby="news-save-hint"><span>↗</span> Сохранить и показать публикации</button><p class="news-save-hint" id="news-save-hint">↓ На телефоне результаты откроются ниже редактора, на компьютере — справа.</p>
      <button type="button" class="news-repeat-button" id="news-repeat-button" hidden>↺ Изменить выбор и повторить</button>
      <div class="news-demo-status" id="news-preview-result" aria-live="polite">Готово к демонстрации. Материалы появятся справа после нажатия.</div>
     </div>
@@ -1192,7 +1346,7 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
         <output class="creative-mini-time" id="creative-timer" for="creative-progress">00:00 / 00:10</output>
         <button type="button" class="creative-mini-button creative-mini-sound" id="creative-sound" aria-label="Выключить звук" aria-pressed="true"><span aria-hidden="true">♪</span></button>
       </div>
-      <div class="creative-chapters" aria-label="Этапы видеокреатива">
+      <p class="demo-action-hint demo-action-hint--dark" role="note"><span class="demo-action-hint-icon" aria-hidden="true">↗</span><span><strong>Выбери момент:</strong> 00:00, 00:04 и 00:08 перематывают ролик.</span></p><div class="creative-chapters" aria-label="Этапы видеокреатива">
         <button type="button" class="creative-chapter is-active" data-creative-seek="0" aria-pressed="true"><span>00:00</span> Хук</button>
         <button type="button" class="creative-chapter" data-creative-seek="4" aria-pressed="false"><span>00:04</span> Вовлечение</button>
         <button type="button" class="creative-chapter" data-creative-seek="8" aria-pressed="false"><span>00:08</span> Призыв</button>
@@ -1215,7 +1369,7 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
 <article class="project feature case case-guide reveal" id="guide" aria-labelledby="guide-h">
   <div class="guide-visual">
     <div class="live-head"><span class="live-pill"><span class="green-dot"></span> Живой проект</span><span>Инструкция для команды</span></div>
-    <div class="guide-switches" aria-label="Разделы реальной инструкции">
+    <p class="demo-action-hint demo-action-hint--dark" role="note"><span class="demo-action-hint-icon" aria-hidden="true">↗</span><span><strong>Выбери раздел:</strong> вкладки переключают живую инструкцию ниже.</span></p><div class="guide-switches" aria-label="Разделы реальной инструкции">
       <button type="button" class="guide-switch is-active" data-guide="need" aria-pressed="true">Выбрать задачу</button>
       <button type="button" class="guide-switch" data-guide="urgent" aria-pressed="false">МОЛНИЯ</button>
       <button type="button" class="guide-switch" data-guide="applications" aria-pressed="false">Заявки</button>
