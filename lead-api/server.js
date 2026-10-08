@@ -12,6 +12,8 @@ const configured=!!(TOKEN&&/^\d{5,20}$/.test(OWNER));
 const webhookSecret=configured?crypto.createHmac('sha256',TOKEN).update('portfolio-chat-webhook-v1').digest('hex'):null;
 const CHOICES=new Set(['Таргетированная реклама','Сайты и лендинги','AI-боты и ассистенты','Автоматизация заявок','CRM, API и интеграции','SEO и сопровождение','AI-видео и креативы','Образовательные проекты','Другая задача']);
 const sessions=new Map(),telegramMessages=new Map(),ipBuckets=new Map();
+const markerColors=['🔵','🟣','🟢','🟠','🟡','🔴','⚪️','🟤'];
+const DIRECT_USERNAME='dnk_pr03';
 const sessionLife=48*3600*1000;
 let globalRate={start:Date.now(),count:0},webhookRegistered=false;
 function sendJSON(res,status,data){
@@ -77,23 +79,53 @@ async function telegram(method,data){
  if(!r.ok||result.ok!==true)throw new Error('Telegram request failed');
  return result.result;
 }
-function adminLabel(s){return '💬 ПОРТФОЛИО · ЧАТ #'+s.id.slice(0,8).toUpperCase()}
+function clientTag(s){
+ // Short code + stable visual marker make simultaneous conversations distinguishable.
+ return s.id.slice(0,8).toUpperCase();
+}
+function markerFor(s){
+ const value=[...clientTag(s)].reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
+ return markerColors[value%markerColors.length];
+}
+function clientName(s){return s.name||'Посетитель без имени'}
+function adminLabel(s){return markerFor(s)+' ЧАТ #'+clientTag(s)+' · '+clientName(s)}
+function linkReply(msgId,s){
+ if(Number.isInteger(msgId)){s.botMessages.add(msgId);telegramMessages.set(msgId,s.id)}
+}
+function directDraft(s){
+ const short=(value,size)=>clean(value||'',size).replace(/[.!?\s]+$/u,'');
+ const first=s.messages.find(m=>m.by==='visitor')?.text||'';
+ const latest=s.messages.filter(m=>m.by==='visitor').slice(-1)[0]?.text||'';
+ const lastOwner=s.messages.filter(m=>m.by==='owner').slice(-1)[0]?.text||'';
+ const who=s.name?'Я '+short(s.name,70):'Я посетитель твоего портфолио';
+ const intro='Здравствуйте, Денис! '+who+', мы переписывались на сайте (чат #'+clientTag(s)+').';
+ const issue='Меня интересует «'+short(s.category,70)+'»; моя задача: '+short(first,190)+'.';
+ let followup='Продолжим общение здесь.';
+ if(lastOwner)followup='Последнее обсуждали: '+short(lastOwner,115)+'.';
+ else if(latest!==first)followup='Последнее уточнение: '+short(latest,115)+'.';
+ const draft=[intro,issue,followup].join('\n');
+ return {draft,url:'https://t.me/'+DIRECT_USERNAME+'?text='+encodeURIComponent(draft)};
+}
+function telegramKeyboard(s){
+ return {inline_keyboard:[[{text:'↗ Предложить переход в Telegram',callback_data:'handoff:'+s.id}]]};
+}
 async function notify(s,body,kind){
- const lines=[adminLabel(s),kind==='new'?'🆕 Новое обращение':'✉️ Новое сообщение посетителя',
+ const lines=[adminLabel(s),kind==='new'?'🆕 НОВЫЙ КЛИЕНТ':'✉️ ПРОДОЛЖЕНИЕ ДИАЛОГА',
   'Направление: '+s.category,
-  kind==='new'&&s.name?'Имя/компания: '+s.name:'',
-  kind==='new'&&s.contact?'Контакт: '+s.contact:'',
+  '👤 Имя / компания: '+clientName(s),
+  s.contact?'📲 Контакт: '+s.contact:'',
   'Сообщение:',body,
   '━━━━━━━━━━━━━━━━━━',
-  '↩️ Нажми «Ответить» на это сообщение: ответ появится у посетителя на сайте.'];
- const msg=await telegram('sendMessage',{chat_id:OWNER,text:lines.filter(Boolean).join('\n'),disable_web_page_preview:true});
- if(msg.message_id){s.botMessages.add(msg.message_id);telegramMessages.set(msg.message_id,s.id)}
+  '↩️ Нажми «Ответить» на ЭТО сообщение — ответ попадёт только в чат #'+clientTag(s)+'.',
+  'Ответы на следующие сообщения этого диалога тоже привязаны к этому клиенту.'];
+ const msg=await telegram('sendMessage',{chat_id:OWNER,text:lines.filter(Boolean).join('\n'),disable_web_page_preview:true,reply_markup:telegramKeyboard(s)});
+ linkReply(msg.message_id,s);
  return msg;
 }
 async function registerWebhook(){
  if(!configured)return;
  try{
-  await telegram('setWebhook',{url:PUBLIC_URL+'/telegram/webhook',secret_token:webhookSecret,allowed_updates:['message'],drop_pending_updates:false});
+  await telegram('setWebhook',{url:PUBLIC_URL+'/telegram/webhook',secret_token:webhookSecret,allowed_updates:['message','callback_query'],drop_pending_updates:false});
   webhookRegistered=true;
   console.log('Telegram webhook configured');
  }catch{
@@ -106,6 +138,28 @@ async function webhook(req,res){
  if(!configured){sendJSON(res,503,{ok:false});return}
  if(!timingMatch(req.headers['x-telegram-bot-api-secret-token'],webhookSecret)){sendJSON(res,403,{ok:false});return}
  let update;try{update=await readBody(req,26000)}catch{sendJSON(res,400,{ok:false});return}
+ // Inline button: only the account that owns the bot is authorized to issue invitations.
+ const callback=update&&update.callback_query;
+ if(callback){
+  const isOwner=String(callback.from?.id)===OWNER&&String(callback.message?.chat?.id)===OWNER;
+  const match=typeof callback.data==='string'?/^handoff:([0-9a-f-]{36})$/.exec(callback.data):null;
+  const s=isOwner&&match?sessions.get(match[1]):null;
+  let response='Эта беседа больше не активна.';
+  if(s&&Date.now()-s.updated<sessionLife){
+   if(s.handoffSeq===s.seq){
+    response='Приглашение уже отправлено. Клиент видит кнопку на сайте.';
+   }else{
+    const prepared=directDraft(s);
+    s.seq++;
+    s.messages.push({seq:s.seq,by:'system',kind:'telegram_invite',text:'Денис предлагает продолжить переписку в личном Telegram.',url:prepared.url,draft:prepared.draft,at:Date.now()});
+    if(s.messages.length>50)s.messages.shift();
+    s.updated=Date.now();s.handoffSeq=s.seq;
+    response='✓ Приглашение отправлено клиенту в чат #'+clientTag(s)+'.';
+   }
+  }
+  try{await telegram('answerCallbackQuery',{callback_query_id:callback.id,text:response,show_alert:false,cache_time:0})}catch{}
+  sendJSON(res,200,{ok:true});return;
+ }
  const message=update&&update.message;
  if(message&&String(message.chat?.id)===OWNER&&String(message.from?.id)===OWNER){
   const replyTo=message.reply_to_message?.message_id,sessionId=telegramMessages.get(replyTo);
@@ -116,8 +170,23 @@ async function webhook(req,res){
    s.messages.push({seq:s.seq,by:'owner',text,at:Date.now()});
    if(s.messages.length>50)s.messages.shift();
    s.updated=Date.now();
-   // Ack is deliberately not mapped to a session, so a reply must target the visitor alert.
-   telegram('sendMessage',{chat_id:OWNER,text:'✓ Ответ передан в чат #'+s.id.slice(0,8).toUpperCase()+'. Посетитель увидит его, когда откроет страницу (пока сеанс сохранён).'}).catch(()=>{});
+   // Accept a reply to ANY message in the same dialogue: visitor notices,
+   // the owner's own prior replies, and these confirmation messages.
+   linkReply(message.message_id,s);
+   try{
+    const ack=await telegram('sendMessage',{
+     chat_id:OWNER,
+     text:markerFor(s)+' ✓ Ответ доставлен в '+clientName(s)+' · чат #'+clientTag(s)+'.\n↩️ Можешь ответить и на это подтверждение, чтобы продолжить тот же разговор.',
+     reply_parameters:{message_id:message.message_id},
+     reply_markup:telegramKeyboard(s)
+    });
+    linkReply(ack.message_id,s);
+   }catch{
+    // Reply has already been queued for the site; failed confirmation is non-fatal.
+   }
+  }else if(message.reply_to_message&&text){
+   // Never silently redirect to another visitor if the referenced session expired.
+   try{await telegram('sendMessage',{chat_id:OWNER,text:'⚠️ Не удалось найти этот диалог — возможно, сервис перезапускался или сессия истекла. Ответ не отправлен никому. Попроси клиента написать снова.'})}catch{}
   }
  }
  sendJSON(res,200,{ok:true});
