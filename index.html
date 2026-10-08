@@ -170,6 +170,24 @@
 @media(max-width:900px){.sales-solutions-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sales-solution-card{min-height:335px}.sales-solutions-grid .sales-solution-card:last-child{grid-column:1/-1;min-height:260px}}
 @media(max-width:700px){.sales-solutions{padding-top:32px;padding-bottom:24px}.sales-section-head{flex-direction:column;align-items:flex-start;gap:6px}.sales-section-head>p{max-width:100%}.sales-solutions-grid{grid-template-columns:1fr}.sales-solutions-grid .sales-solution-card:last-child{grid-column:auto;min-height:unset}.sales-solution-card{min-height:unset;padding:22px}.sales-solution-icon{margin:20px 0 0}.sales-solution-card h3{font-size:24px}.sales-path-bridge{flex-wrap:wrap}.sales-path-bridge a{margin-left:22px}.hero .hero-inline-contact{margin-top:7px}}
 @media(prefers-reduced-motion:reduce){.sales-solution-card,.sales-solution-actions .sales-solution-quote{transition:none!important}}
+
+/* Evidence: transparent links to verifiable live work */
+.proof-showcase{margin-top:30px;margin-bottom:36px;border:1px solid #e4eaf2;border-radius:27px;background:linear-gradient(135deg,#f2f6fd,#f9fbfd);padding:clamp(20px,3vw,34px)}
+.proof-intro{display:flex;align-items:end;justify-content:space-between;gap:22px;margin-bottom:20px;flex-wrap:wrap}
+.proof-intro .eyebrow{font-size:10px;display:block;flex-basis:100%}
+.proof-intro h3{font-size:clamp(23px,3vw,33px);line-height:1.1;letter-spacing:-.045em;color:#29364e;margin:0}
+.proof-intro>p{max-width:390px;margin:0;font-size:13px;line-height:1.7;color:#738096}
+.proof-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.proof-link{min-width:0;background:#fff;border:1px solid #e6ebf3;border-radius:18px;padding:20px;display:flex;flex-direction:column;align-items:flex-start;gap:9px;transition:transform .25s,box-shadow .25s}
+.proof-link:hover{transform:translateY(-3px);box-shadow:0 12px 32px #20345212}
+.proof-type{color:#5980b1;letter-spacing:.1em;font-weight:800;font-size:10px;display:flex;align-items:center;gap:8px}
+.proof-status{width:8px;height:8px;display:inline-block;border-radius:50%;background:#55ae85;box-shadow:0 0 0 3px #55ae8520}
+.proof-link strong{font-size:16px;line-height:1.3;color:#2f3d55;letter-spacing:-.02em}
+.proof-link small{font-size:12px;line-height:1.6;color:#7f8ba0}
+.proof-arrow{margin-top:auto;padding-top:5px;color:#356bb0;font-size:12px;font-weight:750}
+.proof-link:focus-visible{outline:3px solid #7b9fdc;outline-offset:2px}
+@media(max-width:700px){.proof-showcase{margin-top:22px;padding:19px}.proof-links{grid-template-columns:1fr}.proof-link{padding:17px}.proof-intro{gap:8px}.proof-intro>p{max-width:100%}}
+@media(prefers-reduced-motion:reduce){.proof-link{transition:none}}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Контакт</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов.<br><span class="gradient">Автоматизирую бизнес.</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
@@ -202,6 +220,16 @@
 </section>
 <nav class="tour-strip wrap" id="journey" aria-label="Навигация по кейсам"><span>КЕЙСЫ:</span><a href="#creative">AI-видео и реклама</a><a href="#cinematic">AI-анимация</a><a href="#cat">Telegram-бот</a><a href="#dpo">Экосистема ДПО</a><a href="#form">Яндекс Форма</a><a href="#payment">Оплата</a><a href="#news">Новости</a><a href="#guide">Инструкции</a></nav>
 <section class="section wrap" id="work"><div class="eyebrow">Избранные работы</div><h2>Не концепты.<br>Реальные решения.</h2><p class="muted">Реальные проекты на стыке продвижения, контента, разработки и автоматизации. Смотрите видеокреативы, переходите в работающие сервисы и пробуйте интерактивные сценарии.</p>
+
+<div class="proof-showcase" id="proof" aria-labelledby="proof-heading">
+ <div class="proof-intro"><span class="eyebrow">Не обещания — проверьте сами</span><h3 id="proof-heading">Работающие проекты.<br>Открытые демонстрации.</h3><p>Вот продукты, которые можно открыть прямо сейчас. Демонстрационные экраны на этом сайте отдельно помечены — они не отправляют реальные заявки и платежи.</p></div>
+ <div class="proof-links">
+  <a href="https://ranepa-dpo39.ru/" target="_blank" rel="noopener noreferrer" class="proof-link"><span class="proof-type"><i class="proof-status"></i> ДЕЙСТВУЮЩИЙ САЙТ</span><strong>Экосистема дополнительного образования</strong><small>Программы, расписание, AI-помощник, новости и сервисы слушателя</small><span class="proof-arrow">Посмотреть ↗</span></a>
+  <a href="https://t.me/zapad_ranepa_cat_bot" target="_blank" rel="noopener noreferrer" class="proof-link"><span class="proof-type"><i class="proof-status"></i> TELEGRAM-БОТ</span><strong>Помощник приёмной комиссии</strong><small>Поиск информации, вопросы абитуриентов, конкурсные процедуры</small><span class="proof-arrow">Попробовать ↗</span></a>
+  <a href="https://forms.yandex.ru/cloud/6ac66e491f1eb55cd4148bc8/" target="_blank" rel="noopener noreferrer" class="proof-link"><span class="proof-type"><i class="proof-status"></i> РАБОЧАЯ ФОРМА</span><strong>Три сценария обращения в одном интерфейсе</strong><small>Запись на программу, подбор обучения и корпоративный запрос</small><span class="proof-arrow">Исследовать ↗</span></a>
+  <a href="https://aderpil21-source.github.io/cdo-staff-guide/" target="_blank" rel="noopener noreferrer" class="proof-link"><span class="proof-type"><i class="proof-status"></i> ИНТЕРАКТИВНОЕ РУКОВОДСТВО</span><strong>Как команда работает после запуска</strong><small>Пошаговые действия для редакторов, оператора и администраторов</small><span class="proof-arrow">Открыть ↗</span></a>
+ </div>
+</div>
 <div class="projects case-grid">
 
 <article class="project feature case case-cat reveal" id="cat" aria-labelledby="cat-h">
