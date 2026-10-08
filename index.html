@@ -223,8 +223,46 @@
 @media(max-width:960px){.sales-offers-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sales-offer:last-child{grid-column:1/-1;min-height:unset}.sales-offer{min-height:450px}}
 @media(max-width:700px){.sales-offers{padding-top:33px;padding-bottom:38px}.sales-offers-head{flex-direction:column;align-items:flex-start;gap:7px}.sales-offers-head>p{max-width:100%}.sales-offers-grid{grid-template-columns:1fr}.sales-offer:last-child{grid-column:auto}.sales-offer{min-height:unset;padding:24px}.sales-terms{flex-direction:column;align-items:flex-start}.sales-terms>a{width:100%;text-align:center}.sales-steps span{flex:1 0 42%}.sales-steps i{display:none}}
 @media(prefers-reduced-motion:reduce){.sales-offer{transition:none!important}}
+
+/* Client intake: lightweight mailto workflow, no tracking or backend */
+.brief-section{padding-top:62px;padding-bottom:67px}
+.brief-main{display:grid;grid-template-columns:.94fr 1.06fr;gap:clamp(22px,4vw,55px);align-items:center;background:radial-gradient(circle at 8% 19%,#405b953c,transparent 45%),linear-gradient(135deg,#161f31,#23344f 67%,#1c2741);border-radius:33px;padding:clamp(22px,4.5vw,53px);color:#fff;overflow:hidden}
+.brief-heading{min-width:0}
+.brief-heading>.eyebrow{color:#a6bee8;font-size:11px}
+.brief-heading h2{font-size:clamp(32px,4.1vw,53px);line-height:1.13;color:#fff;letter-spacing:-.058em;margin:21px 0}
+.brief-heading h2 span{color:#c6dcf9}
+.brief-heading p{color:#becbe0;line-height:1.75;font-size:15px;max-width:410px;margin:0}
+.brief-value-points{display:grid;gap:11px;margin-top:28px}
+.brief-value-points span{display:flex;align-items:center;gap:9px;font-size:12px;color:#d6e1f2}
+.brief-value-points i{font-style:normal;color:#9be0bd}
+.brief-form{background:#fff;border:1px solid #e9eff7;color:#26354b;border-radius:23px;padding:clamp(17px,2.7vw,26px);box-shadow:0 20px 70px #06102346;min-width:0}
+.brief-form-header{display:flex;align-items:center;gap:11px;margin-bottom:19px}
+.brief-form-header strong{font-size:15px;letter-spacing:-.025em;flex:1}
+.brief-form-header>span:last-child{font-size:11px;color:#8f9bad}
+.brief-dots{display:flex;gap:4px}.brief-dots i{display:block;width:7px;height:7px;border-radius:50%;background:#cad3e2}.brief-dots i:first-child{background:#809aca}
+.brief-form label{font-size:12px;font-weight:780;color:#3e4c60;display:block;margin:0 0 8px}
+.brief-form input,.brief-form select,.brief-form textarea{width:100%;border:1px solid #dce4ef;border-radius:12px;padding:12px 13px;margin:0 0 15px;background:#fbfcfe;color:#2f415a;font-family:inherit;font-size:13px;line-height:1.5;outline:0;transition:border-color .2s,box-shadow .2s}
+.brief-form textarea{resize:vertical;min-height:104px;max-height:240px;margin-bottom:4px}
+.brief-form input:focus,.brief-form select:focus,.brief-form textarea:focus{border-color:#7699d1;box-shadow:0 0 0 4px #7699d120}
+.brief-form textarea::placeholder,.brief-form input::placeholder{color:#9ba8b8}
+.brief-tip{font-size:11px;color:#8b9bae;margin-bottom:15px;line-height:1.4}
+.brief-fields{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.brief-fields>div{min-width:0}.brief-fields label{min-height:26px}.brief-fields input,.brief-fields select{margin-bottom:0}
+.brief-actions{display:flex;flex-direction:column;gap:9px;margin-top:20px}
+.brief-actions button{border:0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:770;border-radius:13px;padding:14px;transition:transform .2s,background .2s}
+.brief-actions button:hover{transform:translateY(-1px)}
+.brief-actions button[type=submit]{display:flex;justify-content:center;gap:10px;background:#263d69;color:#fff}
+.brief-actions button[type=submit]:hover{background:#34548b}
+.brief-actions button[type=button]{background:#eaf0f9;color:#375982}
+.brief-send-status{font-size:11px!important;line-height:1.6!important;color:#8f9bad!important;margin:11px 0 5px!important}
+.brief-send-status.is-error{color:#b34251!important}.brief-send-status.is-success{color:#2e856c!important}
+.brief-telegram{display:inline-block;margin-top:8px;font-weight:720;font-size:12px;color:#3766a8}
+.brief-form a:focus-visible,.brief-form button:focus-visible{outline:3px solid #7ca1de;outline-offset:3px}
+@media(max-width:900px){.brief-main{grid-template-columns:1fr;gap:27px}.brief-heading p{max-width:640px}.brief-value-points{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.brief-value-points span{align-items:flex-start}}
+@media(max-width:620px){.brief-section{padding-top:26px;padding-bottom:32px}.brief-main{padding:19px;border-radius:24px}.brief-heading h2{font-size:35px;margin:14px 0}.brief-value-points{grid-template-columns:1fr;margin-top:17px}.brief-form{padding:16px}.brief-fields{grid-template-columns:1fr}.brief-fields label{min-height:0}.brief-fields>div:first-child input{margin-bottom:5px}}
+@media(prefers-reduced-motion:reduce){.brief-actions button{transition:none}}
 </style></head><body>
-<nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Контакт</a></div></nav>
+<nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#brief">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов.<br><span class="gradient">Автоматизирую бизнес.</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
 <section class="section wrap sales-solutions" id="solutions" aria-labelledby="solutions-title">
   <div class="sales-section-head"><div><span class="eyebrow">Для руководителей и владельцев бизнеса</span><h2 id="solutions-title">Что нужно решить<br><span class="gradient">в вашей компании?</span></h2></div><p>Не обязательно разбираться в технологиях. Выберите задачу — я покажу, как её можно решить, и какие подобные системы уже создавал.</p></div>
@@ -508,6 +546,35 @@
     <div class="about-links"><a href="#work" class="btn btn-white">Пройти по кейсам ↗</a><a href="#contact" class="about-contact-link">Обсудить ваш проект →</a></div>
   </div>
   <div class="process-strip"><div><span>1</span>Разбираюсь в задаче</div><i>→</i><div><span>2</span>Проектирую сценарии</div><i>→</i><div><span>3</span>Запускаю систему</div><i>→</i><div><span>4</span>Обучаю команду</div></div>
+</section>
+
+<section class="section wrap brief-section" id="brief" aria-labelledby="brief-title">
+ <div class="brief-main">
+  <div class="brief-heading"><span class="eyebrow">Начать без сложного брифа</span><h2 id="brief-title">Расскажите задачу.<br><span>Я предложу маршрут решения.</span></h2><p>Не нужно разбираться в AI, рекламе или интеграциях. Достаточно описать, что сейчас не работает или что хотите улучшить. Мы начнём с масштаба задачи, а не с продажи ненужных функций.</p>
+   <div class="brief-value-points"><span><i aria-hidden="true">✓</i> Без регистрации</span><span><i aria-hidden="true">✓</i> Без автоматической отправки данных</span><span><i aria-hidden="true">✓</i> Можно начать с одной задачи</span></div>
+  </div>
+  <form class="brief-form" id="brief-form">
+    <div class="brief-form-header"><span class="brief-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>Короткий запрос на проект</strong><span>≈ 1 минута</span></div>
+    <label for="brief-service">Что вас интересует?</label>
+    <select id="brief-service" name="service">
+       <option value="Автоматизация обращений">Автоматизация обращений и процессов</option>
+       <option value="Привлечение заявок">Реклама и привлечение клиентов</option>
+       <option value="Цифровая система под ключ">Сайт и цифровая система под ключ</option>
+       <option value="AI-видео и креативы">AI-видео, контент и креативы</option>
+       <option value="Другая задача">Другая задача</option>
+    </select>
+    <label for="brief-goal">Какую задачу нужно решить?</label>
+    <textarea id="brief-goal" name="goal" maxlength="1200" rows="4" required placeholder="Например: обращения приходят из разных каналов, сотрудники вручную отвечают на одни и те же вопросы..." aria-describedby="brief-tip"></textarea>
+    <div id="brief-tip" class="brief-tip">Можно описать своими словами, даже без технических подробностей.</div>
+    <div class="brief-fields">
+      <div><label for="brief-organization">Компания или имя (необязательно)</label><input id="brief-organization" name="organization" type="text" maxlength="100" autocomplete="organization" placeholder="Как к вам обращаться"></div>
+      <div><label for="brief-horizon">Когда планируете начать?</label><select id="brief-horizon" name="horizon"><option value="Пока изучаю возможности">Пока изучаю возможности</option><option value="В ближайшее время">В ближайшее время</option><option value="После предварительной оценки">После оценки проекта</option></select></div>
+    </div>
+    <div class="brief-actions"><button id="brief-email" type="submit">Составить письмо и открыть почту <span aria-hidden="true">↗</span></button><button type="button" id="brief-copy">Скопировать запрос</button></div>
+    <p class="brief-send-status" id="brief-status" role="status" aria-live="polite">Ничего не отправляется автоматически. Вы сами решаете, отправлять письмо или сообщение.</p>
+    <a class="brief-telegram" href="https://t.me/dnk_pr03" target="_blank" rel="noopener noreferrer">Предпочитаете Telegram? Открыть переписку ↗</a>
+  </form>
+ </div>
 </section>
 <section class="section wrap contact-section" id="contact"><div class="eyebrow">На связи</div><h2>Обсудим задачу.<br><span class="gradient">Найдём решение.</span></h2><p class="muted">Расскажите о проекте, процессе или идее. Я предложу, что можно автоматизировать и как сделать сервис удобным для людей.</p><div class="contact-options"><a class="contact-option" href="mailto:oxcidix@gmail.com"><span class="contact-icon">✉</span><span><small>Электронная почта</small><strong>oxcidix@gmail.com</strong></span><span class="contact-arrow">↗</span></a><a class="contact-option" href="https://t.me/dnk_pr03" target="_blank" rel="noopener noreferrer"><span class="contact-icon">↗</span><span><small>Telegram · быстрее всего</small><strong>Написать о проекте</strong></span><span class="contact-arrow">↗</span></a></div><p class="contact-note">Без формальностей и долгих брифов: можно начать с двух предложений о задаче.</p></section></main>
 <footer class="wrap footer"><span>© 2026 Денис Кац · Разработка и автоматизация</span><a href="mailto:oxcidix@gmail.com">oxcidix@gmail.com</a></footer>
@@ -990,5 +1057,70 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
      });
    }
  }
+})();
+</script><script>
+/* Intake only constructs a draft. No data is stored, transmitted or sent automatically. */
+(function(){
+ const form=document.getElementById('brief-form'),service=document.getElementById('brief-service'),goal=document.getElementById('brief-goal');
+ const org=document.getElementById('brief-organization'),horizon=document.getElementById('brief-horizon');
+ const status=document.getElementById('brief-status'),copy=document.getElementById('brief-copy');
+ if(!form||!service||!goal||!org||!horizon||!status||!copy)return;
+ function draft(){
+   const description=goal.value.trim();
+   const client=org.value.trim();
+   return 'Здравствуйте! Хочу обсудить проект.\n\n'
+     +'Направление: '+service.value+'\n'
+     +(client?'Компания / контакт: '+client+'\n':'')
+     +'Задача: '+(description||'Нужна консультация по возможностям')+'\n'
+     +'Планируемый старт: '+horizon.value+'\n\n'
+     +'Буду рад(а) получить предварительную оценку решения и следующих шагов.';
+ }
+ function notify(msg,type){
+   status.textContent=msg;
+   status.classList.remove('is-success','is-error');
+   if(type)status.classList.add('is-'+type);
+ }
+ function valid(){
+   if(!goal.value.trim()){
+     notify('Опишите задачу хотя бы в одном предложении — это поможет предметно ответить.','is-error'.replace('is-',''));
+     goal.focus();
+     return false;
+   }
+   return true;
+ }
+ function selectService(value){
+   if(!value)return;
+   const match=Array.from(service.options).find(opt=>opt.value===value);
+   if(match)service.value=match.value;
+ }
+ document.addEventListener('click',event=>{
+   const a=event.target.closest('a[href="#brief"]');if(!a)return;
+   if(a.dataset.offer){selectService(a.dataset.offer);return;}
+   const source=a.closest('[data-solution]');
+   if(source){selectService({leads:'Привлечение заявок',automation:'Автоматизация обращений',ecosystem:'Цифровая система под ключ'}[source.dataset.solution]);}
+ });
+ form.addEventListener('submit',event=>{
+   event.preventDefault();if(!valid())return;
+   const subject=encodeURIComponent('Запрос на проект: '+service.value);
+   const body=encodeURIComponent(draft());
+   const url='mailto:oxcidix@gmail.com?subject='+subject+'&body='+body;
+   notify('Открываю почтовое приложение. Отправку письма нужно подтвердить самостоятельно.','success');
+   window.location.href=url;
+ });
+ copy.addEventListener('click',async()=>{
+   if(!valid())return;
+   const msg=draft();
+   try{
+     if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(msg)}
+     else {
+       const tmp=document.createElement('textarea');
+       tmp.value=msg;tmp.setAttribute('readonly','');
+       tmp.style.position='fixed';tmp.style.opacity='0';document.body.appendChild(tmp);
+       tmp.select();const ok=document.execCommand('copy');tmp.remove();
+       if(!ok)throw new Error('Clipboard unavailable');
+     }
+     notify('Запрос скопирован. Теперь его можно вставить в письмо или Telegram.','success');
+   }catch(e){notify('Не получилось скопировать автоматически. Используйте кнопку отправки письма или скопируйте описание вручную.','error');}
+ });
 })();
 </script></body></html>
