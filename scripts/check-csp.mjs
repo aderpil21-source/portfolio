@@ -19,6 +19,12 @@ for (let i=0;i<scripts.length;i++) {
  if (!directive('script-src').includes(hash)) throw new Error('Script #'+(i+1)+' not CSP-authorized; update its hash');
  new vm.Script(scripts[i][2], {filename:'inline-'+(i+1)+'.js'});
 }
+const assistantScript=fs.readFileSync('assets/lead-chat.js','utf8').replace(/\r\n/g,'\n');
+if(!html.includes('<script src="assets/lead-chat.js" defer></script>'))throw new Error('Contact assistant must load its protected local script');
+if(!directive('script-src').includes("'self'")||!directive('script-src').includes('https://challenges.cloudflare.com'))throw new Error('Turnstile script is disallowed by CSP');
+if(!directive('frame-src').includes('https://challenges.cloudflare.com')||!directive('connect-src').includes('https://challenges.cloudflare.com'))throw new Error('Turnstile resources are disallowed by CSP');
+if(!assistantScript.includes('initTurnstile()')||!assistantScript.includes('turnstileToken'))throw new Error('Missing Turnstile client integration');
+new vm.Script(assistantScript,{filename:'assets/lead-chat.js'});
 for (let i=0;i<styleBlocks.length;i++) {
  if (!directive('style-src').includes(sha(styleBlocks[i][1])))
   throw new Error('Style block #'+(i+1)+' not CSP-authorized; update its hash');
