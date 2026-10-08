@@ -1730,7 +1730,7 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
       <button type="button" class="dk-la-close" id="dk-la-close" aria-label="Закрыть помощника" title="Закрыть">×</button>
     </header>
     <div class="dk-la-body" id="dk-la-body">
-      <div class="dk-la-greeting" id="dk-la-greeting"><span class="dk-la-greeting-icon">✦</span><div><b>Привет! Что нужно сделать?</b><p>Помогу выбрать направление и передать задачу Денису. Выбери вариант или расскажи своими словами.</p></div></div>
+      <div class="dk-la-greeting" id="dk-la-greeting"><span class="dk-la-greeting-icon">✦</span><div><b>Здравствуйте! Чем могу помочь?</b><p>Помогу выбрать направление и передать задачу Денису. Выберите направление или расскажите о задаче своими словами.</p></div></div>
       <div class="dk-la-section-label" id="dk-la-section-label">ВЫБЕРИ ЗАДАЧУ</div>
       <div class="dk-la-tasks" id="dk-la-tasks" aria-label="Восемь направлений услуг">
         <button type="button" data-la-task="Таргетированная реклама"><span>↗</span>Реклама и заявки</button>
@@ -1742,14 +1742,14 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
         <button type="button" data-la-task="AI-видео и креативы"><span>▶</span>AI-видео / креативы</button>
         <button type="button" data-la-task="Образовательные проекты"><span>◈</span>Вуз / образование</button>
       </div>
-      <button type="button" class="dk-la-custom" id="dk-la-custom">Нет в списке? Опишу свою задачу →</button>
+      <button type="button" class="dk-la-custom" id="dk-la-custom">Другая задача? Опишу своими словами →</button>
       <div class="dk-la-answer" id="dk-la-answer" aria-live="polite" hidden>
         <div class="dk-la-choice">Вы выбрали: <b id="dk-la-choice-label"></b><button type="button" id="dk-la-change-choice">Изменить</button></div>
         <p id="dk-la-answer-text"></p>
         <form class="dk-la-form" id="dk-la-form">
           <label for="dk-la-message">Что нужно сделать?</label>
           <textarea id="dk-la-message" name="message" required minlength="12" maxlength="1500" rows="3" placeholder="Например: нужна автоматизация заявок с сайта и Telegram. Сейчас менеджер отвечает вручную."></textarea>
-          <label for="dk-la-contact">Контакт для связи, если закроешь сайт <small>Необязательно</small></label>
+          <label for="dk-la-contact">Контакт для ответа после посещения сайта <small>Необязательно</small></label>
           <input id="dk-la-contact" name="contact" type="text" maxlength="130" autocomplete="off" placeholder="@telegram, email или телефон">
           <label for="dk-la-name">Имя / компания <small>Необязательно</small></label>
           <input id="dk-la-name" name="name" type="text" maxlength="90" autocomplete="name" placeholder="Как к тебе обращаться">
@@ -1789,15 +1789,15 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
  const api=(document.querySelector('meta[name="portfolio-leads-api"]')?.getAttribute('content')||'').trim().replace(/\/$/,'');
  const KEY='portfolio_telegram_session_v1';
  const replies={
-  'Таргетированная реклама':'Продвижение: аудитории, стратегия, креативы и обработка заявок. Расскажи, что нужно рекламировать.',
-  'Сайты и лендинги':'Сайт под ключ: структура, дизайн, формы, оплата, хостинг и поддержка. Нужен новый или доработка?',
-  'AI-боты и ассистенты':'AI-помощник для сайта или Telegram, ответы, запись, сопровождение клиентов. Где приходят вопросы?',
+  'Таргетированная реклама':'Продвижение: аудитории, стратегия, креативы и обработка заявок. Расскажите, какой продукт нужно продвигать.',
+  'Сайты и лендинги':'Сайт под ключ: структура, дизайн, формы, оплата, хостинг и поддержка. Нужен новый сайт или доработка существующего?',
+  'AI-боты и ассистенты':'AI-помощник для сайта или Telegram, ответы, запись, сопровождение клиентов. Откуда сейчас поступают вопросы?',
   'Автоматизация заявок':'Формы, документы, уведомления, оплаты, CRM. Какие действия сотрудники сейчас выполняют вручную?',
-  'CRM, API и интеграции':'Интеграции между сайтом, ботом, CRM и сервисами. Какие системы требуется связать?',
-  'SEO и сопровождение':'Оптимизация поиска, скорости, хостинг, поддержка. Есть ли уже сайт?',
-  'AI-видео и креативы':'Рекламные видео, изображения, AI-постеры, посевы и контент. Что хотите запустить?',
-  'Образовательные проекты':'Системы для вузов и ДПО: абитуриенты, боты, расписания, запись на программы. Какой процесс тормозит?',
-  'Другая задача':'Расскажи свою задачу простыми словами — подберём решение.'
+  'CRM, API и интеграции':'Интеграции между сайтом, ботом, CRM и сервисами. Какие системы нужно связать?',
+  'SEO и сопровождение':'Оптимизация поиска, скорости, хостинг, поддержка. У вас уже есть сайт?',
+  'AI-видео и креативы':'Рекламные видео, изображения, AI-постеры, посевы и контент. Что планируете запустить?',
+  'Образовательные проекты':'Системы для вузов и ДПО: абитуриенты, боты, расписания, запись на программы. Какой процесс нуждается в улучшении?',
+  'Другая задача':'Опишите задачу простыми словами — подберём решение.'
  };
  let category='',session=null,last=0,seen=new Set(),timer=0,polling=false,expired=false;
  const note=(target,text,kind)=>{target.textContent=text;target.dataset.state=kind||''};
@@ -1807,7 +1807,7 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
  function show(open){root.dataset.open=String(open);panel.hidden=!open;launch.setAttribute('aria-expanded',String(open));if(open){close.focus({preventScroll:true});if(session)poll()}else{stop();launch.focus({preventScroll:true})}}
  launch.addEventListener('click',()=>show(panel.hidden));close.addEventListener('click',()=>show(false));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)show(false)});
- function select(v){category=v;choices.querySelectorAll('[data-la-task]').forEach(b=>{const active=b.dataset.laTask===v;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active))});el('dk-la-choice-label').textContent=v==='Другая задача'?'Своя задача':v;el('dk-la-answer-text').textContent=replies[v]||replies['Другая задача'];answer.hidden=false;note(status,'Опиши задачу. После отправки ответ Дениса придёт прямо в этот чат.');send.textContent='Отправить Денису в Telegram →';scrollInner()}
+ function select(v){category=v;choices.querySelectorAll('[data-la-task]').forEach(b=>{const active=b.dataset.laTask===v;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active))});el('dk-la-choice-label').textContent=v==='Другая задача'?'Своя задача':v;el('dk-la-answer-text').textContent=replies[v]||replies['Другая задача'];answer.hidden=false;note(status,'Опишите задачу. Ответ Дениса появится в этом чате.');send.textContent='Отправить Денису в Telegram →';scrollInner()}
  choices.addEventListener('click',e=>{const b=e.target.closest('[data-la-task]');if(b)select(b.dataset.laTask)});
  el('dk-la-custom').addEventListener('click',()=>select('Другая задача'));
  el('dk-la-change-choice').addEventListener('click',()=>{category='';answer.hidden=true;choices.querySelectorAll('button').forEach(b=>b.classList.remove('is-active'))});
@@ -1830,8 +1830,8 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
  form.addEventListener('submit',async e=>{
   e.preventDefault();
   const payload={category:category||'Другая задача',message:msg.value.trim(),contact:contact.value.trim(),name:name.value.trim(),website:el('dk-la-website').value.trim(),consent:consent.checked};
-  if(payload.message.length<12){note(status,'Напиши хотя бы 12 символов, чтобы объяснить задачу.','error');msg.focus();return}
-  if(!payload.consent){note(status,'Подтверди согласие на передачу обращения.','error');consent.focus();return}
+  if(payload.message.length<12){note(status,'Опишите задачу хотя бы в одном предложении.','error');msg.focus();return}
+  if(!payload.consent){note(status,'Подтвердите согласие на передачу обращения.','error');consent.focus();return}
   send.disabled=true;note(status,'Передаю задачу в Telegram…');
   try{const out=await request('/api/chat/start',payload);if(!out.sessionId||!out.sessionKey)throw Error('Invalid session');session={id:out.sessionId,key:out.sessionKey};try{sessionStorage.setItem(KEY,JSON.stringify(session))}catch{};seen.clear();last=0;messages.replaceChildren();bubble({seq:1,by:'visitor',text:payload.message});chatMode();note(liveStatus,'✓ Сообщение доставлено Денису. Ожидаем ответа…');msg.value='';consent.checked=false;poll();}
   catch{note(status,'Отправка не подтверждена. Пожалуйста, напиши Денису через кнопку личного Telegram ниже.','error');}
