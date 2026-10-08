@@ -764,9 +764,36 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
 .news-attachment-label .brand-logo{width:13px;height:13px;display:inline-block}
 .brand-text-label{display:inline-flex!important;align-items:center;gap:5px}
 .brand-text-label .brand-logo{width:16px;height:16px}
+
+/* Typography safety: keep Cyrillic diacritics, descenders and gradient glyphs
+   completely inside the paint area, including multi-line wrapping on mobile. */
+.section h2{line-height:1.17;letter-spacing:-.048em;overflow-wrap:break-word}
+:is(.sales-section-head>div,.sales-offers-head>div,.contact-stage-copy){min-width:0}
+:is(.sales-section-head h2,.sales-offers-head h2,.contact-stage-copy h2){
+  line-height:1.23;
+  letter-spacing:-.045em;
+  padding-block:.08em .11em;
+  overflow:visible;
+  overflow-wrap:break-word;
+}
+:is(.sales-section-head h2,.sales-offers-head h2)>.gradient,
+.contact-stage-copy h2>span{
+  padding-block:.08em .11em;
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+/* Maintain comfortable spacing on compact screens where headlines wrap. */
+@media(max-width:700px){
+  :is(.sales-section-head h2,.sales-offers-head h2,.contact-stage-copy h2){
+    line-height:1.22;
+    padding-block:.1em .13em;
+  }
+}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Заказать</a></div></nav>
-<main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов<br><span class="gradient">Автоматизирую бизнес</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#contact">Обсудить свою задачу ↗</a></p></header>
+<main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов<br><span class="gradient">Автоматизирую бизнес</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Направления работы ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#contact">Обсудить свою задачу ↗</a></p></header>
 <section class="section wrap sales-solutions" id="solutions" aria-labelledby="solutions-title">
   <div class="sales-section-head"><div><span class="eyebrow">Для руководителей и владельцев бизнеса</span><h2 id="solutions-title">Что нужно решить<br><span class="gradient">в вашей компании?</span></h2></div><p>Не обязательно разбираться в технологиях. Выберите задачу — я покажу, как её можно решить, и какие подобные системы уже создавал.</p></div>
   <div class="sales-solutions-grid">
