@@ -88,10 +88,13 @@
 .cinematic-scene.is-finished .cinematic-progress i{transform:scaleX(1)}
 @media(max-width:700px){.cinematic-section{padding-top:12px;padding-bottom:20px}.cinematic-scene{min-height:460px;border-radius:23px}.cinematic-top{padding:24px 21px 0}.cinematic-content{padding:60px 21px 100px}.cinematic-content h2{font-size:clamp(36px,8vw,48px)}.cinematic-content p{font-size:15px;max-width:470px}.cinematic-bottom{padding:0 20px 20px}.cinematic-progress{flex-basis:60px;width:60px}}
 @media(max-width:440px){.cinematic-time{display:none}.cinematic-actions{gap:8px}.cinematic-primary,.cinematic-replay{font-size:12px;padding:12px}.cinematic-scene{min-height:490px}.cinematic-bottom>span:first-child{max-width:240px;font-size:10px}}
+.cinematic-scene.is-finished .cinematic-video{animation:cinematic-still-life 16s ease-in-out infinite alternate}
+@keyframes cinematic-still-life{from{transform:scale(1.01)}to{transform:scale(1.055)}}
+@media(max-width:700px),(prefers-reduced-motion:reduce){.cinematic-scene.is-finished .cinematic-video{animation:none!important}}
 @media(prefers-reduced-motion:reduce){.cinematic-primary,.cinematic-replay,.cinematic-progress i{transition:none!important}}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Контакт</a></div></nav>
-<main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Сложные процессы.<br><span class="gradient">Простые решения.</span></h1><p class="lead">Объединяю маркетинг и технологии: таргетированная реклама, посевы, контент и AI-креативы, сайты, SEO, боты и автоматизация бизнес-процессов под ключ.</p><div class="actions"><a class="btn" href="#journey">Начать экскурсию ↓</a><a class="btn secondary" href="https://t.me/dnk_pr03" target="_blank" rel="noopener">Обсудить задачу</a></div><p class="hero-subnote">От первой заявки до работы сотрудников — проектирую весь маршрут.</p></header><nav class="tour-strip wrap" id="journey" aria-label="Навигация по кейсам"><span>КЕЙСЫ:</span><a href="#creative">AI-видео и реклама</a><a href="#cat">Telegram-бот</a><a href="#dpo">Экосистема ДПО</a><a href="#form">Яндекс Форма</a><a href="#payment">Оплата</a><a href="#news">Новости</a><a href="#guide">Инструкции</a></nav>
+<main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Сложные процессы.<br><span class="gradient">Простые решения.</span></h1><p class="lead">Объединяю маркетинг и технологии: таргетированная реклама, посевы, контент и AI-креативы, сайты, SEO, боты и автоматизация бизнес-процессов под ключ.</p><div class="actions"><a class="btn" href="#journey">Начать экскурсию ↓</a><a class="btn secondary" href="https://t.me/dnk_pr03" target="_blank" rel="noopener">Обсудить задачу</a></div><p class="hero-subnote">От первой заявки до работы сотрудников — проектирую весь маршрут.</p></header><nav class="tour-strip wrap" id="journey" aria-label="Навигация по кейсам"><span>КЕЙСЫ:</span><a href="#creative">AI-видео и реклама</a><a href="#cinematic">AI-анимация</a><a href="#cat">Telegram-бот</a><a href="#dpo">Экосистема ДПО</a><a href="#form">Яндекс Форма</a><a href="#payment">Оплата</a><a href="#news">Новости</a><a href="#guide">Инструкции</a></nav>
 <section class="section wrap" id="work"><div class="eyebrow">Избранные работы</div><h2>Не концепты.<br>Реальные решения.</h2><p class="muted">Реальные проекты на стыке продвижения, контента, разработки и автоматизации. Смотрите видеокреативы, переходите в работающие сервисы и пробуйте интерактивные сценарии.</p>
 <div class="projects case-grid">
 
@@ -579,7 +582,7 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
               window.matchMedia('(max-width: 700px)').matches ||
               Boolean(navigator.connection&&navigator.connection.saveData);
- function load(){const src=video.querySelector('source');if(src&&src.dataset.src&&!src.src){src.src=src.dataset.src;video.load();}}
+ function load(){const src=video.querySelector('source');if(src&&src.dataset.src&&!src.hasAttribute('src')){src.setAttribute('src',src.dataset.src);video.load();}}
  function start(replayFromStart){
    load();
    if(replayFromStart){try{video.currentTime=0}catch(e){}}
