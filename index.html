@@ -586,6 +586,21 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
 .dk-la-new-chat{border:0;background:transparent;color:#7b8fa9;padding:8px;cursor:pointer;font-size:11px;font-weight:700}
 .dk-la-chat button:focus-visible,.dk-la-live-tg:focus-visible{outline:3px solid #91baf2;outline-offset:3px}
 @media(max-width:600px){.dk-la-messages{max-height:165px}}
+
+/* Personal invitation to Telegram, triggered by owner's inline action in Telegram */
+.dk-la-chat-id{display:inline-block;margin-left:4px;color:#557cac;font-size:10px;letter-spacing:.025em;font-weight:800}
+.dk-la-invite{width:100%;max-width:100%;border:1px solid #c6def7;background:linear-gradient(145deg,#ecf5ff,#e4eefc);border-radius:16px;padding:14px 12px;display:grid;gap:9px;box-shadow:0 10px 26px #2d65a912}
+.dk-la-invite-header{display:flex;align-items:center;gap:8px;color:#294d81;font-size:12px;font-weight:830}
+.dk-la-invite-header i{font-style:normal;display:grid;place-items:center;width:25px;height:25px;border-radius:9px;background:#cfe2fc;color:#3170c2;font-size:17px}
+.dk-la-invite>p{color:#5d7595;line-height:1.6;font-size:11px;margin:0}
+.dk-la-invite-preview{background:#fff;border:1px solid #d6e2f4;border-radius:10px;padding:10px}
+.dk-la-invite-preview strong{font-size:9px;font-weight:850;letter-spacing:.08em;color:#7290b4;display:block;margin-bottom:7px}
+.dk-la-invite-preview p{font-size:10px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;color:#45627d}
+.dk-la-invite-go{display:block;text-align:center;padding:11px 9px;background:#2d74b9;color:#fff;border-radius:10px;font-size:11px;font-weight:800}
+.dk-la-invite-go:hover{background:#205c99}
+.dk-la-invite-hint{font-size:9px;color:#7893ad;line-height:1.5}
+.dk-la-invite-go:focus-visible{outline:3px solid #6ea6ee;outline-offset:3px}
+.dk-la-live-tg.is-invited{background:#cfe8ff;border-color:#95c5ef;color:#245a99}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#brief">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов.<br><span class="gradient">Автоматизирую бизнес.</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
@@ -1755,7 +1770,7 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
           <input id="dk-la-name" name="name" type="text" maxlength="90" autocomplete="name" placeholder="Как к тебе обращаться">
           <div class="dk-la-honeypot" aria-hidden="true"><label for="dk-la-website">Ваш сайт</label><input id="dk-la-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
           <label class="dk-la-consent" for="dk-la-consent"><input id="dk-la-consent" name="consent" type="checkbox" required><span>Согласен передать указанные мной данные Денису для ответа на мой запрос. <a href="#dk-la-privacy" id="dk-la-privacy-link">Как используются данные?</a></span></label>
-          <p id="dk-la-privacy" class="dk-la-privacy" hidden>Данные используются для ответа на твою задачу, передаются через Telegram и не публикуются на сайте. Не указывай пароли, реквизиты карт и чувствительные данные. Обработка Telegram осуществляется на условиях сервиса. Сообщения хранятся временно в памяти сервера до 48 часов после последнего сообщения; при перезапуске сервиса история может потеряться. Не передавайте пароли, финансовые данные и конфиденциальные сведения.</p>
+          <p id="dk-la-privacy" class="dk-la-privacy" hidden>Данные используются для ответа на твою задачу, передаются через Telegram и не публикуются на сайте. Не указывай пароли, реквизиты карт и чувствительные данные. Обработка Telegram осуществляется на условиях сервиса. По вашему решению для перехода в личный Telegram будет предложен черновик из 2–3 предложений по переписке; его можно проверить и отредактировать перед отправкой. Сообщения хранятся временно в памяти сервера до 48 часов после последнего сообщения; при перезапуске сервиса история может потеряться. Не передавайте пароли, финансовые данные и конфиденциальные сведения.</p>
           <button type="submit" id="dk-la-send" class="dk-la-submit">Скопировать запрос и открыть Telegram ↗</button>
           <div class="dk-la-status" id="dk-la-status" role="status" aria-live="polite">Отправка напрямую появится после подключения бота.</div>
           <a class="dk-la-direct" href="https://t.me/dnk_pr03" target="_blank" rel="noopener noreferrer">Или написать Денису напрямую ↗</a>
@@ -1763,11 +1778,11 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
 
       </div>
       <div class="dk-la-chat" id="dk-la-chat" hidden>
-        <div class="dk-la-chat-head"><span class="dk-la-online-dot"></span><div><b>Диалог с Денисом</b><small>Отвечаю через Telegram — ответ появится прямо здесь</small></div></div>
+        <div class="dk-la-chat-head"><span class="dk-la-online-dot"></span><div><b>Диалог с Денисом <span class="dk-la-chat-id" id="dk-la-chat-id"></span></b><small id="dk-la-chat-subtitle">Отвечаю через Telegram — ответ появится прямо здесь</small></div></div>
         <div class="dk-la-messages" id="dk-la-messages" role="log" aria-live="polite" aria-relevant="additions"></div>
         <form id="dk-la-followup" class="dk-la-followup"><label for="dk-la-followup-text">Продолжить разговор</label><div><textarea id="dk-la-followup-text" rows="2" minlength="2" maxlength="1400" placeholder="Ваш вопрос..."></textarea><button id="dk-la-followup-send" type="submit" aria-label="Отправить сообщение">➤</button></div></form>
         <p class="dk-la-live-status" id="dk-la-live-status" role="status" aria-live="polite">Проверяем ответы...</p>
-        <a class="dk-la-live-tg" href="https://t.me/dnk_pr03" target="_blank" rel="noopener noreferrer">↗ Перейти в личный Telegram к Денису</a>
+        <a class="dk-la-live-tg" id="dk-la-live-tg" href="https://t.me/dnk_pr03" target="_blank" rel="noopener noreferrer">↗ Перейти в личный Telegram к Денису</a>
         <button class="dk-la-new-chat" type="button" id="dk-la-new-chat">+ Новый разговор</button>
       </div>
     </div>
@@ -1818,8 +1833,56 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
     const out=await r.json().catch(()=>({ok:false,error:'Нет ответа'}));if(!r.ok||!out.ok){const err=new Error(out.error||'Ошибка отправки');err.status=r.status;throw err}return out;
   }finally{clearTimeout(t)}
  }
- function bubble(m){if(seen.has(m.seq))return;seen.add(m.seq);last=Math.max(last,m.seq);const n=document.createElement('div');n.className='dk-la-msg';n.dataset.from=m.by==='owner'?'owner':'visitor';const k=document.createElement('small');k.textContent=m.by==='owner'?'Денис · Telegram':'Вы · сайт';const p=document.createElement('span');p.textContent=m.text;n.append(k,p);messages.append(n);if(messages.children.length>50)messages.firstChild.remove();scrollInner()}
- function chatMode(){el('dk-la-greeting').hidden=true;choices.hidden=true;el('dk-la-section-label').hidden=true;el('dk-la-custom').hidden=true;answer.hidden=true;chat.hidden=false;scrollInner()}
+ function bubble(m){
+  if(seen.has(m.seq))return;
+  seen.add(m.seq);last=Math.max(last,m.seq);
+  const isInvitation=m.kind==='telegram_invite'&&m.by==='system';
+  if(isInvitation){
+    // The server constructs an official t.me/<username>?text= link; never trust arbitrary redirect URLs.
+    let url=null;
+    try{const parsed=new URL(m.url);if(parsed.protocol==='https:'&&parsed.hostname==='t.me'&&parsed.pathname==='/dnk_pr03'&&parsed.searchParams.has('text'))url=parsed.href}catch{}
+    const card=document.createElement('div');card.className='dk-la-invite';
+    const heading=document.createElement('div');heading.className='dk-la-invite-header';
+    const icon=document.createElement('i');icon.textContent='↗';
+    const label=document.createElement('span');label.textContent='Денис приглашает в Telegram';
+    heading.append(icon,label);
+    const explanation=document.createElement('p');explanation.textContent='Можно продолжить общение в личной переписке. Мы уже подготовили короткое сообщение, чтобы тебе не пришлось повторять задачу.';
+    card.append(heading,explanation);
+    if(typeof m.draft==='string'&&m.draft.length){
+      const preview=document.createElement('div');preview.className='dk-la-invite-preview';
+      const caption=document.createElement('strong');caption.textContent='ВАШЕ ГОТОВОЕ СООБЩЕНИЕ';
+      const body=document.createElement('p');body.textContent=m.draft;
+      preview.append(caption,body);card.appendChild(preview);
+    }
+    if(url){
+      const open=document.createElement('a');open.className='dk-la-invite-go';
+      open.href=url;open.target='_blank';open.rel='noopener noreferrer';
+      open.textContent='Перейти в чат с Денисом в Telegram ↗';
+      card.appendChild(open);
+      const staticLink=el('dk-la-live-tg');
+      if(staticLink){staticLink.href=url;staticLink.classList.add('is-invited');staticLink.textContent='↗ Перейти в Telegram с готовым сообщением';}
+    }
+    const hint=document.createElement('small');hint.className='dk-la-invite-hint';
+    hint.textContent='Telegram откроет личный чат с черновиком. Его можно изменить; сообщение не отправится без твоего подтверждения.';
+    card.appendChild(hint);
+    messages.appendChild(card);
+  }else{
+    const n=document.createElement('div');n.className='dk-la-msg';n.dataset.from=m.by==='owner'?'owner':'visitor';
+    const k=document.createElement('small');k.textContent=m.by==='owner'?'Денис · Telegram':'Вы · сайт';
+    const p=document.createElement('span');p.textContent=m.text;
+    n.append(k,p);messages.append(n);
+  }
+  if(messages.children.length>50)messages.firstChild.remove();
+  scrollInner();
+}
+ function chatMode(){
+  el('dk-la-greeting').hidden=true;choices.hidden=true;el('dk-la-section-label').hidden=true;
+  el('dk-la-custom').hidden=true;answer.hidden=true;chat.hidden=false;
+  const id=el('dk-la-chat-id'),description=el('dk-la-chat-subtitle');
+  if(id&&session?.id)id.textContent='#'+session.id.slice(0,8).toUpperCase();
+  if(description)description.textContent=session?.name?'Ваш разговор с Денисом · '+session.name:'Ответы из Telegram появляются прямо здесь';
+  scrollInner();
+}
  async function poll(){
   if(!session||polling||panel.hidden||document.hidden||expired)return;polling=true;
   try{const out=await request('/api/chat/poll',{sessionId:session.id,sessionKey:session.key,after:last});for(const m of out.messages||[])bubble(m);note(liveStatus,'Соединено с Telegram · ожидаем ответ Дениса');}
@@ -1833,12 +1896,15 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
   if(payload.message.length<12){note(status,'Опишите задачу хотя бы в одном предложении.','error');msg.focus();return}
   if(!payload.consent){note(status,'Подтвердите согласие на передачу обращения.','error');consent.focus();return}
   send.disabled=true;note(status,'Передаю задачу в Telegram…');
-  try{const out=await request('/api/chat/start',payload);if(!out.sessionId||!out.sessionKey)throw Error('Invalid session');session={id:out.sessionId,key:out.sessionKey};try{sessionStorage.setItem(KEY,JSON.stringify(session))}catch{};seen.clear();last=0;messages.replaceChildren();bubble({seq:1,by:'visitor',text:payload.message});chatMode();note(liveStatus,'✓ Сообщение доставлено Денису. Ожидаем ответа…');msg.value='';consent.checked=false;poll();}
+  try{const out=await request('/api/chat/start',payload);if(!out.sessionId||!out.sessionKey)throw Error('Invalid session');session={id:out.sessionId,key:out.sessionKey,name:payload.name||''};try{sessionStorage.setItem(KEY,JSON.stringify(session))}catch{};seen.clear();last=0;messages.replaceChildren();bubble({seq:1,by:'visitor',text:payload.message});chatMode();note(liveStatus,'✓ Сообщение доставлено Денису. Ожидаем ответа…');msg.value='';consent.checked=false;poll();}
   catch{note(status,'Отправка не подтверждена. Пожалуйста, напиши Денису через кнопку личного Telegram ниже.','error');}
   finally{send.disabled=false}
  });
  followup.addEventListener('submit',async e=>{e.preventDefault();if(!session||expired)return;const text=followupText.value.trim();if(text.length<2)return;followupButton.disabled=true;note(liveStatus,'Отправляем…');try{const out=await request('/api/chat/message',{sessionId:session.id,sessionKey:session.key,text});bubble({seq:out.seq,by:'visitor',text});followupText.value='';note(liveStatus,'✓ Сообщение доставлено Денису.');}catch{note(liveStatus,'Сообщение не дошло. Повторите или перейдите в личный Telegram.','error')}finally{followupButton.disabled=false}});
- el('dk-la-new-chat').addEventListener('click',()=>{if(!window.confirm('Начать новый разговор?'))return;stop();session=null;expired=false;seen.clear();last=0;messages.replaceChildren();try{sessionStorage.removeItem(KEY)}catch{};chat.hidden=true;el('dk-la-greeting').hidden=false;choices.hidden=false;el('dk-la-section-label').hidden=false;el('dk-la-custom').hidden=false;answer.hidden=true;scrollInner()});
+ el('dk-la-new-chat').addEventListener('click',()=>{if(!window.confirm('Начать новый разговор?'))return;stop();session=null;expired=false;seen.clear();last=0;messages.replaceChildren();
+  const directLink=el('dk-la-live-tg');
+  if(directLink){directLink.href='https://t.me/dnk_pr03';directLink.textContent='↗ Перейти в личный Telegram к Денису';directLink.classList.remove('is-invited');}
+  try{sessionStorage.removeItem(KEY)}catch{};chat.hidden=true;el('dk-la-greeting').hidden=false;choices.hidden=false;el('dk-la-section-label').hidden=false;el('dk-la-custom').hidden=false;answer.hidden=true;scrollInner()});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else if(session&&!panel.hidden)poll()});
  try{const v=JSON.parse(sessionStorage.getItem(KEY)||'null');if(v&&typeof v.id==='string'&&typeof v.key==='string'&&v.id.length>20&&v.key.length>30)session=v}catch{}
  if(session){chatMode();if(!panel.hidden)poll()}
