@@ -287,6 +287,116 @@
 .confidence-question summary:focus-visible{outline:3px solid #7396ce;outline-offset:-3px}
 @media(max-width:700px){.confidence-section{padding-top:18px;padding-bottom:18px}.confidence-intro{flex-direction:column;align-items:flex-start;gap:9px}.confidence-intro>p{max-width:100%}.confidence-question summary{padding:18px 15px;font-size:14px}.confidence-question>p{margin:0 15px 19px}}
 @media(prefers-reduced-motion:reduce){.confidence-question summary span:last-child{transition:none!important}}
+
+/* DPO interactive product scenes. One scene per tab, no duplicate entry animations. */
+.case-dpo .dpo-showcase{min-height:515px;padding:clamp(20px,2.2vw,28px) clamp(15px,2.3vw,23px) 18px;background:radial-gradient(ellipse at 17% 8%,#e3e9ff,#e8edf6 64%,#dce6f2)}
+.dpo-browser-bar{border:1px solid #ffffffbf;height:31px}
+.dpo-browser-bar b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.dpo-browser-secure{font-style:normal;font-size:10px;color:#45a981;margin-left:5px}
+.dpo-stage-window{height:362px;min-height:362px;position:relative;isolation:isolate;overflow:hidden;border-radius:0 0 16px 16px;box-shadow:0 20px 46px #2939592c;border:1px solid #ffffff20;border-top:0;background:#1b2a49}
+.dpo-scene{position:absolute!important;inset:0;z-index:0;overflow:hidden;padding:24px;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(0,10px,0) scale(.991);transition:opacity .33s ease,transform .42s cubic-bezier(.22,1,.36,1),visibility 0s linear .42s}
+.dpo-scene.is-active{z-index:1;opacity:1;visibility:visible;pointer-events:auto;transform:translate3d(0,0,0) scale(1);transition:opacity .3s ease,transform .4s cubic-bezier(.22,1,.36,1),visibility 0s linear 0s}
+.dpo-scene-home.mock-site{border-radius:0;margin:0;min-height:unset;background:radial-gradient(ellipse at 100% 40%,#56639090,transparent 65%),linear-gradient(120deg,#182440,#29365c)}
+.dpo-scene-home .mock-site-title{font-size:clamp(21px,2.65vw,31px);margin:28px 0 11px}.dpo-home-watermark{position:absolute;right:14px;bottom:13px;color:#c8d8fe85;font-weight:770;letter-spacing:.14em;font-size:8px}
+.dpo-scene .dpo-screen-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.dpo-screen-brand{font-size:13px;font-weight:800;letter-spacing:-.03em;display:flex;align-items:center;gap:7px}
+.dpo-screen-brand small{font-size:8px;letter-spacing:.11em;font-weight:770;opacity:.63;margin-left:3px}
+.dpo-avatar{width:29px;height:29px;border-radius:9px;display:grid;place-items:center;background:#ffffff24;font-size:16px}
+.dpo-live-mark{font-size:9px;font-weight:750;display:flex;gap:6px;align-items:center;white-space:nowrap}
+.dpo-live-mark i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#7cdfb3;box-shadow:0 0 0 4px #7cdfb319}
+.dpo-stage-mini-pill{font-size:9px;letter-spacing:.09em;font-weight:800;white-space:nowrap;padding:7px 9px;background:#ffffff20;border-radius:9px}
+.dpo-scene-owl{color:#f2f7ff;background:radial-gradient(circle at 85% 20%,#6384bc77,transparent 50%),linear-gradient(138deg,#1c3158,#233a65)}
+.dpo-conversation{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-top:17px}
+.dpo-chat-bubble{max-width:89%;padding:10px 13px;border-radius:14px;font-size:11px;line-height:1.55;box-shadow:0 4px 12px #09162b1b}
+.dpo-chat-agent{background:#ffffffed;color:#435471;border-bottom-left-radius:4px}
+.dpo-chat-bubble b{display:block;font-size:9px;color:#3d69ae;margin-bottom:3px}
+.dpo-chat-client{background:#6f96d3;color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+.dpo-chat-suggestions{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+.dpo-chat-suggestions span{font-size:10px;background:#ffffff17;border:1px solid #ffffff37;padding:7px 10px;border-radius:10px}
+.dpo-chat-input{position:absolute;bottom:16px;left:24px;right:24px;border:1px solid #ffffff3d;background:#ffffff12;color:#ccd9f1;font-size:10px;padding:11px;border-radius:11px;display:flex;align-items:center;justify-content:space-between;gap:7px}
+.dpo-chat-input i{font-style:normal;color:#fff}
+.dpo-scene-operator{background:radial-gradient(circle at 50% 0,#f5f9ff,#e4ebf5 75%);color:#243751}
+.dpo-scene-operator .dpo-screen-brand small{color:#8194af;opacity:1}
+.dpo-scene-operator .dpo-live-mark{color:#478c6c}
+.dpo-operator-path{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin:24px 0 18px}
+.dpo-operator-path>span{background:#fff;border:1px solid #dbe5f4;border-radius:10px;padding:10px;font-size:11px;font-weight:700;color:#596e8d}
+.dpo-operator-path>i{font-style:normal;color:#7896c1}
+.dpo-operator-path .dpo-path-strong{background:#294b79;color:#fff;border-color:#294b79}
+.dpo-operator-messages{display:grid;gap:10px}
+.dpo-operator-question,.dpo-operator-answer{padding:10px 13px;background:white;border:1px solid #dce4f0;border-radius:12px;box-shadow:0 3px 12px #1b335010}
+.dpo-operator-question small,.dpo-operator-answer small{display:block;font-size:8px;letter-spacing:.1em;font-weight:800;color:#8fa0b6;margin-bottom:5px}
+.dpo-operator-question strong,.dpo-operator-answer strong{font-size:11px;line-height:1.4;font-weight:640;display:block}
+.dpo-operator-transfer{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:11px;background:#e0edf7;border:1px solid #d4e4f1;color:#346a91;font-size:11px}
+.dpo-operator-transfer>span{font-size:15px}.dpo-operator-transfer b{display:block;font-size:10px}.dpo-operator-transfer small{display:block;font-size:9px;margin-top:2px}
+.dpo-operator-answer{display:flex;align-items:center;gap:12px;margin-left:22px}
+.dpo-telegram-badge{width:32px;height:32px;flex:0 0 32px;border-radius:10px;display:grid;place-items:center;background:#e3effb;color:#3578b7;font-size:17px}
+.dpo-operator-bottom{position:absolute;bottom:11px;left:24px;color:#8c9bae;font-size:9px;display:flex;align-items:center;gap:6px}.dpo-operator-bottom i{width:6px;height:6px;background:#4cac84;border-radius:50%}
+.dpo-scene-lecture{background:radial-gradient(circle at 85% 85%,#4f84bf66,transparent 52%),linear-gradient(148deg,#203154,#17253f);color:white}
+.dpo-lecture-card{background:#ffffff14;border:1px solid #ffffff28;max-width:345px;margin:18px auto 0;border-radius:16px;padding:16px 19px;position:relative;box-shadow:0 16px 40px #07172e26;backdrop-filter:blur(8px)}
+.dpo-lecture-symbol{position:absolute;right:15px;top:14px;font-size:24px;color:#c4daffbb}
+.dpo-lecture-eyebrow{color:#a9c3ec;letter-spacing:.13em;font-size:8px;font-weight:820}
+.dpo-lecture-card h4{font-size:19px;line-height:1.18;margin:10px 0 7px;letter-spacing:-.05em}
+.dpo-lecture-card p{font-size:10px;color:#bccbe1;line-height:1.4;margin:0 0 11px}
+.dpo-lecture-code{display:flex;gap:6px}.dpo-lecture-code span{flex:1;text-align:center;background:#ffffffeb;color:#47628c;border-radius:7px;font-size:14px;font-weight:850;padding:4px 0}
+.dpo-lecture-button{display:flex;align-items:center;justify-content:center;gap:14px;border-radius:9px;background:#cddfff;color:#203e66;font-size:10px;font-weight:800;padding:10px;margin-top:10px}
+.dpo-lecture-footer,.dpo-editor-footer{display:flex;align-items:center;justify-content:center;gap:8px;font-size:9px;color:#b8d0ef;margin-top:14px}
+.dpo-lecture-footer i,.dpo-editor-footer i{font-style:normal;color:#91acd1}
+.dpo-scene-news{background:linear-gradient(145deg,#ecf2fa,#dce8f4);color:#263955}
+.dpo-scene-news .dpo-stage-mini-pill,.dpo-scene-admin .dpo-stage-mini-pill,.dpo-scene-schedule .dpo-stage-mini-pill{background:#dce7f6;color:#56739f}
+.dpo-editor{margin-top:18px;padding:14px;border-radius:13px;background:#fff;border:1px solid #d9e4f0;box-shadow:0 14px 35px #1a315417}
+.dpo-editor-field{border:1px solid #dfe8f2;border-radius:8px;padding:9px 10px}
+.dpo-editor-field small{display:block;font-size:8px;font-weight:800;letter-spacing:.1em;color:#8b99ac;margin-bottom:5px}
+.dpo-editor-field strong{font-size:11px;font-weight:720}
+.dpo-editor-blocks{display:flex;gap:12px;align-items:center;margin:10px 0}
+.dpo-editor-image{display:flex;flex-direction:column;align-items:center;justify-content:center;width:70px;height:40px;flex:0 0 70px;background:linear-gradient(120deg,#8098ba,#c1d3ea);border-radius:8px;color:#fff}
+.dpo-editor-image span{font-size:14px}.dpo-editor-image small{font-size:7px;letter-spacing:.12em}
+.dpo-editor-lines{display:grid;gap:6px;width:100%}.dpo-editor-lines span{height:5px;background:#dfe6ef;border-radius:5px}.dpo-editor-lines span:nth-child(2){width:88%}.dpo-editor-lines span:nth-child(3){width:66%}.dpo-editor-lines span:nth-child(4){width:75%}
+.dpo-editor-vk{display:flex;align-items:center;gap:9px;background:#eef5ff;border:1px solid #dce8fa;border-radius:9px;padding:8px}
+.dpo-editor-check{width:17px;height:17px;border-radius:5px;background:#2a74d8;display:grid;place-items:center;color:#fff;font-size:12px}
+.dpo-editor-vk>div{flex:1;min-width:0}.dpo-editor-vk b{font-size:10px;display:block}.dpo-editor-vk small{font-size:8px;display:block;color:#8092a9;margin-top:2px}
+.dpo-vk-symbol{font-size:11px;font-weight:850;color:#3972bd}
+.dpo-editor-save{display:flex;justify-content:center;gap:10px;background:#294b7c;color:#fff;padding:9px;border-radius:9px;font-size:10px;font-weight:790;margin-top:9px}
+.dpo-editor-footer{color:#547397;margin-top:11px}.dpo-editor-footer i{color:#7792b4}
+.dpo-scene-admin{background:#eaf0f7;color:#2a3a50}
+.dpo-admin-layout{display:flex;height:260px;margin-top:14px;border:1px solid #d6e0ed;background:white;border-radius:13px;overflow:hidden;box-shadow:0 12px 30px #112c4918}
+.dpo-admin-menu{flex:0 0 93px;background:#202e48;padding:11px 7px;display:flex;flex-direction:column;gap:7px}
+.dpo-admin-menu>span{font-size:13px;color:#8ea4c5;border-radius:7px;padding:9px 6px;display:flex;align-items:center;gap:7px}
+.dpo-admin-menu .active{background:#ffffff1b;color:#fff}
+.dpo-admin-menu small{font-size:9px;color:inherit}
+.dpo-admin-main{flex:1;min-width:0;padding:13px 12px}
+.dpo-admin-heading{display:flex;align-items:center;justify-content:space-between;gap:7px}
+.dpo-admin-heading b{font-size:10px}.dpo-admin-heading span{font-size:8px;background:#e6f0ff;border-radius:7px;color:#406aa7;padding:6px}
+.dpo-admin-block{border:1px solid #e2e7ef;background:#f7f9fc;margin-top:14px;border-radius:10px;padding:11px}
+.dpo-admin-block small{font-size:8px;color:#8b9caf;font-weight:770;letter-spacing:.1em}.dpo-admin-block b{display:block;font-size:11px;margin-top:7px}
+.dpo-admin-edit-lines{display:grid;gap:6px;margin-top:12px}.dpo-admin-edit-lines i{display:block;height:5px;background:#dee7f2;border-radius:5px}.dpo-admin-edit-lines i:nth-child(2){width:68%}.dpo-admin-edit-lines i:nth-child(3){width:81%}
+.dpo-admin-tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:10px}.dpo-admin-tools div{display:flex;flex-direction:column;align-items:center;gap:3px;border:1px solid #e3e9f1;border-radius:9px;padding:6px 3px}
+.dpo-admin-tools span{color:#5075ac;font-size:14px}.dpo-admin-tools b{font-size:9px;font-weight:670}
+.dpo-admin-status{font-size:8px;color:#748c9d;display:flex;gap:5px;align-items:center;margin-top:7px}.dpo-admin-status i{background:#4fa681;width:6px;height:6px;border-radius:50%}
+.dpo-scene-schedule{background:linear-gradient(145deg,#ecf1fa,#dfe8f5);color:#2d4565}
+.dpo-calendar{background:white;border-radius:14px;padding:16px 13px;margin-top:19px;box-shadow:0 15px 34px #1c3e6218;border:1px solid #e0e9f4}
+.dpo-calendar-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.dpo-calendar-top strong{font-size:12px}.dpo-calendar-top>span{font-size:8px;letter-spacing:.08em;color:#8f9db0}
+.dpo-calendar-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:13px}
+.dpo-calendar-day{display:flex;flex-direction:column;gap:7px;background:#f5f7fa;border-radius:10px;padding:7px;min-height:171px}
+.dpo-calendar-day>b{font-size:9px;color:#7489a8;text-align:center;padding:2px 0 4px}
+.dpo-calendar-class{border-radius:8px;background:#dbe8fc;border:1px solid #cbdcf7;padding:9px 6px;font-size:10px;color:#40649a;font-weight:710;min-height:57px}
+.dpo-calendar-class.alt{background:#e9e5fa;border-color:#dfd7f1;color:#6d618f}
+.dpo-calendar-class i{display:block;font-style:normal;font-size:8px;font-weight:600;opacity:.7;margin-bottom:5px}
+.dpo-calendar-blank{min-height:57px}
+.dpo-calendar-note{margin-top:9px;display:flex;gap:6px;align-items:center;color:#728ca8;font-size:9px}
+.dpo-calendar-note i{height:7px;width:7px;background:#53ad88;border-radius:50%}
+.dpo-stage-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:12px 0 0}
+.dpo-stage-current{display:flex;gap:9px;align-items:center;min-width:0}
+.dpo-stage-current span{font-size:10px;font-weight:820;color:#7188b3;letter-spacing:.1em}
+.dpo-stage-current b{font-size:12px;color:#465b7b;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.dpo-stage-controls-actions{display:flex;gap:6px}
+.dpo-stage-controls-actions button{cursor:pointer;border:1px solid #d1dced;background:#fff;color:#3d5d91;border-radius:10px;width:35px;height:31px;font-size:18px;transition:background .18s,transform .18s}
+.dpo-stage-controls-actions button:hover{background:#e0eaff;transform:translateY(-2px)}
+.dpo-stage-controls-actions button:focus-visible{outline:3px solid #739de6;outline-offset:3px}
+.case-dpo .dpo-showcase>.visual-caption{margin-top:11px}
+@media(max-width:850px){.case-dpo .dpo-showcase{min-height:unset}.dpo-stage-window{height:362px}}
+@media(max-width:480px){.case-dpo .dpo-showcase{padding:16px 12px 14px}.dpo-scene{padding:17px}.dpo-stage-window{height:365px;min-height:365px}.dpo-screen-brand{font-size:12px}.dpo-screen-brand small{font-size:7px}.dpo-scene-home .mock-site-title{font-size:24px}.dpo-chat-bubble{font-size:10px;padding:8px 10px}.dpo-conversation{gap:6px;margin-top:14px}.dpo-chat-suggestions span{font-size:9px;padding:6px 7px}.dpo-chat-input{left:17px;right:17px;font-size:9px}.dpo-operator-path{margin-top:23px;gap:4px}.dpo-operator-path>span{font-size:9px;padding:8px}.dpo-operator-question strong,.dpo-operator-answer strong{font-size:10px}.dpo-admin-menu{flex-basis:78px}.dpo-admin-menu small{font-size:8px}.dpo-admin-main{padding:12px 8px}.dpo-admin-heading span{font-size:7px;padding:5px}.dpo-calendar{padding:13px 9px}.dpo-calendar-grid{gap:4px}.dpo-calendar-day{padding:5px}.dpo-calendar-class{font-size:8px;padding:7px 4px;min-height:52px}.dpo-calendar-blank{min-height:52px}.dpo-calendar-day{min-height:162px}.dpo-calendar-top>span{font-size:7px}}
+@media(prefers-reduced-motion:reduce){.dpo-scene,.dpo-stage-controls-actions button{transition:none!important;transform:none!important}}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#brief">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов.<br><span class="gradient">Автоматизирую бизнес.</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
@@ -394,11 +504,80 @@
 </article>
 
 <article class="project feature case case-dpo reveal" id="dpo" aria-labelledby="dpo-h">
-<div class="site-visual"><div class="mock-browser-bar"><span></span><span></span><span></span><b>ranepa-dpo39.ru</b></div><div class="mock-site"><div class="mock-site-nav"><span>ПРЕЗИДЕНТСКАЯ АКАДЕМИЯ</span><span>≡</span></div><div class="mock-site-title">Академия управления<br>и профессионального роста</div><div class="mock-site-sub">Цифровая образовательная платформа</div><div class="mock-search">⌕ <span>Программы · Расписание · Слушателям</span></div><div class="mock-site-tiles"><span>Сова</span><span>Оператор</span><span>Лекции по коду</span><span>Новости</span></div><div class="mock-owl" aria-hidden="true">✦</div></div><div class="visual-caption visual-caption-dark">Схематичная витрина · реальный продукт доступен по ссылке</div></div>
+
+<div class="site-visual dpo-showcase">
+  <div class="mock-browser-bar dpo-browser-bar"><span></span><span></span><span></span><b id="dpo-stage-address">ranepa-dpo39.ru</b><i class="dpo-browser-secure" aria-hidden="true">●</i></div>
+  <div class="dpo-stage-window" id="dpo-stage-window" aria-live="polite" aria-atomic="true" aria-label="Интерактивная демонстрация возможностей экосистемы">
+    <div class="dpo-scene dpo-scene-home is-active mock-site" data-dpo-scene="overview" role="img" aria-label="Главная страница цифровой образовательной платформы" aria-hidden="false">
+      <div class="mock-site-nav"><span>ПРЕЗИДЕНТСКАЯ АКАДЕМИЯ</span><span>≡</span></div>
+      <div class="mock-site-title">Академия управления<br>и профессионального роста</div>
+      <div class="mock-site-sub">Цифровая образовательная платформа</div>
+      <div class="mock-search">⌕ <span>Программы · Расписание · Слушателям</span></div>
+      <div class="mock-site-tiles"><span>Сова</span><span>Оператор</span><span>Лекции по коду</span><span>Новости</span></div>
+      <div class="mock-owl" aria-hidden="true">✦</div>
+      <span class="dpo-home-watermark">ОТ САЙТА К ЭКОСИСТЕМЕ</span>
+    </div>
+    <div class="dpo-scene dpo-scene-owl" data-dpo-scene="owl" role="img" aria-label="Макет диалога с AI-помощником Совой" aria-hidden="true">
+      <div class="dpo-screen-top"><span class="dpo-screen-brand"><span class="dpo-avatar">🦉</span> Сова <small>AI-ПОМОЩНИК</small></span><span class="dpo-live-mark"><i></i> Онлайн</span></div>
+      <div class="dpo-conversation">
+        <div class="dpo-chat-bubble dpo-chat-agent"><b>Сова</b>Добрый день! Помогу подобрать обучение или получить материалы по коду.</div>
+        <div class="dpo-chat-bubble dpo-chat-client">Хочу узнать про программы повышения квалификации.</div>
+        <div class="dpo-chat-bubble dpo-chat-agent"><b>Сова</b>Подскажу направления, формат обучения и расписание.</div>
+      </div>
+      <div class="dpo-chat-suggestions"><span>Подобрать программу</span><span>Ввести код лекции</span></div>
+      <div class="dpo-chat-input">Спросите о программе или занятии <i aria-hidden="true">➤</i></div>
+    </div>
+    <div class="dpo-scene dpo-scene-operator" data-dpo-scene="human" role="img" aria-label="Макет передачи диалога живому оператору через Telegram" aria-hidden="true">
+      <div class="dpo-screen-top"><span class="dpo-screen-brand">✦ Поддержка слушателей <small>ПЕРЕДАЧА ДИАЛОГА</small></span><span class="dpo-live-mark"><i></i> Оператор на связи</span></div>
+      <div class="dpo-operator-path"><span>Посетитель</span><i>→</i><span>Сова</span><i>→</i><span class="dpo-path-strong">Сотрудник</span></div>
+      <div class="dpo-operator-messages">
+        <div class="dpo-operator-question"><small>СЛУШАТЕЛЬ</small><strong>Можно уточнить условия оформления договора?</strong></div>
+        <div class="dpo-operator-transfer"><span aria-hidden="true">↗</span><div><b>Передано живому оператору</b><small>Контекст обращения сохранён</small></div></div>
+        <div class="dpo-operator-answer"><span class="dpo-telegram-badge">➤</span><div><small>СОТРУДНИК · TELEGRAM</small><strong>Здравствуйте! Сейчас подскажу порядок оформления.</strong></div></div>
+      </div>
+      <div class="dpo-operator-bottom"><i></i> Визуальный пример передачи обращения</div>
+    </div>
+    <div class="dpo-scene dpo-scene-lecture" data-dpo-scene="lecture" role="img" aria-label="Макет выдачи учебных материалов по коду лекции" aria-hidden="true">
+      <div class="dpo-screen-top"><span class="dpo-screen-brand">▤ Материалы занятий <small>ЦЕНТР ДПО</small></span><span class="dpo-stage-mini-pill">ДОСТУП ПО КОДУ</span></div>
+      <div class="dpo-lecture-card"><div class="dpo-lecture-symbol">⌘</div><span class="dpo-lecture-eyebrow">БЫСТРЫЙ ДОСТУП</span><h4>Получите материалы<br>своего занятия</h4><p>Введите код, который выдал преподаватель.</p><div class="dpo-lecture-code"><span>•</span><span>•</span><span>•</span><span>•</span><span>•</span><span>•</span></div><div class="dpo-lecture-button">Найти материалы <span>→</span></div></div>
+      <div class="dpo-lecture-footer"><span>Преподаватель</span><i>→</i><span>Код доступа</span><i>→</i><span>Лекция</span></div>
+    </div>
+    <div class="dpo-scene dpo-scene-news" data-dpo-scene="news" role="img" aria-label="Макет редактора новостей с публикацией на сайте и во ВКонтакте" aria-hidden="true">
+      <div class="dpo-screen-top"><span class="dpo-screen-brand">▤ Редактор новостей <small>МЕДИА · ПУБЛИКАЦИИ</small></span><span class="dpo-stage-mini-pill">НОВАЯ ЗАПИСЬ</span></div>
+      <div class="dpo-editor">
+        <div class="dpo-editor-field"><small>ЗАГОЛОВОК НОВОСТИ</small><strong>Открыта запись на новую программу</strong></div>
+        <div class="dpo-editor-blocks"><div class="dpo-editor-image"><span>✦</span><small>МЕДИА</small></div><div class="dpo-editor-lines"><span></span><span></span><span></span><span></span></div></div>
+        <div class="dpo-editor-vk"><span class="dpo-editor-check">✓</span><div><b>Опубликовать во ВКонтакте</b><small>После сохранения новости</small></div><span class="dpo-vk-symbol">ВК</span></div>
+        <div class="dpo-editor-save">Сохранить новость <span>↗</span></div>
+      </div>
+      <div class="dpo-editor-footer"><span>Редактор</span><i>→</i><span>Сайт</span><i>→</i><span>ВКонтакте</span></div>
+    </div>
+    <div class="dpo-scene dpo-scene-admin" data-dpo-scene="admin" role="img" aria-label="Макет административной панели PRO для управления контентом" aria-hidden="true">
+      <div class="dpo-screen-top"><span class="dpo-screen-brand">◈ Панель PRO <small>УПРАВЛЕНИЕ ПЛАТФОРМОЙ</small></span><span class="dpo-stage-mini-pill">РЕЖИМ РЕДАКТОРА</span></div>
+      <div class="dpo-admin-layout">
+        <div class="dpo-admin-menu"><span class="active">▦ <small>Панель</small></span><span>▤ <small>Новости</small></span><span>⌘ <small>Программы</small></span><span>◷ <small>История</small></span><span>⌕ <small>SEO</small></span></div>
+        <div class="dpo-admin-main"><div class="dpo-admin-heading"><b>Управление контентом</b><span>＋ Новый материал</span></div>
+          <div class="dpo-admin-block"><small>ТЕКУЩАЯ ЗАДАЧА</small><b>Редактирование страницы</b><div class="dpo-admin-edit-lines"><i></i><i></i><i></i></div></div>
+          <div class="dpo-admin-tools"><div><span>◉</span><b>Предпросмотр</b></div><div><span>◷</span><b>Версии</b></div><div><span>⌕</span><b>SEO</b></div></div>
+          <div class="dpo-admin-status"><i></i> Изменения проходят проверку перед публикацией</div>
+        </div>
+      </div>
+    </div>
+    <div class="dpo-scene dpo-scene-schedule" data-dpo-scene="schedule" role="img" aria-label="Макет календаря расписания учебных занятий" aria-hidden="true">
+      <div class="dpo-screen-top"><span class="dpo-screen-brand">◫ Расписание занятий <small>УЧЕБНЫЙ ПРОЦЕСС</small></span><span class="dpo-stage-mini-pill">КАЛЕНДАРЬ</span></div>
+      <div class="dpo-calendar"><div class="dpo-calendar-top"><strong>Обзор учебной недели</strong><span>ПРИМЕР ИНТЕРФЕЙСА</span></div>
+        <div class="dpo-calendar-grid"><div class="dpo-calendar-day"><b>ПН</b><span class="dpo-calendar-class"><i>Утро</i>Лекция</span><span class="dpo-calendar-class alt"><i>День</i>Практикум</span></div><div class="dpo-calendar-day"><b>ВТ</b><span class="dpo-calendar-class alt"><i>Утро</i>Семинар</span><span class="dpo-calendar-blank"></span></div><div class="dpo-calendar-day"><b>СР</b><span class="dpo-calendar-blank"></span><span class="dpo-calendar-class"><i>День</i>Занятие</span></div><div class="dpo-calendar-day"><b>ЧТ</b><span class="dpo-calendar-class"><i>Утро</i>Лекция</span><span class="dpo-calendar-class alt"><i>День</i>Практика</span></div></div>
+        <div class="dpo-calendar-note"><i></i> Актуальные занятия обновляются автоматически</div>
+      </div>
+    </div>
+  </div>
+  <div class="dpo-stage-controls"><div class="dpo-stage-current"><span id="dpo-stage-counter">01 / 07</span><b id="dpo-stage-label">Главная</b></div><div class="dpo-stage-controls-actions"><button id="dpo-stage-prev" type="button" aria-label="Предыдущий экран" title="Предыдущий экран">←</button><button id="dpo-stage-next" type="button" aria-label="Следующий экран" title="Следующий экран">→</button></div></div>
+  <div class="visual-caption visual-caption-dark">Интерактивные макеты интерфейсов · реальные продукты доступны по ссылкам</div>
+</div>
 <div class="copy case-copy"><div class="tag">Сайт под ключ · AI · Интеграции</div><h3 id="dpo-h">Экосистема ДПО.<br>Больше, чем сайт.</h3><p>Моя комплексная разработка: интерфейсы, каталог программ, расписание, новости, AI-помощник «Сова», живой оператор, выдача лекционных материалов по коду, панель PRO, серверная логика и интеграции.</p>
 <div class="dpo-pills" role="group" aria-label="Изучить возможности экосистемы">
-<button class="dpo-pill is-active" type="button" data-feature="owl" aria-pressed="true">🦉 Сова</button><button class="dpo-pill" type="button" data-feature="human" aria-pressed="false">Оператор</button><button class="dpo-pill" type="button" data-feature="lecture" aria-pressed="false">Лекции</button><button class="dpo-pill" type="button" data-feature="news" aria-pressed="false">Новости</button><button class="dpo-pill" type="button" data-feature="admin" aria-pressed="false">PRO</button><button class="dpo-pill" type="button" data-feature="schedule" aria-pressed="false">Расписание</button></div>
-<div class="dpo-feature" aria-live="polite"><strong id="dpo-feature-title">AI-ассистент «Сова»</strong><p id="dpo-feature-desc">Помогает сориентироваться в программах, сроках и учебных процессах прямо на сайте.</p><a id="dpo-feature-link" href="https://ranepa-dpo39.ru/" target="_blank" rel="noopener noreferrer">Посмотреть в работе ↗</a></div>
+<button class="dpo-pill is-active" type="button" data-feature="overview" aria-pressed="true">Обзор</button><button class="dpo-pill" type="button" data-feature="owl" aria-pressed="false">🦉 Сова</button><button class="dpo-pill" type="button" data-feature="human" aria-pressed="false">Оператор</button><button class="dpo-pill" type="button" data-feature="lecture" aria-pressed="false">Лекции</button><button class="dpo-pill" type="button" data-feature="news" aria-pressed="false">Новости</button><button class="dpo-pill" type="button" data-feature="admin" aria-pressed="false">PRO</button><button class="dpo-pill" type="button" data-feature="schedule" aria-pressed="false">Расписание</button></div>
+<div class="dpo-feature" aria-live="polite"><strong id="dpo-feature-title">Экосистема ДПО — всё связано</strong><p id="dpo-feature-desc">Начните с обзора платформы, затем переключайте вкладки: слева появятся интерфейсы «Совы», оператора, лекций, новостей, PRO и расписания.</p><a id="dpo-feature-link" href="https://ranepa-dpo39.ru/" target="_blank" rel="noopener noreferrer">Посмотреть в работе ↗</a></div>
 <p class="muted">Не оставляю сотрудников один на один с новой системой: разрабатываю наглядные инструкции и сопровождаю внедрение от первого входа до результата.</p>
 <div class="links"><a class="link" href="https://ranepa-dpo39.ru/" target="_blank" rel="noopener noreferrer">Открыть реальный сайт ↗</a><a class="link" href="#guide">Инструкция ↓</a><a class="link" href="#news">Новости ↓</a></div></div></article>
 <article class="project feature case case-form reveal" id="form" aria-labelledby="form-h">
@@ -646,20 +825,40 @@ document.querySelectorAll('[data-guide]').forEach(btn=>btn.addEventListener('cli
 </script><script>
 (function(){
  const features={
-  owl:["AI-помощник «Сова»","Помогает посетителям сориентироваться в программах, расписании и вопросах обучения прямо на сайте.","https://ranepa-dpo39.ru/"],
-  human:["Подключение живого оператора","Когда AI-помощника недостаточно, человек передаётся сотруднику. Сотрудник отвечает через Telegram, сохраняя контекст обращения.","https://aderpil21-source.github.io/cdo-staff-guide/#operator"],
-  lecture:["Учебные материалы по коду","Преподаватель передаёт материалы; система выдаёт код доступа. Слушатель получает нужную лекцию через «Сову».","https://aderpil21-source.github.io/cdo-staff-guide/#materials"],
-  news:["Редактор новостей и соцсети","Новости с медиа, анонсами и тегами. После сохранения редактор может открыть ВКонтакте и поделиться ссылкой на публикацию.","https://ranepa-dpo39.ru/news.html"],
-  admin:["Панель управления PRO","Управление программами, документами, страницами, черновиками, предпросмотром, историей версий и SEO без правки кода.","https://aderpil21-source.github.io/cdo-staff-guide/#pro"],
-  schedule:["Автоматизированное расписание","Расписание редактируется через панель. Завершившийся день исчезает из актуальной выдачи после 21:00 по Калининграду.","https://ranepa-dpo39.ru/schedule.html"]
+  overview:["Экосистема ДПО — всё связано","Начните с обзора платформы, затем переключайте вкладки: слева появятся интерфейсы «Совы», оператора, лекций, новостей, PRO и расписания.","https://ranepa-dpo39.ru/","Главная","ranepa-dpo39.ru"],
+  owl:["AI-помощник «Сова»","Помогает посетителям подобрать программу, разобраться в расписании и получить учебные материалы по коду прямо в чате.","https://ranepa-dpo39.ru/","AI-ассистент","ranepa-dpo39.ru"],
+  human:["Подключение живого оператора","Когда AI-помощника недостаточно, диалог передаётся сотруднику. Сотрудник может отвечать через Telegram, сохраняя контекст обращения.","https://aderpil21-source.github.io/cdo-staff-guide/#operator","Живой оператор","ranepa-dpo39.ru"],
+  lecture:["Учебные материалы по коду","Преподаватель передаёт материалы и выдаёт код доступа. Слушатель вводит код через «Сову» и получает нужную лекцию.","https://aderpil21-source.github.io/cdo-staff-guide/#materials","Лекции по коду","ranepa-dpo39.ru"],
+  news:["Редактор новостей и соцсети","Редактор добавляет заголовок, фотографии и анонс. При выбранной опции «Опубликовать во ВКонтакте» система запускает автопубликацию новости.","https://ranepa-dpo39.ru/news.html","Редактор новостей","ranepa-dpo39.ru/news.html"],
+  admin:["Панель управления PRO","Редактирование программ, документов и страниц, черновики, предпросмотр, история версий и SEO без ручной правки кода.","https://aderpil21-source.github.io/cdo-staff-guide/#pro","Панель PRO","ranepa-dpo39.ru"],
+  schedule:["Автоматизированное расписание","Расписание редактируется через панель. Завершившийся день исчезает из актуальной выдачи после 21:00 по Калининграду.","https://ranepa-dpo39.ru/schedule.html","Расписание","ranepa-dpo39.ru/schedule.html"]
  };
- document.querySelectorAll('[data-feature]').forEach(btn=>btn.addEventListener('click',function(){
-  document.querySelectorAll('[data-feature]').forEach(b=>{const on=b===btn;b.classList.toggle('is-active',on);b.setAttribute('aria-pressed',String(on));});
-  const [name,desc,url]=features[btn.dataset.feature]||features.owl;
+ const dpoButtons=Array.from(document.querySelectorAll('#dpo [data-feature]'));
+ const dpoScenes=Array.from(document.querySelectorAll('#dpo [data-dpo-scene]'));
+ const dpoKeys=dpoButtons.map(b=>b.dataset.feature);
+ const dpoCounter=document.getElementById('dpo-stage-counter');
+ const dpoLabel=document.getElementById('dpo-stage-label');
+ const dpoAddress=document.getElementById('dpo-stage-address');
+ const dpoPrev=document.getElementById('dpo-stage-prev');
+ const dpoNext=document.getElementById('dpo-stage-next');
+ let activeDpoKey='overview';
+ function setDpoFeature(key){
+  if(!features[key])key='overview';
+  if(key===activeDpoKey)return;
+  activeDpoKey=key;
+  for(const b of dpoButtons){const on=b.dataset.feature===key;b.classList.toggle('is-active',on);b.setAttribute('aria-pressed',String(on));}
+  for(const scene of dpoScenes){const on=scene.dataset.dpoScene===key;scene.classList.toggle('is-active',on);scene.setAttribute('aria-hidden',String(!on));}
+  const [name,desc,url,shortName,address]=features[key];
   document.getElementById('dpo-feature-title').textContent=name;
   document.getElementById('dpo-feature-desc').textContent=desc;
   document.getElementById('dpo-feature-link').href=url;
- }));
+  dpoCounter.textContent=String(dpoKeys.indexOf(key)+1).padStart(2,'0')+' / '+String(dpoKeys.length).padStart(2,'0');
+  dpoLabel.textContent=shortName;
+  dpoAddress.textContent=address;
+ }
+ dpoButtons.forEach(b=>b.addEventListener('click',()=>setDpoFeature(b.dataset.feature)));
+ if(dpoPrev)dpoPrev.addEventListener('click',()=>setDpoFeature(dpoKeys[(dpoKeys.indexOf(activeDpoKey)-1+dpoKeys.length)%dpoKeys.length]));
+ if(dpoNext)dpoNext.addEventListener('click',()=>setDpoFeature(dpoKeys[(dpoKeys.indexOf(activeDpoKey)+1)%dpoKeys.length]));
  const formCard=document.querySelector('.form-visual');
  const originalMailHeading=document.querySelector('#email-stage .mail-body h4');
  const mailParagraphs=document.querySelectorAll('#email-stage .mail-body p');
