@@ -3,6 +3,7 @@
 const http=require('node:http');
 const crypto=require('node:crypto');
 const net=require('node:net');
+const {verifyTurnstileToken}=require('./turnstile.js');
 const {URL}=require('node:url');
 const PORT=Number(process.env.PORT||3000);
 const ORIGIN=(process.env.ALLOWED_ORIGIN||'https://aderpil21-source.github.io').replace(/\/$/,'');
@@ -12,6 +13,12 @@ const STORE_URL=(process.env.PORTFOLIO_STORE_URL||'').trim();
 const STORE_KEY=(process.env.PORTFOLIO_STORE_KEY||'').trim();
 const storageEnabled=!!(STORE_URL&&STORE_KEY);
 const storageRequired=process.env.PORTFOLIO_REQUIRE_STORAGE!=='false';
+const TURNSTILE_SITE_KEY=(process.env.TURNSTILE_SITE_KEY||'').trim();
+const TURNSTILE_SECRET_KEY=(process.env.TURNSTILE_SECRET_KEY||'').trim();
+const turnstileEnabled=!!(TURNSTILE_SITE_KEY&&TURNSTILE_SECRET_KEY);
+const turnstileMisconfigured=!!TURNSTILE_SITE_KEY!==!!TURNSTILE_SECRET_KEY;
+// Hostname restrictions are checked independently of the browser Origin.
+const TURNSTILE_ALLOWED_HOSTNAMES=new Set(['aderpil21-source.github.io','katsstudio.eu.org']);
 const TOKEN=(process.env.TELEGRAM_BOT_TOKEN||'').trim();
 const OWNER=(process.env.TELEGRAM_CHAT_ID||'').trim();
 const PUBLIC_URL=(process.env.PUBLIC_BASE_URL||'https://denis-kats-portfolio-chat.onrender.com').replace(/\/$/,'');
@@ -69,7 +76,7 @@ function allowOrigin(req,res){
  const origin=String(req.headers.origin||'');
  if(!ALLOWED_ORIGINS.has(origin))return false;
  res.setHeader('Access-Control-Allow-Origin',origin);
- res.setHeader('Access-Control-Allow-Methods','POST, OPTIONS');
+ res.setHeader('Access-Control-Allow-Methods','GET, POST, OPTIONS');
  res.setHeader('Access-Control-Allow-Headers','Content-Type');
  res.setHeader('Access-Control-Max-Age','600');
  return true;
@@ -268,6 +275,11 @@ async function handle(req,res){
  if(!path.startsWith('/api/chat/')){sendJSON(res,404,{ok:false,error:'Не найдено'});return}
  if(!allowOrigin(req,res)){sendJSON(res,403,{ok:false,error:'Недопустимый источник'});return}
  if(req.method==='OPTIONS'){res.writeHead(204);res.end();return}
+ if(path==='/api/chat/config'&&req.method==='GET'){
+  if(turnstileMisconfigured){sendJSON(res,503,{ok:false,error:'Проверка безопасности настраивается'});return}
+  sendJSON(res,200,{ok:true,turnstileEnabled,siteKey:turnstileEnabled?TURNSTILE_SITE_KEY:null});
+  return;
+ }
  if(req.method!=='POST'){sendJSON(res,405,{ok:false,error:'Недопустимый метод'});return}
  if(!String(req.headers['content-type']||'').startsWith('application/json')){
   sendJSON(res,415,{ok:false,error:'Ожидается JSON'});return;
@@ -282,6 +294,14 @@ async function handle(req,res){
   const category=clean(data.category,100),message=clean(data.message,1600),name=clean(data.name,120),contact=clean(data.contact,160);
   if(!CHOICES.has(category)||message.length<12||message.length>1500||data.consent!==true){
    sendJSON(res,400,{ok:false,error:'Выберите направление, опишите задачу и подтвердите согласие.'});return;
+  }
+  if(turnstileMisconfigured){sendJSON(res,503,{ok:false,error:'Защита формы временно настраивается'});return}
+  if(turnstileEnabled){
+   const verified=await verifyTurnstileToken({
+    token:data.turnstileToken,secret:TURNSTILE_SECRET_KEY,
+    expectedHostnames:TURNSTILE_ALLOWED_HOSTNAMES
+   });
+   if(!verified){sendJSON(res,403,{ok:false,error:'Проверка безопасности не пройдена. Обновите проверку и повторите.'});return}
   }
   clearExpired();
   if(sessions.size>=550){sendJSON(res,503,{ok:false,error:'Приём сообщений временно ограничен. Используйте Telegram.'});return}
