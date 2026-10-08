@@ -18,6 +18,8 @@ jobs:
           node-version: '22'
       - name: Validate server syntax
         run: node --check lead-api/server.js
+      - name: Validate chat assistant JavaScript
+        run: node --check assets/lead-chat.js
       - name: Validate browser scripts and CSP
         if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
         run: node scripts/check-csp.mjs
