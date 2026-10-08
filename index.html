@@ -543,7 +543,7 @@ main{overflow-x:clip;overflow-y:visible}
 .dk-la-form{display:grid;gap:7px}
 .dk-la-form>label:not(.dk-la-consent){font-size:11px;font-weight:790;color:#344862;margin-top:7px}
 .dk-la-form>label small{font-size:9px;color:#8699b2;font-weight:520}
-.dk-la-form input:not([type=checkbox]),.dk-la-form textarea{font:550 12px/1.5 inherit;width:100%;border:1px solid #dfe8f2;background:#fff;border-radius:10px;color:#253c58;padding:10px 11px;outline:0}
+.dk-la-form input:not([type=checkbox]),.dk-la-form textarea{font-size:12px;font-weight:550;line-height:1.5;font-family:inherit;width:100%;border:1px solid #dfe8f2;background:#fff;border-radius:10px;color:#253c58;padding:10px 11px;outline:0}
 .dk-la-form textarea{resize:vertical;min-height:78px;max-height:180px}.dk-la-form input:focus,.dk-la-form textarea:focus{border-color:#82b0ef;box-shadow:0 0 0 3px #82b0ef24}
 .dk-la-form .dk-la-honeypot{height:0;max-height:0;overflow:hidden;position:absolute;opacity:0;pointer-events:none}
 .dk-la-consent{display:flex;gap:9px;align-items:flex-start;margin-top:6px;cursor:pointer}
@@ -551,7 +551,7 @@ main{overflow-x:clip;overflow-y:visible}
 .dk-la-consent span{font-size:10px;line-height:1.6;color:#697f9d}
 .dk-la-consent a{color:#2f6eb1;font-weight:720;text-decoration:underline;text-underline-offset:2px}
 .dk-la-privacy[hidden]{display:none!important}.dk-la-privacy{font-size:10px;line-height:1.6;color:#8094aa;background:#edf3fa;padding:11px;border-radius:9px;margin:0}
-.dk-la-submit{display:block;border:0;border-radius:11px;background:linear-gradient(110deg,#285a9e,#3979c5);color:#fff;font:750 12px inherit;padding:14px;cursor:pointer;margin-top:9px}.dk-la-submit:hover{filter:brightness(1.06)}.dk-la-submit:disabled{opacity:.68;cursor:wait}
+.dk-la-submit{display:block;border:0;border-radius:11px;background:linear-gradient(110deg,#285a9e,#3979c5);color:#fff;font-size:12px;font-weight:750;font-family:inherit;padding:14px;cursor:pointer;margin-top:9px}.dk-la-submit:hover{filter:brightness(1.06)}.dk-la-submit:disabled{opacity:.68;cursor:wait}
 .dk-la-status{font-size:10px;line-height:1.55;color:#8296ac;padding:3px 1px}.dk-la-status[data-result=success]{color:#267f62}.dk-la-status[data-result=error]{color:#b4444e}
 .dk-la-direct{font-size:11px;color:#3c72aa;font-weight:740;margin:4px 0 7px;display:inline-block}
 .dk-la-footer{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:7px;border-top:1px solid #e6edf7;background:#f3f6fb;color:#8496ac;font-size:9px;text-align:center;padding:11px 9px}
@@ -1797,7 +1797,7 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
   status.dataset.result='';
   if(!api)send.textContent='Скопировать запрос для Telegram ↗';
   else send.textContent='Отправить Денису в Telegram →';
-  requestAnimationFrame(()=>{answer.scrollIntoView({block:'nearest',behavior:'instant'})});
+  requestAnimationFrame(()=>{const pane=document.getElementById('dk-la-body');if(pane)pane.scrollTo({top:pane.scrollHeight,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});});
  }
  choices.addEventListener('click',event=>{
   const button=event.target.closest('button[data-la-task]');
