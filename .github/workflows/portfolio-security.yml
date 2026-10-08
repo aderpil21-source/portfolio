@@ -18,6 +18,8 @@ jobs:
           node-version: '22'
       - name: Verify Node.js API syntax
         run: node --check lead-api/server.js
+      - name: Test Cloudflare Turnstile verification
+        run: node --test lead-api/turnstile.test.js
       - name: Check for embedded Telegram bot secret
         run: |
           node -e "const fs=require('fs'); const t=fs.readFileSync('lead-api/server.js','utf8'); if(!t.includes('process.env.TELEGRAM_BOT_TOKEN') || !t.includes('process.env.PORTFOLIO_STORE_KEY'))process.exit(1); console.log('Secrets are referenced as environment variables');"
