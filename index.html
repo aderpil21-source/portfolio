@@ -397,6 +397,116 @@
 @media(max-width:850px){.case-dpo .dpo-showcase{min-height:unset}.dpo-stage-window{height:362px}}
 @media(max-width:480px){.case-dpo .dpo-showcase{padding:16px 12px 14px}.dpo-scene{padding:17px}.dpo-stage-window{height:365px;min-height:365px}.dpo-screen-brand{font-size:12px}.dpo-screen-brand small{font-size:7px}.dpo-scene-home .mock-site-title{font-size:24px}.dpo-chat-bubble{font-size:10px;padding:8px 10px}.dpo-conversation{gap:6px;margin-top:14px}.dpo-chat-suggestions span{font-size:9px;padding:6px 7px}.dpo-chat-input{left:17px;right:17px;font-size:9px}.dpo-operator-path{margin-top:23px;gap:4px}.dpo-operator-path>span{font-size:9px;padding:8px}.dpo-operator-question strong,.dpo-operator-answer strong{font-size:10px}.dpo-admin-menu{flex-basis:78px}.dpo-admin-menu small{font-size:8px}.dpo-admin-main{padding:12px 8px}.dpo-admin-heading span{font-size:7px;padding:5px}.dpo-calendar{padding:13px 9px}.dpo-calendar-grid{gap:4px}.dpo-calendar-day{padding:5px}.dpo-calendar-class{font-size:8px;padding:7px 4px;min-height:52px}.dpo-calendar-blank{min-height:52px}.dpo-calendar-day{min-height:162px}.dpo-calendar-top>span{font-size:7px}}
 @media(prefers-reduced-motion:reduce){.dpo-scene,.dpo-stage-controls-actions button{transition:none!important;transform:none!important}}
+
+/* Realistic, explicitly simulated multi-channel publishing tour */
+.case-news.feature{display:block!important;grid-template-columns:none!important;overflow:hidden}
+.case-news .news-distribution{background:radial-gradient(circle at 4% 16%,#3c5e9a45,transparent 49%),linear-gradient(145deg,#101a2b,#1d3455 72%,#112039);padding:clamp(20px,3.3vw,36px);color:#fff}
+.news-distribution-heading{display:flex;justify-content:space-between;gap:20px;align-items:start;margin:0 0 24px}
+.news-distribution-heading h4{font-size:clamp(32px,5vw,56px);line-height:1.04;letter-spacing:-.065em;margin:11px 0 12px;color:#f8fbff}
+.news-distribution-heading h4 span{color:#99c6fa}
+.news-distribution-heading p{font-size:13px;line-height:1.65;color:#b1c3df;max-width:610px;margin:0}
+.news-distribution-eyebrow{letter-spacing:.16em;color:#aac8f1;font-size:10px;font-weight:800;display:inline-flex;align-items:center;gap:10px}
+.news-live-light{display:block;width:7px;height:7px;border-radius:50%;background:#70d3f8;box-shadow:0 0 13px #85dfff}
+.news-demo-label{white-space:nowrap;border:1px solid #b9d8ff50;color:#c1ddf6;border-radius:20px;padding:8px 10px;font-size:9px;font-weight:800;letter-spacing:.1em}
+.news-flow-grid{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);align-items:start;gap:clamp(14px,2.4vw,27px)}
+.news-author-panel{background:#fff;color:#24354c;border-radius:20px;overflow:hidden;min-width:0;box-shadow:0 25px 60px #07122544}
+.news-author-top{display:flex;align-items:center;gap:12px;border-bottom:1px solid #eaf0f7;padding:17px 19px}
+.news-author-icon{width:35px;height:35px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(140deg,#3c82e6,#1657ae);color:#fff;font-size:20px}
+.news-author-top>div{flex:1;min-width:0}.news-author-top b{font-size:14px;display:block}.news-author-top small{font-size:10px;color:#8291a8;display:block;margin-top:4px;line-height:1.35}
+.news-author-draft{font-size:9px;font-weight:800;padding:7px 8px;background:#eef2f7;color:#7b8aa1;border-radius:7px}
+.news-author-body{padding:17px 19px 19px}
+.news-field-label{display:block;margin:0 0 7px;font-size:10px;font-weight:830;letter-spacing:.08em;color:#788aa5}
+.news-author-body>textarea{font:550 12px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;display:block;width:100%;border:1px solid #dfe7f2;background:#f9fbfe;color:#293c56;border-radius:10px;padding:11px 12px;margin-bottom:15px;outline:none;resize:vertical;min-height:67px}
+.news-author-body>textarea:focus{border-color:#699de6;box-shadow:0 0 0 4px #6898d51c}
+.news-author-body #news-demo-body{min-height:106px;font-weight:450;margin-bottom:12px}
+.news-inset{display:flex;gap:12px;align-items:center;padding:12px;background:#eff5fd;border-left:3px solid #3385e7;border-radius:8px;margin:0 0 16px}
+.news-inset span{font-size:10px;letter-spacing:.09em;color:#2874d5;font-weight:900}
+.news-inset p{font-size:11px;line-height:1.5;margin:0;color:#5b769d}
+.news-media-caption,.news-channels-label{font-size:10px;font-weight:850;letter-spacing:.08em;color:#7185a2;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.news-media-caption span,.news-channels-label span{font-size:9px;letter-spacing:0;text-transform:none;color:#a4adbb;font-weight:500}
+.news-attachment-strip{display:flex;gap:8px;margin:10px 0 19px}
+.news-attachment-strip>div{flex:1;min-width:0;border:1px solid #e4eaf3;background:#fafbfe;border-radius:9px;padding:5px}
+.news-attach-thumb{display:block;position:relative;height:64px;border-radius:6px;overflow:hidden;background:linear-gradient(145deg,#2f456c,#b81b46)}
+.news-attach-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.news-attach-tg img{object-position:50% 53%}.news-attach-vk img{object-position:50% 52%}
+.news-attachment-strip small{display:block;font-size:9px;font-weight:620;color:#778aa5;padding:6px 3px 2px;text-align:center;line-height:1.25}
+.news-publish-options{display:grid;gap:6px;margin:11px 0 16px}
+.news-channel-option{display:flex;align-items:center;gap:10px;cursor:pointer;background:#fbfcff;border:1px solid #e0e8f2;border-radius:11px;padding:9px 10px;transition:border-color .2s,background .2s}
+.news-channel-option:hover{background:#f1f7ff;border-color:#a7c4ec}
+.news-channel-option input{accent-color:#2175dc;width:17px;height:17px;flex:0 0 17px;margin:0}
+.news-channel-option>span:nth-last-child(2){flex:1}
+.news-channel-option b{font-size:11px;display:block}.news-channel-option small{font-size:9px;color:#8495aa;display:block;margin-top:2px}
+.news-channel-icon,.news-platform-node{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border-radius:10px;font-size:12px;font-weight:950;color:white}
+.news-icon-vk{background:linear-gradient(145deg,#399aff,#0865d1)}.news-icon-tg{background:linear-gradient(145deg,#50c6ed,#1587c6);font-size:18px}.news-icon-dzen{background:#151b2a;font-size:22px}
+.news-option-check{color:#267fdc;font-weight:800}.news-channel-option:has(input:not(:checked)){opacity:.55}.news-channel-option:has(input:not(:checked)) .news-option-check{visibility:hidden}
+.news-publish-action{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px 12px;background:linear-gradient(130deg,#267ded,#1467d0);border:0;border-radius:11px;color:#fff;font-size:13px;font-weight:830;cursor:pointer;box-shadow:0 9px 24px #2b6ccc28}
+.news-publish-action:disabled{opacity:.76;cursor:wait}.news-publish-action:not(:disabled):hover{filter:brightness(1.08)}
+.news-publish-action span{font-size:18px}
+.news-repeat-button{cursor:pointer;background:none;border:0;font:700 11px inherit;color:#4672ab;padding:12px 0 0}
+.news-demo-status{background:#f2f6fb;border:1px solid #e6edf5;border-radius:10px;padding:11px 12px;margin-top:13px;font-size:11px;color:#69829f;line-height:1.55}
+.news-demo-status.is-ready{background:#e9f7ef;color:#27815b;border-color:#d2ecda;font-weight:660}
+.news-distribution-results{min-width:0;position:relative}
+.news-results-top{display:flex;align-items:center;justify-content:space-between;gap:15px;background:#ffffff10;border:1px solid #ffffff24;padding:12px 15px;border-radius:13px;margin-bottom:14px}
+.news-results-top>div{display:flex;align-items:center;gap:9px}.news-results-top strong{color:#ecf5ff;font-size:12px}.news-results-top>span{font-size:11px;color:#aec8e8;font-weight:810}
+.news-result-dot{display:block;width:8px;height:8px;border-radius:50%;background:#8eacde}
+.news-distribution.is-publishing .news-result-dot{background:#f0bd6c;box-shadow:0 0 0 5px #f0bd6c21}
+.news-distribution.is-published .news-result-dot{background:#83d5a1;box-shadow:0 0 0 5px #83d5a121}
+.news-platform-stack{position:relative;display:grid;gap:13px}
+.news-platform-stack:before{content:"";position:absolute;top:25px;bottom:40px;left:16px;width:2px;background:linear-gradient(#539edcb9,#7ce7ff70);opacity:.8;z-index:0}
+.news-platform{position:relative;min-width:0;padding-left:27px}
+.news-platform:before{content:"";position:absolute;top:16px;left:16px;width:21px;height:2px;background:#77bee9;box-shadow:0 0 10px #67b6ff}
+.news-platform-line{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.news-platform-node{position:relative;z-index:1;box-shadow:0 5px 14px #06172c55}
+.news-platform-meta{display:flex;flex-direction:column;gap:3px;flex:1}.news-platform-meta b{font-size:12px;color:#e5f1ff}.news-platform-meta small{font-size:10px;color:#91b0d2}
+.news-platform-indicator{font-size:11px;color:#8aa4c5}
+.news-platform[data-state=published] .news-platform-status{color:#92e1b4}.news-platform[data-state=published] .news-platform-indicator{color:#79e8ab}
+.news-platform[data-state=skipped] .news-platform-status{color:#9babc1}
+.news-platform-card{background:#fff;border:1px solid #edf0f8;border-radius:13px;color:#22314b;padding:12px;overflow:hidden;box-shadow:0 13px 33px #070f2244;opacity:.42;filter:grayscale(.6);transform:translateY(0);transition:opacity .35s ease,filter .35s ease,transform .45s cubic-bezier(.22,1,.36,1)}
+.news-platform[data-state=published] .news-platform-card{opacity:1;filter:none;transform:translateY(-2px)}
+.news-platform[data-state=pending] .news-platform-card{opacity:.64;filter:grayscale(.18)}
+.news-platform[data-state=skipped] .news-platform-card{opacity:.24;filter:grayscale(1)}
+.news-social-identity{display:flex;gap:8px;align-items:center;margin-bottom:9px}
+.news-social-avatar{background:#a5143c;color:white;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:800;flex:0 0 32px}
+.news-social-identity>div{flex:1;min-width:0}.news-social-identity strong{display:block;font-size:10px;line-height:1.3;color:#2f5f9e}
+.news-social-identity small{font-size:9px;color:#96a3b8;display:block;margin-top:3px}
+.news-social-more{font-size:12px;color:#9dadc4;align-self:flex-start;letter-spacing:2px}
+.news-social-text b,.news-tg-body b,.news-dzen-preview b{display:block;color:#273952;font-size:12px;line-height:1.35}
+.news-social-text p,.news-tg-body p,.news-dzen-preview p{font-size:10px;line-height:1.5;color:#71829c;margin:5px 0 9px}
+.news-social-media{position:relative;border-radius:8px;overflow:hidden;background:#152441}
+.news-social-media img{display:block;width:100%;height:100%;object-fit:cover}
+.news-vk-media{height:167px}.news-vk-media img{object-position:center}
+.news-social-actions{margin:10px 1px 0;display:flex;gap:13px;align-items:center;justify-content:space-between;color:#8c9db7;font-size:9px}
+.news-tg-card{background:#eff5fd}
+.news-tg-chatname{display:flex;align-items:center;gap:8px;margin-bottom:10px}.news-tg-chatname>span{display:grid;place-items:center;background:#a41c3d;width:29px;height:29px;flex:0 0 29px;border-radius:50%;color:#fff;font-weight:800}
+.news-tg-chatname b{font-size:10px;color:#426da1;display:block}.news-tg-chatname small{font-size:9px;display:block;color:#8da5bd;margin-top:3px}
+.news-tg-media{height:165px}.news-tg-media img{object-position:50% 55%}
+.news-tg-body{background:#fff;border-radius:0 0 8px 8px;padding:11px 8px 7px}
+.news-tg-body small,.news-dzen-preview small{display:block;margin-top:10px;font-size:9px;color:#93a3b8}
+.news-dzen-identity{display:flex;align-items:center;gap:7px;margin-bottom:12px}
+.news-dzen-brand{width:26px;height:26px;flex:0 0 26px;display:grid;place-items:center;background:#101727;color:white;border-radius:8px;font-size:20px}
+.news-dzen-identity b{font-size:10px;color:#28374d;flex:1;line-height:1.35}.news-dzen-identity>span:last-child{color:#8599b2}
+.news-dzen-preview{display:grid;grid-template-columns:49% 1fr;gap:10px;align-items:start}
+.news-dzen-preview b{font-size:11px}
+.news-dzen-preview p{font-size:9px;max-height:62px;overflow:hidden}
+.news-dzen-media{height:134px}
+.news-dzen-play{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:19px;text-shadow:0 2px 9px #000;pointer-events:none}.news-dzen-play:before{content:"";position:absolute;width:41px;height:41px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 15px #0007;background:#14203999;z-index:-1}
+.news-dzen-duration{position:absolute;bottom:5px;right:5px;background:#000b;color:#fff;font-size:8px;border-radius:4px;padding:4px}
+.news-sim-link{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:8px 0 3px;padding:9px 11px;border-radius:9px;background:#0e2445;border:1px solid #5c90b46b;color:#b6ddff}
+.news-sim-link[hidden]{display:none!important}
+.news-sim-link span{font-size:10px;overflow-wrap:anywhere;flex:1}
+.news-sim-link button{cursor:pointer;font:650 10px inherit;border:0;background:#2d67a0;color:#e9f4ff;border-radius:6px;padding:6px 7px;white-space:nowrap}
+.news-results-footnote{font-size:10px;color:#9ab4d6;line-height:1.6;margin:17px 2px 0}
+.news-stage-disclaimer{display:flex;gap:11px;align-items:flex-start;margin-top:19px;border:1px solid #ffffff28;background:#ffffff0b;padding:12px 14px;border-radius:11px}
+.news-stage-disclaimer>span{color:#a3caff;font-size:16px}
+.news-stage-disclaimer p{color:#aabfdc;font-size:11px;line-height:1.6;margin:0}.news-stage-disclaimer strong{color:#d7e6ff}
+.case-news .news-case-copy{padding:clamp(24px,3vw,38px) clamp(26px,4vw,50px)}
+.case-news .news-case-copy h3{font-size:clamp(28px,3.6vw,43px)}
+.case-news .news-case-copy p{font-size:14px;max-width:850px;line-height:1.7}
+.case-news .news-case-copy .news-automation-proof{max-width:710px}
+@media(min-width:850px){.case-news .news-case-copy{order:unset!important}.case-news .news-distribution{order:unset!important}}
+@media(max-width:860px){.news-flow-grid{grid-template-columns:1fr}.news-platform-stack{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.news-platform{padding-left:0}.news-platform:before,.news-platform-stack:before{display:none}.news-vk-media,.news-tg-media{height:135px}.news-dzen-preview{grid-template-columns:1fr}.news-dzen-media{height:135px}.news-platform-card{padding:9px}.news-social-actions{flex-wrap:wrap}}
+@media(max-width:650px){.case-news .news-distribution{padding:20px 12px}.news-distribution-heading{padding:0 6px;flex-wrap:wrap;gap:10px}.news-distribution-heading h4{font-size:39px}.news-demo-label{order:-1}.news-platform-stack{grid-template-columns:1fr}.news-platform{padding-left:24px}.news-platform:before,.news-platform-stack:before{display:block}.news-vk-media,.news-tg-media{height:200px}.news-dzen-preview{grid-template-columns:45% 1fr}.news-dzen-media{height:120px}.news-author-body{padding:15px}.news-author-top{padding:15px}.news-author-top small{font-size:9px}.news-media-caption span,.news-channels-label span{font-size:8px}.news-attachment-strip small{font-size:8px}.case-news .news-case-copy{padding:23px}}
+@media(prefers-reduced-motion:reduce){.news-platform-card,.news-channel-option{transition:none!important;transform:none!important}}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#brief">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов.<br><span class="gradient">Автоматизирую бизнес.</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
@@ -638,9 +748,83 @@
 <div class="pay-validation" id="pay-validation" role="status" aria-live="polite"></div><button id="pay-simulate" class="demo-primary" type="button">Смоделировать оплату →</button></div>
 <div id="pay-complete-step" class="pay-complete" hidden aria-live="polite"><div class="success-ring">✓</div><h4>Демонстрация завершена</h4><p>Так выглядит финальный этап сценария после подтверждения операции в приложении банка.</p><div class="status-list"><span>Данные получателя <b>Заполнены</b></span><span>Сумма <b id="pay-sum-result">40 000 ₽</b></span><span>Реальный перевод <b>Не выполнялся</b></span><span>Подтверждение центру <b>Не отправлялось</b></span></div><button class="pay-reset" id="pay-repeat" type="button">← Ещё раз</button></div>
 <div class="pay-disclaimer">Только интерактивная иллюстрация. Никакие деньги не списываются.</div></div></div></article>
+
 <article class="project feature case case-news reveal" id="news" aria-labelledby="news-heading">
-<div class="news-visual"><div class="editor-demo"><div class="editor-toolbar"><b>Редактор новостей</b><span>ДЕМО</span></div><div class="ed-label">ЗАГОЛОВОК</div><div class="ed-field">Открыта запись на новую программу</div><div class="ed-label">АНОНС</div><div class="ed-field">Короткий анонс, фото, теги и ссылка на полный материал — без ручной вёрстки страницы.</div><div class="share-preview" id="news-share-preview"><div class="share-art">НОВОСТИ<br>ДПО</div><div><b>Открыта запись на новую программу</b><small>Публикация на сайте с переходом к исходной новости.</small><em>ranepa-dpo39.ru/news.html ↗</em></div></div><label class="news-auto-toggle" for="news-publish-vk"><input id="news-publish-vk" type="checkbox" checked><span class="news-check-mark" aria-hidden="true">✓</span><span><strong>Опубликовать во ВКонтакте</strong><small>После сохранения новости система публикует её в сообществе автоматически</small></span></label><button class="demo-primary" id="news-preview-button" type="button">Сохранить новость и показать результат →</button><div class="news-result" id="news-preview-result" aria-live="polite">Нажмите «Сохранить» — увидите, как работает автоматизация.</div><p class="news-demo-disclaimer">Интерактивная демонстрация. Реальные публикации запускаются в редакторе сайта ДПО, не здесь.</p></div></div>
-<div class="copy case-copy"><div class="tag">Редактор · Медиа · Социальные сети</div><h3 id="news-heading">Новости без рутины.<br>От сайта до соцсетей.</h3><p>Разработал новостной раздел с редактором, фотографиями, видео, анонсами и тегами. Редактор ставит галочку «Опубликовать во ВКонтакте», сохраняет новость — и система автоматически размещает анонс в сообществе. Никакого ручного копирования текста и ссылок.</p><p class="muted">Автоматизация обрабатывает заголовок, лид новости, изображение и ссылку на сайт. Публикация идёт через VK API, предусмотрены контроль повторов и обработка ошибок. Если галочка выключена, новость остаётся только на сайте.</p><div class="news-automation-proof"><span><b>01</b> Лид новости</span><i>→</i><span><b>02</b> Фото + ссылка</span><i>→</i><span><b>03</b> VK API</span><i>→</i><span><b>04</b> Контроль дублей</span></div><div class="links"><a class="link" href="https://ranepa-dpo39.ru/news.html" target="_blank" rel="noopener noreferrer">Открыть реальные новости ↗</a><a class="link" href="#dpo">Вся экосистема ↑</a></div></div></article>
+ <div class="news-distribution" id="news-distribution-board">
+  <div class="news-distribution-heading"><div><span class="news-distribution-eyebrow"><span class="news-live-light"></span> ИНТЕРАКТИВНЫЙ СЦЕНАРИЙ ПУБЛИКАЦИИ</span><h4>Одна новость.<br><span>Три площадки.</span></h4><p>Создайте новость один раз, отметьте каналы и посмотрите, как выглядят итоговые публикации.</p></div><span class="news-demo-label">ДЕМО · БЕЗ ОТПРАВКИ</span></div>
+  <div class="news-flow-grid">
+   <div class="news-author-panel">
+    <div class="news-author-top"><span class="news-author-icon">▤</span><div><b>Редактор новостей</b><small>Западный филиал Президентской академии</small></div><span class="news-author-draft">Черновик</span></div>
+    <div class="news-author-body">
+     <label class="news-field-label" for="news-demo-headline">ЗАГОЛОВОК НОВОСТИ</label>
+     <textarea id="news-demo-headline" maxlength="190" rows="3" spellcheck="true">Очная форма обучения: откройте новые возможности в Президентской академии</textarea>
+     <label class="news-field-label" for="news-demo-lead">ЛИД · КРАТКИЙ АНОНС</label>
+     <textarea id="news-demo-lead" maxlength="320" rows="3" spellcheck="true">Западный филиал Президентской академии приглашает абитуриентов познакомиться с очной формой обучения, образовательными программами и возможностями студенческой жизни в Калининграде.</textarea>
+     <div class="news-inset"><span>ВРЕЗ</span><p>Очное обучение — это непосредственное общение с преподавателями, занятия в академической среде и новые знакомства.</p></div>
+     <label class="news-field-label" for="news-demo-body">ОСНОВНОЙ ТЕКСТ</label>
+     <textarea id="news-demo-body" rows="4" spellcheck="true">Учёба в Западном филиале Президентской академии объединяет знания, практические занятия и развитие профессиональных навыков. Абитуриенты могут изучить направления подготовки, узнать об условиях поступления и выбрать образовательную траекторию. Подробная информация о программах и приёме доступна на официальных ресурсах филиала.</textarea>
+     <div class="news-media-caption">МЕДИАМАТЕРИАЛЫ <span>По одному для каждой площадки</span></div>
+     <div class="news-attachment-strip">
+       <div><span class="news-attach-thumb news-attach-vk"><img src="assets/demo-news-vk.webp" alt="Очная форма обучения — постер с кампусом и студентами" loading="lazy"></span><small>VK · фото</small></div>
+       <div><span class="news-attach-thumb news-attach-tg"><img src="assets/demo-news-tg.webp" alt="Добро пожаловать в Западный филиал Президентской академии" loading="lazy"></span><small>Telegram · обложка</small></div>
+       <div><span class="news-attach-thumb news-attach-dzen"><img src="assets/demo-news-dzen.webp" alt="Кадр из видеоролика для Дзена" loading="lazy"></span><small>Дзен · видео</small></div>
+     </div>
+     <div class="news-channels-label">КАНАЛЫ ПУБЛИКАЦИИ <span>Выберите получателей</span></div>
+     <div class="news-publish-options">
+       <label class="news-channel-option" for="news-publish-vk"><input type="checkbox" id="news-publish-vk" checked><span class="news-channel-icon news-icon-vk">VK</span><span><b>ВКонтакте</b><small>Пост с изображением «Очная форма»</small></span><span class="news-option-check">✓</span></label>
+       <label class="news-channel-option" for="news-publish-tg"><input type="checkbox" id="news-publish-tg" checked><span class="news-channel-icon news-icon-tg">➤</span><span><b>Telegram</b><small>Пост с обложкой Академии</small></span><span class="news-option-check">✓</span></label>
+       <label class="news-channel-option" for="news-publish-dzen"><input type="checkbox" id="news-publish-dzen" checked><span class="news-channel-icon news-icon-dzen">✦</span><span><b>Яндекс Дзен</b><small>Превью видеопубликации</small></span><span class="news-option-check">✓</span></label>
+     </div>
+     <button type="button" class="news-publish-action" id="news-preview-button"><span>↗</span> Сохранить и показать публикации</button>
+     <button type="button" class="news-repeat-button" id="news-repeat-button" hidden>↺ Изменить выбор и повторить</button>
+     <div class="news-demo-status" id="news-preview-result" aria-live="polite">Готово к демонстрации. Материалы появятся справа после нажатия.</div>
+    </div>
+   </div>
+   <div class="news-distribution-results">
+      <div class="news-results-top"><div><span class="news-result-dot"></span><strong id="news-delivery-title">Ожидается публикация</strong></div><span id="news-delivery-count">0 / 3</span></div>
+      <div class="news-platform-stack">
+       <section class="news-platform news-platform-vk" data-publish-channel="vk" data-state="idle" aria-label="Демонстрация публикации ВКонтакте">
+        <div class="news-platform-line"><span class="news-platform-node news-icon-vk">VK</span><span class="news-platform-meta"><b>ВКонтакте</b><small class="news-platform-status">Ожидает сохранения</small></span><span class="news-platform-indicator">●</span></div>
+        <div class="news-platform-card news-vk-card">
+         <div class="news-social-identity"><span class="news-social-avatar">ПА</span><div><strong>Западный филиал Президентской академии</strong><small>Запись сообщества · демонстрация</small></div><span class="news-social-more">•••</span></div>
+         <div class="news-social-text"><b data-news-headline>Очная форма обучения: откройте новые возможности в Президентской академии</b><p data-news-lead>Западный филиал Президентской академии приглашает абитуриентов познакомиться с очной формой обучения.</p></div>
+         <div class="news-social-media news-vk-media"><img src="assets/demo-news-vk.webp" alt="Очная форма: здание Президентской академии и студенты" loading="lazy"></div>
+         <div class="news-social-actions"><span>♡ Нравится</span><span>◯ Комментировать</span><span>➤ Поделиться</span></div>
+        </div>
+        <div class="news-sim-link" hidden><span>vk.com/wall-000000_101</span><button type="button" data-copy-demo="vk.com/wall-000000_101" aria-label="Скопировать тестовую ссылку ВКонтакте">Копировать ↗</button></div>
+       </section>
+       <section class="news-platform news-platform-tg" data-publish-channel="tg" data-state="idle" aria-label="Демонстрация публикации Telegram">
+        <div class="news-platform-line"><span class="news-platform-node news-icon-tg">➤</span><span class="news-platform-meta"><b>Telegram</b><small class="news-platform-status">Ожидает сохранения</small></span><span class="news-platform-indicator">●</span></div>
+        <div class="news-platform-card news-tg-card">
+         <div class="news-tg-chatname"><span>З</span><div><b>Западный филиал Президентской академии</b><small>Канал · макет сообщения</small></div></div>
+         <div class="news-social-media news-tg-media"><img src="assets/demo-news-tg.webp" alt="Добро пожаловать в Западный филиал Президентской академии" loading="lazy"></div>
+         <div class="news-tg-body"><b data-news-headline>Очная форма обучения: откройте новые возможности в Президентской академии</b><p data-news-lead>Западный филиал Президентской академии приглашает абитуриентов познакомиться с очной формой обучения.</p><small>◉ Просмотры не моделируются · демо</small></div>
+        </div>
+        <div class="news-sim-link" hidden><span>t.me/example_channel/245</span><button type="button" data-copy-demo="t.me/example_channel/245" aria-label="Скопировать тестовую ссылку Telegram">Копировать ↗</button></div>
+       </section>
+       <section class="news-platform news-platform-dzen" data-publish-channel="dzen" data-state="idle" aria-label="Демонстрация видеопубликации в Дзене">
+        <div class="news-platform-line"><span class="news-platform-node news-icon-dzen">✦</span><span class="news-platform-meta"><b>Дзен</b><small class="news-platform-status">Ожидает сохранения</small></span><span class="news-platform-indicator">●</span></div>
+        <div class="news-platform-card news-dzen-card">
+         <div class="news-dzen-identity"><span class="news-dzen-brand">✦</span><b>Западный филиал Президентской академии</b><span>⋮</span></div>
+         <div class="news-dzen-preview"><div class="news-social-media news-dzen-media"><img src="assets/demo-news-dzen.webp" alt="Кадр из предоставленного видеоролика об образовании" loading="lazy"><span class="news-dzen-play" aria-hidden="true">▶</span><span class="news-dzen-duration">ВИДЕО · 11 СЕК.</span></div><div><b data-news-headline>Очная форма обучения: откройте новые возможности в Президентской академии</b><p data-news-lead>Западный филиал Президентской академии приглашает абитуриентов познакомиться с очной формой обучения.</p><small>Видео · демонстрация карточки</small></div></div>
+        </div>
+        <div class="news-sim-link" hidden><span>dzen.ru/a/demo-fulltime-education</span><button type="button" data-copy-demo="dzen.ru/a/demo-fulltime-education" aria-label="Скопировать тестовую ссылку Дзена">Копировать ↗</button></div>
+       </section>
+      </div>
+      <div class="news-results-footnote">Тестовые адреса, не настоящие публикации. Отметки и карточки показывают только сценарий работы интерфейса.</div>
+   </div>
+  </div>
+  <div class="news-stage-disclaimer"><span>ⓘ</span><p><strong>Важно:</strong> здесь только интерактивная имитация публикации. В реальном проекте подтверждена автоматическая публикация во ВКонтакте; Telegram и Дзен показаны как варианты расширения, без подключения их API.</p></div>
+ </div>
+ <div class="copy case-copy news-case-copy">
+   <div class="tag">Редактор · VK API · Омниканальные сценарии</div>
+   <h3 id="news-heading">Один материал.<br>Публикация на нескольких площадках.</h3>
+   <p>Посмотрите процесс целиком: автор готовит новость об очном обучении, выбирает площадки и нажимает «Сохранить». Интерфейс показывает, как одна публикация может превращаться в пост ВКонтакте, сообщение Telegram и видеокарточку Дзена — с отдельным медиаматериалом для каждого канала.</p>
+   <p class="muted">В моём действующем новостном редакторе уже реализована автоматическая отправка анонсов во ВКонтакте по выбранной галочке. Остальные две ветки на этой странице демонстрируют возможный сценарий развития системы; публикации в Telegram и Дзен здесь не выполняются.</p>
+   <div class="news-automation-proof"><span><b>01</b> Редактор</span><i>→</i><span><b>02</b> Каналы</span><i>→</i><span><b>03</b> Карточки</span><i>→</i><span><b>04</b> Тестовые ссылки</span></div>
+   <div class="links"><a class="link" href="https://ranepa-dpo39.ru/news.html" target="_blank" rel="noopener noreferrer">Открыть настоящий редактор новостей ↗</a><a class="link" href="#dpo">Вся экосистема ↑</a></div>
+ </div>
+</article>
 
 <article class="project feature case case-creative reveal" id="creative" aria-labelledby="creative-heading">
   <div class="creative-stage">
@@ -896,28 +1080,101 @@ document.querySelectorAll('[data-guide]').forEach(btn=>btn.addEventListener('cli
  document.getElementById('pay-repeat')?.addEventListener('click',function(){
   document.getElementById('pay-input-step').hidden=false;document.getElementById('pay-complete-step').hidden=true;
  });
- document.getElementById('news-preview-button')?.addEventListener('click',function(){
-  const status=document.getElementById('news-preview-result');
-  const crosspost=document.getElementById('news-publish-vk')?.checked;
-  const preview=document.getElementById('news-share-preview');
-  if(!status||!preview)return;
-  preview.classList.toggle('is-ready',!!crosspost);
-  status.classList.add('is-ready');
-  status.textContent=crosspost
-   ?'✓ Демо: новость сохранена на сайте, анонс автоматически опубликован в сообществе ВКонтакте.'
-   :'✓ Демо: новость сохранена на сайте. Публикация во ВКонтакте отключена.';
-  this.textContent='Показать ещё раз ↻';
+
+ const board=document.getElementById('news-distribution-board');
+ const publishButton=document.getElementById('news-preview-button');
+ const repeatButton=document.getElementById('news-repeat-button');
+ const status=document.getElementById('news-preview-result');
+ const count=document.getElementById('news-delivery-count');
+ const title=document.getElementById('news-delivery-title');
+ const head=document.getElementById('news-demo-headline');
+ const lead=document.getElementById('news-demo-lead');
+ const channels=[
+  {id:'vk',input:document.getElementById('news-publish-vk')},
+  {id:'tg',input:document.getElementById('news-publish-tg')},
+  {id:'dzen',input:document.getElementById('news-publish-dzen')}
+ ];
+ const platformEntries=channels.map(c=>({...c,card:board.querySelector('[data-publish-channel="'+c.id+'"]')}));
+ let timers=[],generation=0;
+ function cancelTimers(){generation++;timers.forEach(window.clearTimeout);timers=[];}
+ function setText(){
+  const h=head.value.trim()||'Очная форма обучения в Президентской академии';
+  const l=lead.value.trim()||'Информация об очной форме обучения.';
+  board.querySelectorAll('[data-news-headline]').forEach(e=>e.textContent=h);
+  board.querySelectorAll('[data-news-lead]').forEach(e=>e.textContent=l);
+ }
+ function reset(){
+  cancelTimers();
+  board.classList.remove('is-publishing','is-published');
+  for(const c of platformEntries){
+    c.card.dataset.state='idle';
+    c.card.querySelector('.news-platform-status').textContent=c.input.checked?'Ожидает сохранения':'Канал не выбран';
+    c.card.querySelector('.news-sim-link').hidden=true;
+  }
+  title.textContent='Ожидается публикация';
+  count.textContent='0 / '+channels.filter(c=>c.input.checked).length;
+  status.classList.remove('is-ready');
+  status.textContent='Готово к демонстрации. Материалы появятся справа после нажатия.';
+  publishButton.disabled=false;
+  publishButton.innerHTML='<span>↗</span> Сохранить и показать публикации';
+  repeatButton.hidden=true;
+ }
+ function publish(){
+  cancelTimers();
+  const localGeneration=generation;
+  setText();
+  const selected=platformEntries.filter(c=>c.input.checked);
+  board.classList.remove('is-published');
+  board.classList.add('is-publishing');
+  publishButton.disabled=true;
+  publishButton.innerHTML='<span>◌</span> Сохраняем новость…';
+  title.textContent='Размещение по каналам';
+  count.textContent='0 / '+selected.length;
+  platformEntries.forEach(c=>{
+   c.card.dataset.state=c.input.checked?'pending':'skipped';
+   c.card.querySelector('.news-platform-status').textContent=c.input.checked?'Подготовка публикации':'Не выбрано редактором';
+   c.card.querySelector('.news-sim-link').hidden=true;
+  });
+  const advance=(delay,fn)=>timers.push(window.setTimeout(()=>{if(localGeneration!==generation)return;fn()},delay));
+  if(!selected.length){
+    advance(320,()=>{
+      board.classList.remove('is-publishing');
+      board.classList.add('is-published');
+      publishButton.disabled=false;publishButton.textContent='✓ Новость сохранена';
+      repeatButton.hidden=false;title.textContent='Сохранено без отправки';
+      status.classList.add('is-ready');status.textContent='✓ Демонстрация: новость сохранена. Все каналы отключены.';
+    });
+    return;
+  }
+  selected.forEach((c,i)=>advance(280+i*420,()=>{
+    c.card.dataset.state='published';
+    c.card.querySelector('.news-platform-status').textContent='Готово · демонстрация';
+    c.card.querySelector('.news-sim-link').hidden=false;
+    count.textContent=(i+1)+' / '+selected.length;
+    if(i===selected.length-1){
+     board.classList.remove('is-publishing');board.classList.add('is-published');
+     title.textContent='Все выбранные каналы готовы';
+     publishButton.disabled=false;publishButton.textContent='✓ Результат показан';
+     repeatButton.hidden=false;status.classList.add('is-ready');
+     status.textContent='✓ Демо: новость сохранена, '+selected.length+' '+(selected.length===1?'площадка показана':selected.length<5?'площадки показаны':'площадок показано')+'. Реальные публикации не отправлялись.';
+    }
+  }));
+ }
+ publishButton?.addEventListener('click',()=>{if(board.classList.contains('is-published'))reset();publish();});
+ repeatButton?.addEventListener('click',reset);
+ platformEntries.forEach(c=>c.input.addEventListener('change',reset));
+ [head,lead,document.getElementById('news-demo-body')].forEach(input=>input.addEventListener('input',()=>{setText();if(board.classList.contains('is-published'))reset()}));
+ board?.addEventListener('click',async event=>{
+   const b=event.target.closest('[data-copy-demo]');if(!b)return;
+   const value=b.dataset.copyDemo;
+   try{
+      if(!navigator.clipboard||!navigator.clipboard.writeText)throw Error('No clipboard API');
+      await navigator.clipboard.writeText(value);
+      b.textContent='Скопировано ✓';
+   }catch(e){b.textContent='Тестовая ссылка';}
+   window.setTimeout(()=>{b.textContent='Копировать ↗'},1750);
  });
- document.getElementById('news-publish-vk')?.addEventListener('change',function(){
-  const status=document.getElementById('news-preview-result');
-  const preview=document.getElementById('news-share-preview');
-  if(status){status.classList.remove('is-ready');status.textContent=this.checked
-   ?'Автопубликация включена. Сохраните новость, чтобы увидеть весь сценарий.'
-   :'Автопубликация выключена. Новость сохранится только на сайте.';}
-  if(preview)preview.classList.remove('is-ready');
-  const btn=document.getElementById('news-preview-button');
-  if(btn)btn.textContent='Сохранить новость и показать результат →';
- });
+ reset();
 })();
 </script><script>(function(){const b=document.getElementById('toggle-real-form'),w=document.getElementById('real-form-wrap'),f=document.getElementById('real-form-iframe');if(!b||!w||!f)return;b.addEventListener('click',function(){const opening=w.hidden;w.hidden=!opening;b.setAttribute('aria-expanded',String(opening));b.textContent=opening?'Свернуть живую форму ↑':'Развернуть живую форму ↓';if(opening&&!f.getAttribute('src'))f.setAttribute('src',f.getAttribute('data-src'));});})();</script>
 <div id="cat-promo-overlay" class="cat-promo-overlay" hidden>
