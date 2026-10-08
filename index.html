@@ -60,6 +60,35 @@
 .case-creative{overflow:hidden}.creative-stage{display:flex;flex-direction:column;justify-content:center;align-items:stretch;padding:clamp(17px,2.8vw,30px);background:radial-gradient(ellipse at 20% 15%,#5567ae6b,transparent 55%),linear-gradient(148deg,#101a30,#26354c);min-width:0}.creative-frame{background:#0b1020;border:1px solid #58698b6b;box-shadow:0 27px 70px #060e2566,0 4px 18px #060e2540;border-radius:22px;overflow:hidden;color:white}.creative-frame-top{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 17px;letter-spacing:.11em;font-size:10px;font-weight:760;color:#adbddd}.creative-live-dot{width:8px;height:8px;background:#80b6ff;border-radius:50%;box-shadow:0 0 14px #9bc4ff90}.creative-frame-time{margin-left:auto;font-size:10px;letter-spacing:.06em;color:#879aba;font-weight:550}.creative-film{aspect-ratio:910/512;position:relative;background:radial-gradient(ellipse at 50% 40%,#435783b9,transparent 68%),linear-gradient(145deg,#111d34,#283a5b 70%,#121c30);overflow:hidden}.creative-film video{position:relative;display:block;width:100%;height:100%;object-fit:contain;background:#0b0e19;z-index:2}.creative-film-placeholder{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;padding:clamp(17px,3vw,28px);background:radial-gradient(ellipse at 64% 23%,#8ea8db35,transparent 65%),linear-gradient(135deg,#182443,#263e60);z-index:0}.creative-film-mark{font-size:clamp(8px,1vw,12px);font-weight:800;letter-spacing:.17em;color:#f2f5ffe8}.creative-film-caption{font-size:clamp(13px,2.2vw,27px);line-height:1.3;letter-spacing:.16em;color:#d2ddf1;font-weight:650}.creative-film-caption strong{display:block;font-size:clamp(27px,4.2vw,57px);letter-spacing:-.06em;color:#fff;line-height:1.1}.creative-play{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;cursor:pointer;border:0;color:white;background:linear-gradient(180deg,#03091a0a,#06102448);font:800 12px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;letter-spacing:.13em;text-shadow:0 2px 10px #061022aa}.creative-play-icon{display:grid;place-items:center;width:67px;height:67px;padding-left:4px;background:#ffffffeb;color:#263f6c;border-radius:50%;font-size:22px;box-shadow:0 0 0 10px #ffffff1f,0 12px 40px #03091866;transition:transform .3s cubic-bezier(.2,.85,.2,1),box-shadow .3s}.creative-play:hover .creative-play-icon{transform:scale(1.08);box-shadow:0 0 0 16px #ffffff18,0 12px 40px #03091888}.creative-play small{font-size:11px;letter-spacing:0;font-weight:500;color:#d5deed}.creative-film.is-playing .creative-play,.creative-film.is-playing .creative-film-placeholder{display:none}.creative-film.is-failed .creative-play{display:none}.creative-film.is-failed .creative-film-placeholder{z-index:3}.creative-chapters{display:flex;gap:5px;margin:0;padding:12px;border-top:1px solid #ffffff14}.creative-chapter{flex:1;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:5px;padding:9px 5px;cursor:pointer;background:#ffffff0b;border:1px solid transparent;color:#afbed5;border-radius:10px;font:600 11px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;transition:background .2s,color .2s,border-color .2s}.creative-chapter span{color:#7294c5;font-size:10px;font-weight:800}.creative-chapter.is-active{background:#ffffff1d;border-color:#ffffff22;color:#fff}.creative-chapter:hover{background:#ffffff22;color:#fff}.creative-frame-bottom{padding:0 17px 14px;display:flex;justify-content:space-between;gap:12px;color:#9aacc9;font-size:10px;line-height:1.5}.creative-frame-bottom span:last-child{flex-shrink:0;color:#698bbd}.creative-stagenote{margin:14px 5px 0;font-size:11px;line-height:1.55;color:#b7c4dcbb}.case-creative .tag{color:#7382a3}.creative-logic{margin:17px 0 18px;border:1px solid #e6eaf2;border-radius:17px;overflow:hidden}.creative-logic>div{padding:12px 14px;display:flex;flex-direction:column;gap:4px;border-bottom:1px solid #e9edf3}.creative-logic>div:last-child{border-bottom:none}.creative-logic strong{font-size:13px;color:#344866}.creative-logic small{font-size:12px;color:#7a8799;line-height:1.5}.case-creative .copy p{font-size:15px}.case-creative .copy h3{font-size:clamp(30px,3.5vw,42px)}.creative-chapter:focus-visible,.creative-play:focus-visible{outline:3px solid #aac8ff;outline-offset:-3px}
 @media(max-width:850px){.case-creative .creative-stage{order:1}.case-creative .copy{order:2}.creative-film-caption strong{font-size:clamp(27px,6vw,50px)}}@media(max-width:480px){.creative-frame{border-radius:16px}.creative-frame-top{padding:0 11px;font-size:9px;min-height:41px}.creative-stage{padding:15px}.creative-chapters{padding:8px}.creative-chapter{font-size:10px;padding:8px 3px}.creative-frame-bottom{padding:0 11px 10px;font-size:10px}.creative-play-icon{width:53px;height:53px}.creative-logic small{font-size:12px}.creative-stagenote{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.creative-chapter,.creative-play-icon{transition:none}}
+
+/* Scroll-triggered cinematic visual — quiet by default, loads media only when visible */
+.cinematic-section{padding-top:24px;padding-bottom:35px}
+.cinematic-scene{position:relative;min-height:clamp(410px,46vw,500px);border-radius:30px;overflow:hidden;isolation:isolate;background:linear-gradient(135deg,#243149,#5b6881);box-shadow:0 26px 75px #213c5922;color:#fff}
+.cinematic-video{position:absolute;z-index:-2;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center center;filter:saturate(.85) contrast(1.08);background:#52617a}
+.cinematic-shade{position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(93deg,#0b1424ee 0%,#111b2ad9 30%,#14223870 67%,#0a14274b 100%),linear-gradient(0deg,#0b1525b5,transparent 27%,transparent 75%,#0b152564)}
+.cinematic-top{position:relative;display:flex;justify-content:space-between;gap:14px;align-items:center;padding:clamp(22px,3vw,33px) clamp(23px,4vw,43px) 0}
+.cinematic-eyebrow{display:flex;gap:9px;align-items:center;font-size:11px;font-weight:780;letter-spacing:.145em;color:#e4ecff}
+.cinematic-eyebrow i{width:7px;height:7px;border-radius:50%;background:#b9daff;box-shadow:0 0 12px #d7e7ff88}
+.cinematic-time{font-size:10px;letter-spacing:.13em;color:#d0d9ec99;font-weight:800;white-space:nowrap}
+.cinematic-content{position:relative;padding:clamp(48px,6vw,72px) clamp(23px,4vw,43px) 84px;max-width:760px}
+.cinematic-kicker{display:block;color:#c5d7f6;font-size:11px;font-weight:760;letter-spacing:.17em;margin-bottom:15px}
+.cinematic-content h2{font-size:clamp(38px,5.4vw,68px);line-height:1.06;letter-spacing:-.065em;margin:0 0 18px;color:#fff;max-width:680px}
+.cinematic-content h2 span{color:#c8dfff}
+.cinematic-content p{max-width:560px;font-size:clamp(15px,1.5vw,18px);line-height:1.68;color:#dce5f4d9;margin:0}
+.cinematic-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:27px}
+.cinematic-primary,.cinematic-replay{display:inline-flex;align-items:center;justify-content:center;gap:11px;padding:13px 17px;font:700 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;border-radius:13px;min-height:43px}
+.cinematic-primary{background:#fff;color:#203653;transition:transform .2s,box-shadow .2s}
+.cinematic-primary:hover{transform:translateY(-2px);box-shadow:0 8px 27px #0003}
+.cinematic-replay{cursor:pointer;border:1px solid #ffffff4d;background:#ffffff0d;color:#fff;transition:background .2s}
+.cinematic-replay:hover{background:#ffffff29}
+.cinematic-primary:focus-visible,.cinematic-replay:focus-visible{outline:3px solid #b0d4ff;outline-offset:3px}
+.cinematic-bottom{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:end;gap:16px;padding:0 clamp(23px,4vw,43px) 25px;color:#e0e9f3b5;font-size:11px;line-height:1.5}
+.cinematic-progress{display:block;position:relative;width:140px;height:3px;overflow:hidden;border-radius:4px;background:#ffffff3d;flex:0 0 140px}
+.cinematic-progress i{display:block;width:100%;height:100%;background:#d5e9ff;transform-origin:left center;transform:scaleX(0);transition:transform .15s linear}
+.cinematic-scene.is-finished .cinematic-progress i{transform:scaleX(1)}
+@media(max-width:700px){.cinematic-section{padding-top:12px;padding-bottom:20px}.cinematic-scene{min-height:460px;border-radius:23px}.cinematic-top{padding:24px 21px 0}.cinematic-content{padding:60px 21px 100px}.cinematic-content h2{font-size:clamp(36px,8vw,48px)}.cinematic-content p{font-size:15px;max-width:470px}.cinematic-bottom{padding:0 20px 20px}.cinematic-progress{flex-basis:60px;width:60px}}
+@media(max-width:440px){.cinematic-time{display:none}.cinematic-actions{gap:8px}.cinematic-primary,.cinematic-replay{font-size:12px;padding:12px}.cinematic-scene{min-height:490px}.cinematic-bottom>span:first-child{max-width:240px;font-size:10px}}
+@media(prefers-reduced-motion:reduce){.cinematic-primary,.cinematic-replay,.cinematic-progress i{transition:none!important}}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Контакт</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Сложные процессы.<br><span class="gradient">Простые решения.</span></h1><p class="lead">Объединяю маркетинг и технологии: таргетированная реклама, посевы, контент и AI-креативы, сайты, SEO, боты и автоматизация бизнес-процессов под ключ.</p><div class="actions"><a class="btn" href="#journey">Начать экскурсию ↓</a><a class="btn secondary" href="https://t.me/dnk_pr03" target="_blank" rel="noopener">Обсудить задачу</a></div><p class="hero-subnote">От первой заявки до работы сотрудников — проектирую весь маршрут.</p></header><nav class="tour-strip wrap" id="journey" aria-label="Навигация по кейсам"><span>КЕЙСЫ:</span><a href="#creative">AI-видео и реклама</a><a href="#cat">Telegram-бот</a><a href="#dpo">Экосистема ДПО</a><a href="#form">Яндекс Форма</a><a href="#payment">Оплата</a><a href="#news">Новости</a><a href="#guide">Инструкции</a></nav>
@@ -235,6 +264,30 @@
     <a class="engineering-item" href="#payment"><span class="eng-no">04 · Качество и безопасность</span><strong>Проверки, которые не видит посетитель</strong><p>В проекте есть автоматические проверки контента, безопасности, CMS и ссылок на официальные банковские формы.</p><span class="eng-more">Платёжный маршрут ↗</span></a>
   </div>
 </section>
+
+<section class="section wrap cinematic-section reveal" id="cinematic" aria-labelledby="cinematic-title">
+  <div class="cinematic-scene" id="cinematic-scene">
+    <video class="cinematic-video" id="cinematic-video" muted playsinline webkit-playsinline preload="none" poster="assets/academy-architecture-poster.jpg" aria-label="AI-визуализация: здание постепенно собирается из архитектурных элементов">
+      <source data-src="assets/academy-architecture-bg.mp4" type="video/mp4">
+    </video>
+    <div class="cinematic-shade" aria-hidden="true"></div>
+    <div class="cinematic-top">
+      <span class="cinematic-eyebrow"><i aria-hidden="true"></i> AI · ВИЗУАЛИЗАЦИЯ ПРОЦЕССА</span>
+      <span class="cinematic-time">10 СЕКУНД · БЕЗ ЗВУКА</span>
+    </div>
+    <div class="cinematic-content">
+      <span class="cinematic-kicker">ОТ КОНЦЕПЦИИ — К РЕЗУЛЬТАТУ</span>
+      <h2 id="cinematic-title">Из идеи.<br><span>В работающую систему.</span></h2>
+      <p>Архитектура начинается с замысла. Я соединяю маркетинг, AI, дизайн, разработку и автоматизацию в цифровые продукты, которые действительно работают.</p>
+      <div class="cinematic-actions">
+        <a href="#creative" class="cinematic-primary">Другие AI-креативы <span aria-hidden="true">↗</span></a>
+        <button type="button" id="cinematic-replay" class="cinematic-replay" aria-label="Посмотреть сборку здания"><span aria-hidden="true">↻</span> Повторить сборку</button>
+      </div>
+    </div>
+    <div class="cinematic-bottom"><span>Авторская AI-визуализация · не документальная съёмка строительства</span><span class="cinematic-progress"><i id="cinematic-progress-fill"></i></span></div>
+  </div>
+</section>
+
 <section class="section wrap services" id="capabilities"><div class="eyebrow">Чем могу быть полезен</div><h2>Маркетинг. Разработка.<br><span class="gradient">Автоматизация. Контент.</span></h2><p class="muted">Занимаюсь проектом целиком: привожу аудиторию, создаю креативы, проектирую цифровой продукт и автоматизирую то, что раньше делалось вручную.</p><div class="services-grid">
 <a href="#dpo"><span>▦</span><b>Сайты и цифровые платформы</b><small>От дизайна до панели управления</small><em>Кейс ↗</em></a>
 <a href="#dpo"><span>✦</span><b>AI-ассистенты и операторы</b><small>Диалоги, поддержка, передача человеку</small><em>Кейс ↗</em></a>
@@ -516,5 +569,39 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
  video.addEventListener('timeupdate',()=>{if(!video.duration)return;const t=video.currentTime;activeChapter(t>=8?8:t>=4?4:0)});
  video.addEventListener('ended',()=>{film.classList.remove('is-playing');status.textContent='Ролик завершён. Можно посмотреть ещё раз.';activeChapter(0)});
  video.addEventListener('error',()=>{film.classList.add('is-failed');film.classList.remove('is-playing');status.textContent='Видео ещё публикуется. Попробуйте позже.';});
+})();
+</script><script>
+(function(){
+ const scene=document.getElementById('cinematic-scene'),video=document.getElementById('cinematic-video');
+ const replay=document.getElementById('cinematic-replay'),bar=document.getElementById('cinematic-progress-fill');
+ if(!scene||!video||!replay||!bar)return;
+ let started=false,pausedByView=false,observer=null;
+ const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+              window.matchMedia('(max-width: 700px)').matches ||
+              Boolean(navigator.connection&&navigator.connection.saveData);
+ function load(){const src=video.querySelector('source');if(src&&src.dataset.src&&!src.src){src.src=src.dataset.src;video.load();}}
+ function start(replayFromStart){
+   load();
+   if(replayFromStart){try{video.currentTime=0}catch(e){}}
+   scene.classList.remove('is-finished');
+   const p=video.play();
+   if(p&&typeof p.catch==='function')p.catch(()=>{replay.textContent='▶ Посмотреть сборку';});
+   started=true;pausedByView=false;
+ }
+ video.addEventListener('timeupdate',()=>{const x=Math.min(1,Math.max(0,video.currentTime/(video.duration||10)));bar.style.transform='scaleX('+x+')';});
+ video.addEventListener('ended',()=>{scene.classList.add('is-finished');replay.textContent='↻ Повторить сборку';bar.style.transform='scaleX(1)';});
+ video.addEventListener('error',()=>{replay.textContent='↻ Попробовать снова';});
+ replay.addEventListener('click',()=>{start(true)});
+ if('IntersectionObserver' in window){
+   observer=new IntersectionObserver(entries=>{
+     const e=entries[0];if(!e)return;
+     if(e.isIntersecting){
+       if(!started&&!reduce){start(true)}
+       else if(pausedByView&&!document.hidden){video.play().catch(()=>{});pausedByView=false}
+     }else if(started&&!video.paused&&!video.ended){video.pause();pausedByView=true}
+   },{threshold:.30});
+   observer.observe(scene);
+ }else if(!reduce){start(true)}
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&started&&!video.paused){video.pause();pausedByView=true}else if(!document.hidden&&pausedByView&&scene.getBoundingClientRect().top<window.innerHeight&&scene.getBoundingClientRect().bottom>0){video.play().catch(()=>{});pausedByView=false}});
 })();
 </script></body></html>
