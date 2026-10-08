@@ -188,6 +188,41 @@
 .proof-link:focus-visible{outline:3px solid #7b9fdc;outline-offset:2px}
 @media(max-width:700px){.proof-showcase{margin-top:22px;padding:19px}.proof-links{grid-template-columns:1fr}.proof-link{padding:17px}.proof-intro{gap:8px}.proof-intro>p{max-width:100%}}
 @media(prefers-reduced-motion:reduce){.proof-link{transition:none}}
+
+/* Outcome packages, explicit scope and transparent pre-start process */
+.sales-offers{padding-top:45px;padding-bottom:51px}
+.sales-offers-head{display:flex;align-items:flex-end;justify-content:space-between;gap:25px;margin-bottom:24px}
+.sales-offers-head h2{font-size:clamp(33px,4.4vw,54px);margin:12px 0 0}
+.sales-offers-head>p{max-width:285px;font-size:14px;line-height:1.65;color:#8490a1;margin:0}
+.sales-offers-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.sales-offer{position:relative;min-height:462px;background:#fff;border:1px solid #e6eaf0;border-radius:26px;padding:clamp(20px,2.5vw,28px);display:flex;flex-direction:column;transition:box-shadow .25s,transform .25s}
+.sales-offer:hover{transform:translateY(-3px);box-shadow:0 16px 37px #20314f13}
+.sales-offer-focus{background:linear-gradient(165deg,#202b45,#293a5d);border-color:#344568;box-shadow:0 16px 40px #1d305425}
+.sales-offer-head{display:flex;justify-content:space-between;gap:12px;font-size:10px;letter-spacing:.13em;font-weight:800;color:#8390a2}
+.sales-offer-focus .sales-offer-head{color:#b8c8e2}.sales-offer-index{font-size:11px;font-weight:680}
+.sales-offer h3{font-size:clamp(23px,2.6vw,31px);line-height:1.17;letter-spacing:-.04em;color:#283c56;margin:26px 0 11px}
+.sales-offer>p{font-size:13px;line-height:1.65;color:#7a8697;margin:0}
+.sales-offer-focus h3,.sales-offer-focus>p{color:#fff}.sales-offer-focus>p{color:#cad5e9}
+.sales-offer ul{list-style:none;margin:21px 0 15px;padding:0;display:grid;gap:12px}
+.sales-offer li{position:relative;padding-left:22px;font-size:12px;line-height:1.5;color:#56677e}
+.sales-offer li:before{content:"✓";position:absolute;left:0;color:#4b8b7c;font-weight:850}
+.sales-offer-focus li{color:#e2e9f6}.sales-offer-focus li:before{color:#96e0c1}
+.sales-offer-footer{margin-top:auto;padding-top:17px;border-top:1px solid #e9edf3;display:flex;flex-direction:column;gap:13px}
+.sales-offer-focus .sales-offer-footer{border-color:#ffffff29}
+.sales-offer-footer>span{font-size:11px;line-height:1.55;color:#8a96a7}
+.sales-offer-focus .sales-offer-footer>span{color:#bfcce2}
+.sales-offer-footer>a{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;font-weight:780;color:#305d9e}
+.sales-offer-focus .sales-offer-footer>a{color:#e4f0ff}
+.sales-terms{display:flex;align-items:center;gap:22px;margin-top:17px;border:1px solid #e6eaf1;border-radius:20px;padding:20px 23px;background:#f1f4f9}
+.sales-terms>div{flex:1}.sales-terms-eyebrow{font-size:10px;letter-spacing:.1em;color:#7890b3;font-weight:850;display:block;margin-bottom:7px}
+.sales-terms strong{color:#35435a;font-size:15px}.sales-terms p{font-size:12px;line-height:1.6;color:#7e8b9b;margin:6px 0 0}
+.sales-terms>a{flex-shrink:0;font-size:12px;font-weight:740;color:#fff;background:#283c64;border-radius:12px;padding:13px 15px}
+.sales-steps{display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap;padding:18px 3px 0;font-size:11px;color:#79889d;font-weight:660}
+.sales-steps span{display:flex;gap:8px;align-items:center}.sales-steps b{font-size:10px;color:#6683b3;background:#e8eef9;border-radius:8px;padding:6px 7px}.sales-steps i{font-style:normal;color:#adbcd3}
+.sales-offers a:focus-visible{outline:3px solid #7da5ec;outline-offset:4px}
+@media(max-width:960px){.sales-offers-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sales-offer:last-child{grid-column:1/-1;min-height:unset}.sales-offer{min-height:450px}}
+@media(max-width:700px){.sales-offers{padding-top:33px;padding-bottom:38px}.sales-offers-head{flex-direction:column;align-items:flex-start;gap:7px}.sales-offers-head>p{max-width:100%}.sales-offers-grid{grid-template-columns:1fr}.sales-offer:last-child{grid-column:auto}.sales-offer{min-height:unset;padding:24px}.sales-terms{flex-direction:column;align-items:flex-start}.sales-terms>a{width:100%;text-align:center}.sales-steps span{flex:1 0 42%}.sales-steps i{display:none}}
+@media(prefers-reduced-motion:reduce){.sales-offer{transition:none!important}}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Контакт</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов.<br><span class="gradient">Автоматизирую бизнес.</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
@@ -217,6 +252,32 @@
     </article>
   </div>
   <div class="sales-path-bridge"><span class="sales-path-dot" aria-hidden="true"></span><p><b>Хотите посмотреть всё?</b> Ниже — все реальные проекты, сценарии, AI-видео, инструкции и технологии.</p><a href="#journey">Перейти к полной экскурсии <span aria-hidden="true">↓</span></a></div>
+</section>
+
+<section class="section wrap sales-offers" id="offers" aria-labelledby="offers-title">
+  <div class="sales-offers-head"><div><span class="eyebrow">Форматы сотрудничества</span><h2 id="offers-title">Можно начать с одной задачи.<br><span class="gradient">И выстроить всю систему.</span></h2></div><p>Не нужно сразу заказывать большой проект. Подберём объём под задачу и ресурсы компании.</p></div>
+  <div class="sales-offers-grid">
+    <article class="sales-offer" data-offer-type="Привлечение заявок">
+      <div class="sales-offer-head"><span>МАРКЕТИНГ</span><span class="sales-offer-index">01</span></div>
+      <h3>Привлечение заявок</h3><p>Когда важно получить внимание нужной аудитории и направить его в обращения.</p>
+      <ul><li>Анализ аудитории и предложения</li><li>Креативы, AI-видео и посадочная страница</li><li>Настройка и оптимизация рекламы</li><li>Схема отслеживания обращений</li></ul>
+      <div class="sales-offer-footer"><span>На выходе: рекламный маршрут и материалы для его запуска.</span><a href="#brief" data-offer="Привлечение заявок">Обсудить задачу <span aria-hidden="true">→</span></a></div>
+    </article>
+    <article class="sales-offer sales-offer-focus" data-offer-type="Автоматизация обращений">
+      <div class="sales-offer-head"><span>АВТОМАТИЗАЦИЯ</span><span class="sales-offer-index">02</span></div>
+      <h3>Автоматизация обращений</h3><p>Когда заявки теряются, а команда снова и снова делает одни и те же действия.</p>
+      <ul><li>Карта текущего процесса</li><li>Формы, AI-боты, уведомления</li><li>Интеграции с действующими сервисами</li><li>Проверки и инструкции для сотрудников</li></ul>
+      <div class="sales-offer-footer"><span>На выходе: внедрённый сценарий с понятными действиями для команды.</span><a href="#brief" data-offer="Автоматизация обращений">Обсудить задачу <span aria-hidden="true">→</span></a></div>
+    </article>
+    <article class="sales-offer" data-offer-type="Цифровая система под ключ">
+      <div class="sales-offer-head"><span>ПОЛНЫЙ ЦИКЛ</span><span class="sales-offer-index">03</span></div>
+      <h3>Цифровая система под ключ</h3><p>Когда реклама, сайт, сотрудники и обработка клиентов должны работать вместе.</p>
+      <ul><li>Проектирование и запуск сайта</li><li>Заявки, AI, документы и оплата</li><li>SEO, панели управления и аналитика</li><li>Обучение, поддержка и развитие</li></ul>
+      <div class="sales-offer-footer"><span>На выходе: согласованный набор инструментов и регламент их использования.</span><a href="#brief" data-offer="Цифровая система под ключ">Обсудить задачу <span aria-hidden="true">→</span></a></div>
+    </article>
+  </div>
+  <div class="sales-terms"><div><span class="sales-terms-eyebrow">Прозрачные условия</span><strong>Сначала выясняем задачу — потом согласуем объём.</strong><p>Состав работ, сроки, стоимость, порядок оплаты и сопровождение обсуждаются до старта. Нет необходимости оплачивать «целую экосистему», если нужен один работающий процесс.</p></div><a href="#brief">Запросить предварительную оценку ↗</a></div>
+  <div class="sales-steps" aria-label="Этапы сотрудничества"><span><b>01</b> Разбираемся в задаче</span><i>→</i><span><b>02</b> Согласуем решение</span><i>→</i><span><b>03</b> Разрабатываем и проверяем</span><i>→</i><span><b>04</b> Передаём и сопровождаем</span></div>
 </section>
 <nav class="tour-strip wrap" id="journey" aria-label="Навигация по кейсам"><span>КЕЙСЫ:</span><a href="#creative">AI-видео и реклама</a><a href="#cinematic">AI-анимация</a><a href="#cat">Telegram-бот</a><a href="#dpo">Экосистема ДПО</a><a href="#form">Яндекс Форма</a><a href="#payment">Оплата</a><a href="#news">Новости</a><a href="#guide">Инструкции</a></nav>
 <section class="section wrap" id="work"><div class="eyebrow">Избранные работы</div><h2>Не концепты.<br>Реальные решения.</h2><p class="muted">Реальные проекты на стыке продвижения, контента, разработки и автоматизации. Смотрите видеокреативы, переходите в работающие сервисы и пробуйте интерактивные сценарии.</p>
