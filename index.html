@@ -652,6 +652,99 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
 @media(max-width:850px){.freshman-artwork-poster{width:32%;left:7%;top:7%}.freshman-artwork-banner{width:61%;top:20%;right:1%}}
 @media(max-width:510px){.freshman-artwork-poster{width:41%;left:2%;top:9%}.freshman-artwork-banner{width:66%;right:-11%;top:27%}.freshman-artwork-bottom{padding-left:16px;padding-right:16px}}
 @media(prefers-reduced-motion:reduce){.freshman-artwork-collage img{transition:none!important}.freshman-mini-visual:hover .freshman-artwork-poster{transform:rotate(-7deg)}.freshman-mini-visual:hover .freshman-artwork-banner{transform:rotate(5deg)}}
+
+/* October 2026 portfolio polish: legibility, responsive expansion and premium outreach */
+@media(min-width:1180px){.wrap{max-width:1296px}.nav{max-width:1250px}.case-grid{gap:30px}.case.feature{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.news-flow-grid{gap:29px}}
+@media(min-width:1500px){.wrap{max-width:1380px}.nav{max-width:1340px}}
+/* Headings and primary reading copy: no tiny type on desktops, no scale-induced page reflow. */
+.section>.muted,.section>p,.section .about-lead,.section .case-copy p,.section .freshman-mini-content>p{font-size:clamp(15px,1.12vw,18px);line-height:1.75}
+.case .copy .muted{font-size:clamp(15px,1.04vw,17px)}
+.solutions-card p,.offer-card p,.offer-list li,.contact-option em,.sales-education-bridge p,.trust-grid p{font-size:max(13px,1vw);line-height:1.65}
+.news-social-identity strong,.news-tg-chatname b,.news-dzen-identity b{font-size:clamp(11px,.95vw,13px)}
+.news-social-text b,.news-tg-body b,.news-dzen-preview b{font-size:clamp(12px,1vw,14px);line-height:1.47}
+.news-social-text p,.news-tg-body p,.news-dzen-preview p{font-size:clamp(11px,.85vw,13px);line-height:1.55}
+.news-platform-meta b{font-size:14px}
+.news-platform-meta small,.news-social-identity small,.news-tg-chatname small,.news-tg-body small,.news-dzen-preview small{font-size:11px}
+.news-author-top small,.news-field-label,.news-media-caption,.news-channels-label,.news-channel-option small,.news-attachment-strip small,.news-results-footnote,.news-stage-disclaimer p{font-size:clamp(11px,.82vw,12px);line-height:1.55}
+.news-author-body>textarea{font-size:14px}
+.news-author-top b{font-size:16px}
+.news-channel-option b{font-size:13px}
+.news-demo-status{font-size:12px}
+.brief-form label,.brief-form input,.brief-form select,.brief-form textarea{font-size:clamp(14px,1.02vw,16px)}
+.brief-tip,.brief-form-header>span:last-child,.brief-send-status{font-size:12px!important}
+.brief-form-header strong{font-size:17px}
+.brief-form .brief-telegram{font-size:14px}
+.experience-stamp{flex-basis:185px;max-width:220px;padding:19px 20px}
+.experience-stamp strong{font-size:clamp(17px,1.7vw,22px)!important;font-weight:860;line-height:1.25;letter-spacing:-.035em}
+.experience-stamp small{font-size:12px!important;line-height:1.55}
+/* A visual language of precise discs, lines and monogram: intentionally NO 4-point sparkles. */
+.dk-la-head-avatar,.dk-la-launch-icon,.dk-la-greeting-icon{font-size:12px!important;font-weight:900;letter-spacing:-.07em;border-radius:12px;border:1px solid #ffffff75;background:linear-gradient(145deg,#365b92,#152e56);box-shadow:inset 0 1px 0 #ffffff38}
+.dk-la-greeting-icon{font-size:10px!important;border-color:#6b91c5;color:#fff}
+.dk-la-footer-spark{font-size:10px!important;font-weight:900}
+.dpo-screen-brand{letter-spacing:-.015em}
+.news-icon-dzen,.news-dzen-brand{font-size:17px!important;font-weight:950}
+/* Dynamic three-stage indicator; one animation per genuine progress change. */
+.brief-dots{align-items:center;gap:6px;min-width:40px}
+.brief-dots i{width:9px;height:9px;border-radius:50%;background:#d1daea;transition:transform .27s,background .27s,box-shadow .27s;transform:translateY(0);box-shadow:0 0 0 0 transparent}
+.brief-form[data-step="0"] .brief-dots i:first-child,
+.brief-form[data-step="1"] .brief-dots i:first-child,
+.brief-form[data-step="2"] .brief-dots i:nth-child(-n+2),
+.brief-form[data-step="3"] .brief-dots i{background:#5285d1;box-shadow:0 0 0 3px #8cacdf21;transform:scale(1.16)}
+.brief-form[data-step="1"] .brief-dots i:first-child{background:#3678cd}
+.brief-form[data-step="3"] .brief-dots i:last-child{background:#268a72;box-shadow:0 0 0 3px #7ed1b639}
+.brief-dots.is-pulsing i{animation:brief-dot-wake .45s cubic-bezier(.17,.67,.4,1.25) both}
+.brief-dots.is-pulsing i:nth-child(2){animation-delay:.07s}
+.brief-dots.is-pulsing i:nth-child(3){animation-delay:.14s}
+@keyframes brief-dot-wake{0%{transform:translateY(0) scale(.7)}45%{transform:translateY(-5px) scale(1.3)}100%{transform:translateY(0) scale(1.16)}}
+.brief-form:focus-within{box-shadow:0 22px 73px #041c4059,0 0 0 1px #95b6e030}
+/* Rebuilt contact destination. Larger controls, richer contrast, no generic two white tiles. */
+.contact-section{padding-top:clamp(55px,6vw,92px);padding-bottom:clamp(55px,7vw,108px)}
+.contact-stage{position:relative;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 92% 18%,#40649d80,transparent 38%),radial-gradient(ellipse at 7% 98%,#355b9145,transparent 48%),linear-gradient(137deg,#121c30,#1b304e 63%,#16243b);color:#fff;border:1px solid #829bc635;border-radius:34px;padding:clamp(25px,4vw,56px);box-shadow:0 27px 90px #09152d33}
+.contact-stage:after{content:"";pointer-events:none;position:absolute;width:min(460px,52%);height:1px;right:-5%;top:17%;transform:rotate(-25deg);background:linear-gradient(90deg,transparent,#9dbdf590,transparent);box-shadow:0 0 27px 4px #7fa3dc30}
+.contact-stage-head{display:flex;justify-content:space-between;gap:18px;align-items:center;border-bottom:1px solid #d9e7ff27;padding-bottom:20px}
+.contact-stage-kicker{font-size:11px;font-weight:850;letter-spacing:.18em;color:#b9d2f3;display:inline-flex;gap:10px;align-items:center}
+.contact-stage-kicker i{width:8px;height:8px;background:#75e1bf;border-radius:50%;box-shadow:0 0 0 4px #75e1bf18}
+.contact-stage-caption{font-size:12px;color:#aebed8}
+.contact-stage-main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(270px,.65fr);gap:30px;align-items:center;padding:clamp(27px,4vw,52px) 0 22px}
+.contact-stage-copy h2{font-size:clamp(41px,6vw,82px);color:white!important;letter-spacing:-.068em;line-height:1.05;margin:0 0 23px}
+.contact-stage-copy h2 span{background:linear-gradient(95deg,#c8ddfc,#f2f6ff);background-clip:text;-webkit-background-clip:text;color:transparent}
+.contact-stage-copy>p{font-size:clamp(16px,1.35vw,19px);line-height:1.72;color:#c4d3e8;max-width:720px;margin:0}
+.contact-stage-process{display:flex;gap:10px 13px;align-items:center;flex-wrap:wrap;margin-top:29px}
+.contact-stage-process span{font-size:12px;color:#d8e8ff;background:#ffffff13;border:1px solid #ffffff23;padding:10px 13px;border-radius:10px;font-weight:690}
+.contact-stage-process i{font-style:normal;color:#93c7f8;font-size:17px}
+.contact-stage-action{padding:22px 19px 19px;border:1px solid #c7ddfa37;border-radius:22px;background:#dbe6ff0f;backdrop-filter:blur(11px)}
+.contact-stage-primary{width:100%;border:1px solid #ffffff44;display:flex;align-items:center;justify-content:center;gap:11px;cursor:pointer;border-radius:14px;background:linear-gradient(115deg,#f7fbff,#d2e3fa);color:#25446f;padding:18px 17px;font:780 14px/1.35 inherit;box-shadow:0 12px 30px #040c2028;transition:transform .22s,box-shadow .22s}
+.contact-stage-primary>span{font-size:13px;color:#406fa9}
+.contact-stage-primary>b{margin-left:auto;font-size:18px}
+.contact-stage-primary:hover{transform:translateY(-3px);box-shadow:0 17px 33px #08152d45}
+.contact-stage-action>p{color:#b3c7e5;font-size:13px;line-height:1.65;margin:14px 1px 0}
+.contact-stage .contact-options{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:17px 0 0}
+.contact-stage .contact-option{background:#ffffff0c;border:1px solid #c9dbf033;border-radius:18px;box-shadow:none;color:#fff;padding:23px;transition:border-color .23s,background .23s,transform .23s}
+.contact-stage .contact-option:hover{background:#ffffff1b;border-color:#d5e7ff89;transform:translateY(-3px);box-shadow:0 12px 35px #04142c39}
+.contact-stage .contact-icon{background:#dceaff18;border:1px solid #c9e0ff2a;color:#d8e9ff}
+.contact-stage .contact-option small{color:#9eb9de;font-size:11px;letter-spacing:.13em;font-weight:850}
+.contact-stage .contact-option strong{font-size:clamp(20px,2vw,26px);color:#f6f9ff;letter-spacing:-.03em;margin:5px 0 0}
+.contact-stage .contact-option em{display:block;margin-top:4px;font-size:13px;color:#c2d8f2;font-style:normal}
+.contact-stage .contact-arrow{font-size:23px;color:#d3e5ff}
+.contact-telegram-icon{font-size:22px;transform:rotate(-19deg)}
+.contact-stage-signoff{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:27px;padding-top:18px;border-top:1px solid #ffffff27;color:#a2b7d4;font-size:11px;letter-spacing:.09em;font-weight:750}
+.contact-stage button:focus-visible,.contact-stage a:focus-visible{outline:3px solid #b0d5ff;outline-offset:4px}
+/* Zoom layer is out-of-flow: stable page, nothing jumps under the pointer. */
+#portfolio-zoom-lens[hidden]{display:none!important}
+#portfolio-zoom-lens{position:fixed;inset:0;z-index:180;pointer-events:none;contain:layout style;--peek-scale:2}
+.portfolio-zoom-frame{position:absolute;overflow:hidden;border-radius:17px;border:1px solid #d4e4f2;box-shadow:0 23px 85px #0411278c,0 0 0 1px #ffffff7d;background:#fff;isolation:isolate}
+.portfolio-zoom-frame.is-text{padding:19px 23px;background:#fff;color:#283c58;overflow:hidden}
+.portfolio-zoom-frame.is-text .portfolio-zoom-text{font-size:clamp(20px,1.75vw,29px);font-weight:660;line-height:1.5;letter-spacing:-.02em;overflow-wrap:anywhere;margin:0}
+.portfolio-zoom-frame.is-image{background:#14203b}
+.portfolio-zoom-frame.is-image img{width:100%;height:100%;object-fit:contain;display:block}
+.portfolio-zoom-clone{transform-origin:top left;transform:scale(var(--peek-scale));margin:0!important;max-width:none!important;max-height:none!important}
+.portfolio-zoom-clone.news-platform-card{opacity:1!important;filter:none!important;box-shadow:none!important;transform-origin:top left!important;transform:scale(var(--peek-scale))!important}
+.portfolio-zoom-frame .news-social-media img{height:100%}
+.portfolio-zoom-caption{position:absolute;z-index:5;right:13px;top:10px;background:#15294bde;border:1px solid #b9d3ff7d;color:#e5efff;font-size:11px;padding:7px 10px;border-radius:99px;font-weight:760;letter-spacing:.05em}
+@media(min-width:901px){.news-platform-card,.freshman-artwork-collage img,.case .tag,.case .copy p,.freshman-mini-features span,.brief-form-header strong,.contact-option{cursor:zoom-in}}
+@media(max-width:900px){.contact-stage-main{grid-template-columns:1fr}.contact-stage-action{max-width:570px}.contact-stage .contact-options{grid-template-columns:1fr}}
+@media(max-width:650px){.contact-stage{border-radius:24px;padding:22px 18px}.contact-stage-head{align-items:start;flex-direction:column;gap:8px}.contact-stage-main{gap:22px;padding:26px 0 14px}.contact-stage-copy h2{font-size:44px}.contact-stage .contact-option{padding:17px}.contact-stage-signoff{font-size:10px}.contact-stage-action{padding:16px}.experience-stamp{max-width:none}}
+@media(prefers-reduced-motion:reduce){.brief-dots.is-pulsing i{animation:none!important}.contact-stage-primary,.contact-stage .contact-option{transition:none!important}}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#brief">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов<br><span class="gradient">Автоматизирую бизнес</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
@@ -1900,7 +1993,142 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
     <span class="dk-la-launch-copy"><b>Есть задача?</b><small>Помогу разобраться</small></span>
     <span class="dk-la-launch-arrow" aria-hidden="true">↗</span>
   </button>
-</aside><script>
+</aside><div id="portfolio-zoom-lens" hidden aria-hidden="true"><div class="portfolio-zoom-frame" id="portfolio-zoom-frame"></div></div><script>/* Progressive form status, keyboard-safe contact action and hover detail inspector */
+(function(){
+ const form=document.getElementById('brief-form');
+ const dots=form?.querySelector('.brief-dots');
+ const label=document.getElementById('brief-stage-label');
+ const goal=document.getElementById('brief-goal');
+ let interacted=false,stage=-1;
+ function changeStage(){
+  if(!form||!dots||!goal)return;
+  const n=goal.value.trim().length>=12?3:goal.value.trim().length>0?2:interacted?1:0;
+  if(n===stage)return;
+  stage=n;form.dataset.step=String(n);
+  if(label)label.textContent=n===3?'Готово к отправке':n===2?'Шаг 2 из 3':'Шаг 1 из 3';
+  dots.classList.remove('is-pulsing');
+  if(n>0){
+   // Let CSS keyframes run on stage changes only, not every typed character.
+   void dots.offsetWidth;
+   dots.classList.add('is-pulsing');
+  }
+ }
+ if(form&&dots){
+  form.addEventListener('focusin',()=>{interacted=true;changeStage()});
+  form.addEventListener('input',()=>{interacted=true;changeStage()});
+  form.addEventListener('change',()=>{interacted=true;changeStage()});
+  form.addEventListener('submit',()=>{interacted=true;changeStage()});
+  const copy=document.getElementById('brief-copy');
+  copy?.addEventListener('click',()=>{interacted=true;changeStage()});
+  dots.addEventListener('animationend',()=>dots.classList.remove('is-pulsing'));
+  changeStage();
+ }
+ document.getElementById('contact-start-assistant')?.addEventListener('click',()=>{
+  const launcher=document.getElementById('dk-la-launch');
+  const root=document.getElementById('dk-lead-assistant');
+  if(launcher&&root?.dataset.open!=='true')launcher.click();
+  else if(launcher)document.getElementById('dk-la-close')?.focus({preventScroll:true});
+ });
+ // Floating 2× inspection for text and cards; never resize a real block or shift scroll.
+ const query=window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 901px)');
+ const lens=document.getElementById('portfolio-zoom-lens');
+ const frame=document.getElementById('portfolio-zoom-frame');
+ if(!lens||!frame||!query.matches)return;
+ const cardSel='.news-platform-card, .solutions-card, .solution-card, .offer-card, .trust-grid>div';
+ const imageSel='.freshman-artwork-collage img, .news-attachment-strip img, .case-visual img:not(.news-social-media img)';
+ const textSel='.case .tag, .case .copy p, .about-lead, .freshman-mini-content>p, .freshman-mini-features span, .brief-form label, .brief-tip, .brief-form-header strong, .contact-stage-action>p, .sales-education-bridge p, .contact-stage-process span';
+ let active=null,lastPoint={x:0,y:0},lastMode='';
+ function eligible(node){
+  if(!(node instanceof Element))return null;
+  if(node.closest('#portfolio-zoom-lens,#dk-lead-assistant'))return null;
+  const img=node.closest(imageSel);
+  if(img)return {node:img,mode:'image'};
+  const card=node.closest(cardSel);
+  if(card)return {node:card,mode:'card'};
+  const text=node.closest(textSel);
+  if(text&&!text.closest('button,a,input,textarea,select'))return {node:text,mode:'text'};
+  return null;
+ }
+ function place(w,h,x,y){
+  const margin=15;
+  const left=x+w+32<window.innerWidth ? x+17 : x-w-17;
+  const top=Math.max(margin,Math.min(window.innerHeight-h-margin,y-h/2));
+  frame.style.left=Math.max(margin,Math.min(window.innerWidth-w-margin,left))+'px';
+  frame.style.top=top+'px';
+  frame.style.width=w+'px';frame.style.height=h+'px';
+ }
+ function reset(){
+  active=null;lastMode='';
+  lens.hidden=true;frame.replaceChildren();
+  frame.className='portfolio-zoom-frame';
+ }
+ function paint(found,x,y){
+  if(!found)return reset();
+  const node=found.node;
+  if(found.mode==='text'&&node.textContent.trim().length<4)return reset();
+  const bounds=node.getBoundingClientRect();
+  const availW=window.innerWidth-35,availH=window.innerHeight-38;
+  frame.replaceChildren();
+  frame.className='portfolio-zoom-frame is-'+found.mode;
+  let w,h;
+  if(found.mode==='text'){
+    const text=document.createElement('p');text.className='portfolio-zoom-text';text.textContent=node.textContent.trim();
+    const measured=Math.max(22,Math.min(360,Math.round(bounds.width)));
+    w=Math.min(availW,Math.max(350,measured*1.5));h=Math.min(availH,Math.max(105,Math.ceil(text.textContent.length/34)*42+55));
+    frame.append(text);
+  }else if(found.mode==='image'){
+    const img=document.createElement('img');img.alt=node.alt||'Увеличенное изображение';
+    img.src=node.currentSrc||node.src;frame.append(img);
+    const ow=node.naturalWidth||bounds.width,oh=node.naturalHeight||bounds.height;
+    const ratio=ow/Math.max(1,oh);
+    const zoom=Math.min(3,availW/Math.max(1,bounds.width),availH/Math.max(1,bounds.height));
+    w=Math.min(availW,Math.round(bounds.width*Math.max(1,zoom)));h=Math.min(availH,Math.round(w/ratio));
+    if(h>availH){h=availH;w=Math.round(h*ratio)}
+    frame.style.background='#101e36';
+  }else{
+    const boundsW=Math.max(100,bounds.width),boundsH=Math.max(80,bounds.height);
+    const scale=Math.min(2,availW/boundsW,availH/boundsH);
+    if(scale<1.05)return reset(); // Huge full-width sections cannot be doubled in viewport.
+    w=Math.ceil(boundsW*scale);h=Math.ceil(boundsH*scale);
+    const clone=node.cloneNode(true);clone.classList.add('portfolio-zoom-clone');
+    // Avoid duplicate element IDs or tabbable interactive descendants.
+    clone.removeAttribute('id');clone.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));
+    clone.querySelectorAll('button,a,input,textarea,select').forEach(e=>{e.tabIndex=-1;e.setAttribute('aria-hidden','true')});
+    clone.style.width=boundsW+'px';clone.style.height=boundsH+'px';
+    clone.style.setProperty('--peek-scale',String(scale));
+    frame.append(clone);
+  }
+  w=Math.max(120,Math.min(availW,w));h=Math.max(80,Math.min(availH,h));
+  const badge=document.createElement('span');badge.className='portfolio-zoom-caption';
+  badge.textContent=found.mode==='text'?'Увеличенный текст':'Детальный просмотр';
+  frame.append(badge);
+  place(w,h,x,y);
+  lens.hidden=false;
+  active=node;lastMode=found.mode;
+ }
+ document.addEventListener('pointerover',event=>{
+  const found=eligible(event.target);
+  if(!found){if(active&&!event.target.closest?.('#portfolio-zoom-lens'))reset();return}
+  if(found.node===active)return;
+  lastPoint={x:event.clientX,y:event.clientY};
+  paint(found,lastPoint.x,lastPoint.y);
+ },{passive:true});
+ document.addEventListener('pointerout',event=>{
+  if(!active)return;
+  if(event.relatedTarget instanceof Element&&active.contains(event.relatedTarget))return;
+  if(!event.relatedTarget||!active.contains(event.relatedTarget))reset();
+ },{passive:true});
+ document.addEventListener('pointermove',event=>{
+  if(!active||lens.hidden)return;
+  lastPoint={x:event.clientX,y:event.clientY};
+  const w=frame.offsetWidth,h=frame.offsetHeight;
+  place(w,h,lastPoint.x,lastPoint.y);
+ },{passive:true});
+ window.addEventListener('scroll',reset,{passive:true});
+ window.addEventListener('resize',reset,{passive:true});
+ document.addEventListener('keydown',event=>{if(event.key==='Escape')reset()});
+})();
+</script><script>
 /* Eight services + reply-enabled Telegram bridge, no public bot secrets */
 (function(){
  const el=id=>document.getElementById(id),root=el('dk-lead-assistant'),panel=el('dk-la-panel');
