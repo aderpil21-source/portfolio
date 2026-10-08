@@ -72,7 +72,7 @@
  function show(open){root.dataset.open=String(open);panel.hidden=!open;launch.setAttribute('aria-expanded',String(open));if(open){close.focus({preventScroll:true});if(session)poll()}else{stop();launch.focus({preventScroll:true})}}
  launch.addEventListener('click',()=>show(panel.hidden));close.addEventListener('click',()=>show(false));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)show(false)});
- function select(v){category=v;choices.querySelectorAll('[data-la-task]').forEach(b=>{const active=b.dataset.laTask===v;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active))});el('dk-la-choice-label').textContent=v==='Другая задача'?'Своя задача':v;el('dk-la-answer-text').textContent=replies[v]||replies['Другая задача'];answer.hidden=false;note(status,'Опишите задачу. Ответ Дениса появится в этом чате.');send.textContent='Отправить Денису в Telegram →';initTurnstile().catch(()=>{});scrollInner()}
+ function select(v){category=v;choices.querySelectorAll('[data-la-task]').forEach(b=>{const active=b.dataset.laTask===v;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active))});el('dk-la-choice-label').textContent=v==='Другая задача'?'Своя задача':v;el('dk-la-answer-text').textContent=replies[v]||replies['Другая задача'];answer.hidden=false;note(status,'Опишите задачу. Ответ Дениса появится в этом чате.');send.textContent='Отправить Денису в Telegram ';initTurnstile().catch(()=>{});scrollInner()}
  choices.addEventListener('click',e=>{const b=e.target.closest('[data-la-task]');if(b)select(b.dataset.laTask)});
  el('dk-la-custom').addEventListener('click',()=>select('Другая задача'));
  el('dk-la-change-choice').addEventListener('click',()=>{category='';answer.hidden=true;choices.querySelectorAll('button').forEach(b=>b.classList.remove('is-active'))});
@@ -93,7 +93,7 @@
     try{const parsed=new URL(m.url);if(parsed.protocol==='https:'&&parsed.hostname==='t.me'&&parsed.pathname==='/dnk_pr03'&&parsed.searchParams.has('text'))url=parsed.href}catch{}
     const card=document.createElement('div');card.className='dk-la-invite';
     const heading=document.createElement('div');heading.className='dk-la-invite-header';
-    const icon=document.createElement('i');icon.textContent='↗';
+    const icon=document.createElement('i');icon.textContent='';
     const label=document.createElement('span');label.textContent='Денис приглашает в Telegram';
     heading.append(icon,label);
     const explanation=document.createElement('p');explanation.textContent='Можно продолжить общение в личной переписке. Мы уже подготовили короткое сообщение, чтобы тебе не пришлось повторять задачу.';
@@ -107,10 +107,10 @@
     if(url){
       const open=document.createElement('a');open.className='dk-la-invite-go';
       open.href=url;open.target='_blank';open.rel='noopener noreferrer';
-      open.textContent='Перейти в чат с Денисом в Telegram ↗';
+      open.textContent='Перейти в чат с Денисом в Telegram ';
       card.appendChild(open);
       const staticLink=el('dk-la-live-tg');
-      if(staticLink){staticLink.href=url;staticLink.classList.add('is-invited');staticLink.textContent='↗ Перейти в Telegram с готовым сообщением';}
+      if(staticLink){staticLink.href=url;staticLink.classList.add('is-invited');staticLink.textContent=' Перейти в Telegram с готовым сообщением';}
     }
     const hint=document.createElement('small');hint.className='dk-la-invite-hint';
     hint.textContent='Telegram откроет личный чат с черновиком. Его можно изменить; сообщение не отправится без твоего подтверждения.';
@@ -162,7 +162,7 @@
  followup.addEventListener('submit',async e=>{e.preventDefault();if(!session||expired)return;const text=followupText.value.trim();if(text.length<2)return;followupButton.disabled=true;note(liveStatus,'Отправляем…');try{const out=await request('/api/chat/message',{sessionId:session.id,sessionKey:session.key,text});bubble({seq:out.seq,by:'visitor',text});followupText.value='';note(liveStatus,'✓ Сообщение доставлено Денису.');}catch{note(liveStatus,'Сообщение не дошло. Повторите или перейдите в личный Telegram.','error')}finally{followupButton.disabled=false}});
  el('dk-la-new-chat').addEventListener('click',()=>{if(!window.confirm('Начать новый разговор?'))return;stop();session=null;expired=false;seen.clear();last=0;messages.replaceChildren();
   const directLink=el('dk-la-live-tg');
-  if(directLink){directLink.href='https://t.me/dnk_pr03';directLink.textContent='↗ Перейти в личный Telegram к Денису';directLink.classList.remove('is-invited');}
+  if(directLink){directLink.href='https://t.me/dnk_pr03';directLink.textContent=' Перейти в личный Telegram к Денису';directLink.classList.remove('is-invited');}
   try{sessionStorage.removeItem(KEY)}catch{};chat.hidden=true;el('dk-la-greeting').hidden=false;choices.hidden=false;el('dk-la-section-label').hidden=false;el('dk-la-custom').hidden=false;answer.hidden=true;scrollInner()});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else if(session&&!panel.hidden)poll()});
  try{const v=JSON.parse(sessionStorage.getItem(KEY)||'null');if(v&&typeof v.id==='string'&&typeof v.key==='string'&&v.id.length>20&&v.key.length>30)session=v}catch{}
