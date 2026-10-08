@@ -601,6 +601,42 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
 .dk-la-invite-hint{font-size:9px;color:#7893ad;line-height:1.5}
 .dk-la-invite-go:focus-visible{outline:3px solid #6ea6ee;outline-offset:3px}
 .dk-la-live-tg.is-invited{background:#cfe8ff;border-color:#95c5ef;color:#245a99}
+
+/* Small supplementary project: lightweight pure-CSS showcase, seven main cases untouched. */
+.more-work-section{padding-top:clamp(46px,6.5vw,95px);padding-bottom:clamp(48px,6vw,84px)}
+.more-work-heading{display:flex;align-items:end;justify-content:space-between;gap:26px;margin-bottom:27px}
+.more-work-heading h2{font-size:clamp(32px,4.7vw,59px);line-height:1.08;letter-spacing:-.06em;margin:12px 0 0}
+.more-work-heading>p{max-width:380px;font-size:14px;line-height:1.7;color:var(--muted,#91a0b5);margin:0 0 4px}
+.freshman-mini-case{display:grid;grid-template-columns:minmax(0,.97fr) minmax(0,1.03fr);border-radius:24px;background:linear-gradient(140deg,#f4f7fe,#e8eef7);border:1px solid #dfe7f3;overflow:hidden;box-shadow:0 18px 65px #111d3720}
+.freshman-mini-visual{min-height:360px;position:relative;isolation:isolate;overflow:hidden;padding:23px;background:radial-gradient(circle at 19% 34%,#d3265688,transparent 37%),radial-gradient(circle at 75% 25%,#306dfba8,transparent 37%),linear-gradient(125deg,#110c2e,#172c5d 72%,#211039);color:#fff}
+.freshman-mini-visual:before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(150deg,transparent 0 31px,#ffffff0e 32px,transparent 33px 66px);opacity:.55}
+.freshman-mini-visual:after{content:"";position:absolute;inset:auto -15% 22px -12%;height:2px;background:linear-gradient(90deg,transparent,#e5285b,#619bff,transparent);box-shadow:0 -18px 38px 7px #d42a9744;transform:rotate(-6deg)}
+.freshman-mock-glow{pointer-events:none;position:absolute;z-index:0;inset:30px 10px 40px;background:radial-gradient(ellipse at 49% 58%,#5137ca50,transparent 64%);}
+.freshman-mock-top{position:relative;z-index:1;display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:9px;font-weight:800;letter-spacing:.12em;color:#c3d8fe}
+.freshman-mock-live{display:flex;align-items:center;gap:8px}.freshman-mock-live i{background:#67ebc4;width:7px;height:7px;border-radius:50%;box-shadow:0 0 12px #67ebc4}
+.freshman-mock-cat{position:absolute;right:6%;top:19%;font-size:clamp(94px,13vw,172px);line-height:1;filter:drop-shadow(0 15px 24px #070b255a);transform:rotate(-6deg);user-select:none}
+.freshman-mock-title{position:absolute;left:6%;right:5%;bottom:69px;z-index:2;text-shadow:0 5px 22px #0307197c}
+.freshman-mock-title small{display:block;max-width:320px;font-size:8px;letter-spacing:.18em;font-weight:800;color:#d6deff}
+.freshman-mock-title b{font-size:clamp(28px,4.1vw,49px);line-height:1.02;font-weight:900;letter-spacing:-.06em;display:block;margin:10px 0 2px}
+.freshman-mock-title>span{display:inline-block;line-height:1.1;font-size:clamp(43px,5vw,62px);letter-spacing:-.07em;font-weight:900;background:linear-gradient(95deg,#77d0ff,#e178f4,#fba7d5);color:transparent;background-clip:text;-webkit-background-clip:text}
+.freshman-mock-icons{position:absolute;left:6%;right:5%;bottom:25px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;z-index:2}
+.freshman-mock-icons span{font-size:10px;font-weight:760;border:1px solid #ffffff57;background:#0c184d95;border-radius:9px;padding:6px 9px}
+.freshman-mock-icons i{font-style:normal;margin-right:5px}
+.freshman-visual-note{position:absolute;bottom:5px;right:8px;font-size:7px;color:#9db4e18a}
+.freshman-mini-content{min-width:0;padding:clamp(23px,3vw,38px);color:#273956;display:flex;flex-direction:column;align-items:start}
+.freshman-mini-tag{font-size:10px;font-weight:860;letter-spacing:.1em;color:#627cad}
+.freshman-mini-content h3{font-size:clamp(25px,3.4vw,37px);font-weight:870;line-height:1.1;letter-spacing:-.05em;margin:16px 0 12px;color:#243854}
+.freshman-mini-content>p{font-size:13px;line-height:1.7;color:#526780;max-width:530px;margin:0 0 20px}
+.freshman-mini-features{display:flex;flex-wrap:wrap;gap:7px}
+.freshman-mini-features span{font-size:10px;line-height:1.4;font-weight:690;padding:9px 11px;background:white;border:1px solid #d7e1f0;border-radius:9px;color:#4c6280}
+.freshman-mini-links{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:auto;padding-top:24px}
+.freshman-mini-primary{background:#2b4d82;color:#fff!important;display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:13px 17px;border-radius:11px;font-size:12px;font-weight:780;box-shadow:0 9px 24px #1c4c8630}
+.freshman-mini-primary:hover{background:#244475;transform:translateY(-1px)}
+.freshman-mini-secondary{font-size:11px;font-weight:730;color:#376291!important}
+.freshman-mini-footnote{font-size:9px;color:#7c8ca5;line-height:1.5;margin-top:14px}
+@media(max-width:850px){.more-work-heading{align-items:start;flex-direction:column;gap:12px}.freshman-mini-case{grid-template-columns:1fr}.freshman-mini-visual{min-height:330px}.freshman-mock-cat{font-size:155px;top:12%}.freshman-mock-title b{font-size:40px}.freshman-mock-title>span{font-size:56px}}
+@media(max-width:510px){.freshman-mini-visual{min-height:300px}.freshman-mock-cat{font-size:117px;top:18%}.freshman-mock-title b{font-size:32px}.freshman-mock-title>span{font-size:47px}.freshman-mini-content{padding:22px}.freshman-mock-icons span{font-size:9px;padding:5px 7px}}
+@media(prefers-reduced-motion:reduce){.freshman-mini-primary:hover{transform:none}}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#brief">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов.<br><span class="gradient">Автоматизирую бизнес.</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
@@ -974,6 +1010,39 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
   </div>
 </article>
 </div></section>
+
+<section class="section wrap more-work-section" id="freshman-guide" aria-labelledby="freshman-title">
+ <div class="more-work-heading">
+  <div><span class="eyebrow">Дополнительные проекты · 2026</span><h2 id="freshman-title">Небольшой сайт.<br><span class="gradient">Большая польза.</span></h2></div>
+  <p>Не каждой задаче нужна сложная платформа. Иногда лучший результат — понятная и быстрая страница, которая помогает людям не потеряться в информации.</p>
+ </div>
+ <article class="freshman-mini-case">
+  <div class="freshman-mini-visual" role="img" aria-label="Иллюстративная витрина гайда первокурсника: неоновый дизайн, академический кот и главное меню">
+    <div class="freshman-mock-top"><span class="freshman-mock-live"><i></i> РАБОТАЮЩИЙ САЙТ</span><span>ЛЕТО 2026 ↗</span></div>
+    <div class="freshman-mock-glow" aria-hidden="true"></div>
+    <div class="freshman-mock-cat" aria-hidden="true">🐱</div>
+    <div class="freshman-mock-title"><small>ЗАПАДНЫЙ ФИЛИАЛ ПРЕЗИДЕНТСКОЙ АКАДЕМИИ</small><b>ГАЙД<br>ПЕРВОКУРСНИКА</b><span>2026</span></div>
+    <div class="freshman-mock-icons"><span><i>📅</i> Сборы</span><span><i>📖</i> Контакты</span><span><i>🎮</i> Квиз</span></div>
+    <span class="freshman-visual-note">Стилизованная обложка кейса · настоящий сайт открывается по ссылке</span>
+  </div>
+  <div class="freshman-mini-content">
+    <span class="freshman-mini-tag">ЛЕНДИНГ · НАВИГАЦИЯ · ИНТЕРАКТИВ</span>
+    <h3>Навигатор первокурсника</h3>
+    <p>Создал отдельную точку входа для новых студентов Академии: даты и места организационных сборов, цифровые сервисы, контакты и ответы на повседневные вопросы.</p>
+    <div class="freshman-mini-features">
+      <span>📅 Организационные сборы</span>
+      <span>📖 Телефонный справочник</span>
+      <span>💻 Цифровые сервисы и заявления</span>
+      <span>🎮 Мини-квиз для первокурсников</span>
+    </div>
+    <div class="freshman-mini-links">
+      <a class="freshman-mini-primary" href="https://sparkling-cranachan-14c266.netlify.app/" target="_blank" rel="noopener noreferrer">Открыть живой лендинг <span aria-hidden="true">↗</span></a>
+      <a class="freshman-mini-secondary" href="#brief">Нужен похожий проект? →</a>
+    </div>
+    <small class="freshman-mini-footnote">Небольшой самостоятельный проект · реальные ссылки и сценарии, без выдуманных показателей.</small>
+  </div>
+ </article>
+</section>
 
 <section class="section wrap engineering-section" id="engineering">
   <div class="engineering-intro"><div><div class="eyebrow">Что остаётся за красивым интерфейсом</div><h2>Незаметные детали.<br><span class="gradient">Большая работа.</span></h2></div><p>То, что клиенту кажется одной кнопкой, внутри часто состоит из десятков условий, проверок и взаимодействий между сервисами.</p></div>
