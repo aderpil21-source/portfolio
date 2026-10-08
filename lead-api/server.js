@@ -1,111 +1,188 @@
 'use strict';
-// Public source code; NO Telegram token or chat ID is ever stored here.
+// Dedicated Telegram bridge. No tokens or personal Telegram identifiers in source.
 const http=require('node:http');
-const { URL }=require('node:url');
+const crypto=require('node:crypto');
+const {URL}=require('node:url');
 const PORT=Number(process.env.PORT||3000);
 const ORIGIN=(process.env.ALLOWED_ORIGIN||'https://aderpil21-source.github.io').replace(/\/$/,'');
-const TOKEN=process.env.TELEGRAM_BOT_TOKEN||'';
-const CHAT_ID=process.env.TELEGRAM_CHAT_ID||'';
-const allowed=new Set([
- 'Таргетированная реклама',
- 'Сайты и лендинги',
- 'AI-боты и ассистенты',
- 'Автоматизация заявок',
- 'CRM, API и интеграции',
- 'SEO и сопровождение',
- 'AI-видео и креативы',
- 'Образовательные проекты',
- 'Другая задача'
-]);
-const buckets=new Map();
-let globalWindow={start:Date.now(),count:0};
-function reply(res,status,obj){
+const TOKEN=(process.env.TELEGRAM_BOT_TOKEN||'').trim();
+const OWNER=(process.env.TELEGRAM_CHAT_ID||'').trim();
+const PUBLIC_URL=(process.env.PUBLIC_BASE_URL||'https://denis-kats-portfolio-chat.onrender.com').replace(/\/$/,'');
+const configured=!!(TOKEN&&/^\d{5,20}$/.test(OWNER));
+const webhookSecret=configured?crypto.createHmac('sha256',TOKEN).update('portfolio-chat-webhook-v1').digest('hex'):null;
+const CHOICES=new Set(['Таргетированная реклама','Сайты и лендинги','AI-боты и ассистенты','Автоматизация заявок','CRM, API и интеграции','SEO и сопровождение','AI-видео и креативы','Образовательные проекты','Другая задача']);
+const sessions=new Map(),telegramMessages=new Map(),ipBuckets=new Map();
+const sessionLife=48*3600*1000;
+let globalRate={start:Date.now(),count:0},webhookRegistered=false;
+function sendJSON(res,status,data){
  res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Vary':'Origin'});
- res.end(JSON.stringify(obj));
+ res.end(JSON.stringify(data));
 }
-function cors(res,origin){
- if(origin===ORIGIN){
-   res.setHeader('Access-Control-Allow-Origin',ORIGIN);
-   res.setHeader('Access-Control-Allow-Methods','POST, OPTIONS');
-   res.setHeader('Access-Control-Allow-Headers','Content-Type');
-   res.setHeader('Access-Control-Max-Age','600');
-   return true;
- }
- return false;
-}
-function clean(value,limit){
- return typeof value==='string'?value.replace(/[\u0000-\u001f\u007f]/g,' ').trim().slice(0,limit):'';
-}
-function limitExceeded(req){
- const now=Date.now();
- // 30 requests total per 60 seconds on this instance; individual visitors have a lower limit.
- if(now-globalWindow.start>60000)globalWindow={start:now,count:0};
- globalWindow.count++;
- if(globalWindow.count>30)return true;
- const forwarded=String(req.headers['x-forwarded-for']||'');
- const ip=forwarded.split(',')[0].trim().slice(0,65)||req.socket.remoteAddress||'unknown';
- const old=buckets.get(ip);
- const bucket=!old||now-old.start>600000?{start:now,count:0,last:0}:old;
- const fast=now-bucket.last<12000;
- bucket.count++;bucket.last=now;buckets.set(ip,bucket);
- if(buckets.size>500){for(const [key,val] of buckets){if(now-val.start>600000)buckets.delete(key)}}
- return fast||bucket.count>4;
-}
-const server=http.createServer(async(req,res)=>{
- let url;
- try{url=new URL(req.url,'http://localhost')}catch{reply(res,400,{ok:false,error:'Некорректный запрос.'});return}
+function allowOrigin(req,res){
  const origin=String(req.headers.origin||'');
- if(req.method==='GET'&&url.pathname==='/health'){
-   reply(res,200,{ok:true,configured:!!(TOKEN&&CHAT_ID)});
-   return;
+ if(origin!==ORIGIN)return false;
+ res.setHeader('Access-Control-Allow-Origin',ORIGIN);
+ res.setHeader('Access-Control-Allow-Methods','POST, OPTIONS');
+ res.setHeader('Access-Control-Allow-Headers','Content-Type');
+ res.setHeader('Access-Control-Max-Age','600');
+ return true;
+}
+function clean(s,n){return typeof s==='string'?s.replace(/[\u0000-\u001f\u007f]/g,' ').trim().slice(0,n):''}
+function clearExpired(){
+ const now=Date.now();
+ for(const [id,session] of sessions){
+  if(now-session.updated>sessionLife){
+   for(const mid of session.botMessages)telegramMessages.delete(mid);
+   sessions.delete(id);
+  }
  }
- if(url.pathname!=='/api/leads'){reply(res,404,{ok:false,error:'Не найдено.'});return}
- if(!cors(res,origin)){reply(res,403,{ok:false,error:'Запрос с этого сайта не разрешён.'});return}
- if(req.method==='OPTIONS'){res.writeHead(204);res.end();return}
- if(req.method!=='POST'){reply(res,405,{ok:false,error:'Метод не поддерживается.'});return}
- if(!TOKEN||!CHAT_ID){reply(res,503,{ok:false,error:'Отправка временно недоступна. Напишите Денису в Telegram напрямую.'});return}
- if(!String(req.headers['content-type']||'').startsWith('application/json')){reply(res,415,{ok:false,error:'Ожидался JSON.'});return}
- const size=Number(req.headers['content-length']||0);
- if(size>5500){reply(res,413,{ok:false,error:'Сообщение слишком длинное.'});return}
- if(limitExceeded(req)){reply(res,429,{ok:false,error:'Слишком много запросов. Повторите позже.'});return}
- let raw='';
- try{
-   for await(const part of req){
-     raw+=part;
-     if(raw.length>5500)throw new Error('too long');
-   }
- }catch{reply(res,413,{ok:false,error:'Сообщение слишком длинное.'});return}
- let data;try{data=JSON.parse(raw)}catch{reply(res,400,{ok:false,error:'Не удалось прочитать сообщение.'});return}
- if(typeof data!=='object'||!data||Array.isArray(data)){reply(res,400,{ok:false,error:'Некорректные данные.'});return}
- // Honeypot: automated form fillers get no Telegram delivery.
- if(clean(data.website,140)){reply(res,200,{ok:true});return}
- const category=clean(data.category,80),message=clean(data.message,1550),contact=clean(data.contact,140),name=clean(data.name,90);
- if(!allowed.has(category)||message.length<12||message.length>1500||contact.length<3||contact.length>130||data.consent!==true){
-   reply(res,400,{ok:false,error:'Выберите услугу, опишите задачу, оставьте контакт и подтвердите согласие.'});return;
- }
- const lines=[
-  '📩 ЗАЯВКА С ПОРТФОЛИО',
+ for(const [ip,b] of ipBuckets)if(now-b.start>600000)ipBuckets.delete(ip);
+}
+function tooMany(req){
+ const now=Date.now();
+ if(now-globalRate.start>=60000)globalRate={start:now,count:0};
+ if(++globalRate.count>40)return true;
+ const addr=String(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').split(',')[0].slice(0,100);
+ const prior=ipBuckets.get(addr),r=prior&&now-prior.start<600000?prior:{start:now,count:0,last:0};
+ const soon=now-r.last<4000;r.last=now;r.count++;ipBuckets.set(addr,r);
+ return soon||r.count>8;
+}
+function readBody(req,max=6500){
+ return new Promise((resolve,reject)=>{
+  const chunks=[];let bytes=0;let settled=false;
+  function bad(){if(!settled){settled=true;reject(new Error('Invalid body'))}}
+  req.on('data',chunk=>{bytes+=chunk.length;if(bytes>max){bad();req.destroy();return}chunks.push(chunk)});
+  req.on('end',()=>{if(settled)return;settled=true;try{resolve(JSON.parse(Buffer.concat(chunks).toString('utf8')))}catch{reject(new Error('Invalid JSON'))}});
+  req.on('error',bad);
+ });
+}
+function timingMatch(a,b){
+ const ba=Buffer.from(String(a||'')),bb=Buffer.from(String(b||''));
+ return ba.length===bb.length&&crypto.timingSafeEqual(ba,bb);
+}
+function validSession(d){
+ if(!d||typeof d!=='object'||Array.isArray(d))return null;
+ const id=clean(d.sessionId,85),key=clean(d.sessionKey,150);
+ const s=sessions.get(id);
+ if(!s||!timingMatch(crypto.createHash('sha256').update(key).digest('hex'),s.keyHash))return null;
+ if(Date.now()-s.updated>sessionLife)return null;
+ return s;
+}
+async function telegram(method,data){
+ const r=await fetch('https://api.telegram.org/bot'+TOKEN+'/'+method,{
+  method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify(data),signal:AbortSignal.timeout(11000)
+ });
+ const result=await r.json().catch(()=>({ok:false}));
+ if(!r.ok||result.ok!==true)throw new Error('Telegram request failed');
+ return result.result;
+}
+function adminLabel(s){return '💬 ПОРТФОЛИО · ЧАТ #'+s.id.slice(0,8).toUpperCase()}
+async function notify(s,body,kind){
+ const lines=[adminLabel(s),kind==='new'?'🆕 Новое обращение':'✉️ Новое сообщение посетителя',
+  'Направление: '+s.category,
+  kind==='new'&&s.name?'Имя/компания: '+s.name:'',
+  kind==='new'&&s.contact?'Контакт: '+s.contact:'',
+  'Сообщение:',body,
   '━━━━━━━━━━━━━━━━━━',
-  '📌 Направление: '+category,
-  '📝 Задача: '+message,
-  name?'👤 Имя / компания: '+name:'',
-  '☎️ Контакт для ответа: '+contact,
-  '🌐 Источник: сайт-портфолио',
-  '━━━━━━━━━━━━━━━━━━',
-  'Отправлено из формы по согласию посетителя.'
- ].filter(Boolean);
+  '↩️ Нажми «Ответить» на это сообщение: ответ появится у посетителя на сайте.'];
+ const msg=await telegram('sendMessage',{chat_id:OWNER,text:lines.filter(Boolean).join('\n'),disable_web_page_preview:true});
+ if(msg.message_id){s.botMessages.add(msg.message_id);telegramMessages.set(msg.message_id,s.id)}
+ return msg;
+}
+async function registerWebhook(){
+ if(!configured)return;
  try{
-   const response=await fetch('https://api.telegram.org/bot'+TOKEN+'/sendMessage',{
-     method:'POST',headers:{'Content-Type':'application/json'},
-     body:JSON.stringify({chat_id:CHAT_ID,text:lines.join('\n'),disable_web_page_preview:true}),
-     signal:AbortSignal.timeout(12000)
-   });
-   const telegram=await response.json().catch(()=>({ok:false}));
-   if(!response.ok||telegram.ok!==true){reply(res,502,{ok:false,error:'Telegram сейчас не принял сообщение. Попробуйте ещё раз или напишите напрямую.'});return}
-   reply(res,200,{ok:true});
+  await telegram('setWebhook',{url:PUBLIC_URL+'/telegram/webhook',secret_token:webhookSecret,allowed_updates:['message'],drop_pending_updates:false});
+  webhookRegistered=true;
+  console.log('Telegram webhook configured');
  }catch{
-   reply(res,502,{ok:false,error:'Не удалось связаться с Telegram. Попробуйте позже или напишите напрямую.'});
+  webhookRegistered=false;
+  console.error('Telegram webhook registration failed, retrying later');
+  setTimeout(registerWebhook,60000).unref();
  }
-});
-server.requestTimeout=16000;
-server.listen(PORT,'0.0.0.0',()=>{console.log('Portfolio leads API listening on port '+PORT)});
+}
+async function webhook(req,res){
+ if(!configured){sendJSON(res,503,{ok:false});return}
+ if(!timingMatch(req.headers['x-telegram-bot-api-secret-token'],webhookSecret)){sendJSON(res,403,{ok:false});return}
+ let update;try{update=await readBody(req,26000)}catch{sendJSON(res,400,{ok:false});return}
+ const message=update&&update.message;
+ if(message&&String(message.chat?.id)===OWNER&&String(message.from?.id)===OWNER){
+  const replyTo=message.reply_to_message?.message_id,sessionId=telegramMessages.get(replyTo);
+  const s=sessionId&&sessions.get(sessionId);
+  const text=clean(message.text||message.caption,2200);
+  if(s&&text&&Date.now()-s.updated<sessionLife){
+   s.seq++;
+   s.messages.push({seq:s.seq,by:'owner',text,at:Date.now()});
+   if(s.messages.length>50)s.messages.shift();
+   s.updated=Date.now();
+   // Ack is deliberately not mapped to a session, so a reply must target the visitor alert.
+   telegram('sendMessage',{chat_id:OWNER,text:'✓ Ответ передан в чат #'+s.id.slice(0,8).toUpperCase()+'. Посетитель увидит его, когда откроет страницу (пока сеанс сохранён).'}).catch(()=>{});
+  }
+ }
+ sendJSON(res,200,{ok:true});
+}
+async function handle(req,res){
+ let path;
+ try{path=new URL(req.url,'http://localhost').pathname}catch{sendJSON(res,400,{ok:false});return}
+ if(path==='/health'&&req.method==='GET'){
+  sendJSON(res,200,{ok:true,configured,webhookReady:webhookRegistered,activeConversations:sessions.size});
+  return;
+ }
+ if(path==='/telegram/webhook'&&req.method==='POST'){await webhook(req,res);return}
+ if(!path.startsWith('/api/chat/')){sendJSON(res,404,{ok:false,error:'Не найдено'});return}
+ if(!allowOrigin(req,res)){sendJSON(res,403,{ok:false,error:'Недопустимый источник'});return}
+ if(req.method==='OPTIONS'){res.writeHead(204);res.end();return}
+ if(req.method!=='POST'){sendJSON(res,405,{ok:false,error:'Недопустимый метод'});return}
+ if(!String(req.headers['content-type']||'').startsWith('application/json')){
+  sendJSON(res,415,{ok:false,error:'Ожидается JSON'});return;
+ }
+ if(!configured){sendJSON(res,503,{ok:false,error:'Бот ещё подключается. Напишите Денису напрямую в Telegram.'});return}
+ if(Number(req.headers['content-length']||0)>6500){sendJSON(res,413,{ok:false,error:'Слишком длинный запрос'});return}
+ let data;
+ try{data=await readBody(req)}catch{if(!res.writableEnded)sendJSON(res,400,{ok:false,error:'Не удалось прочитать сообщение'});return}
+ if(path==='/api/chat/start'){
+  if(tooMany(req)){sendJSON(res,429,{ok:false,error:'Слишком много обращений. Попробуйте позже.'});return}
+  if(clean(data.website,140)){sendJSON(res,200,{ok:true,ignored:true});return}
+  const category=clean(data.category,100),message=clean(data.message,1600),name=clean(data.name,120),contact=clean(data.contact,160);
+  if(!CHOICES.has(category)||message.length<12||message.length>1500||data.consent!==true){
+   sendJSON(res,400,{ok:false,error:'Выберите направление, опишите задачу и подтвердите согласие.'});return;
+  }
+  clearExpired();
+  if(sessions.size>=550){sendJSON(res,503,{ok:false,error:'Приём сообщений временно ограничен. Используйте Telegram.'});return}
+  const id=crypto.randomUUID(),secret=crypto.randomBytes(24).toString('hex');
+  const s={id,keyHash:crypto.createHash('sha256').update(secret).digest('hex'),name,contact,category,messages:[{seq:1,by:'visitor',text:message,at:Date.now()}],seq:1,updated:Date.now(),botMessages:new Set()};
+  // Never acknowledge successful delivery before Telegram confirms it.
+  try{await notify(s,message,'new')}catch{
+   sendJSON(res,502,{ok:false,error:'Telegram не принял сообщение. Попробуйте ещё раз или перейдите в личный чат.'});return;
+  }
+  sessions.set(id,s);
+  sendJSON(res,200,{ok:true,sessionId:id,sessionKey:secret,expiresInHours:48});
+  return;
+ }
+ if(path==='/api/chat/poll'){
+  const s=validSession(data);
+  if(!s){sendJSON(res,404,{ok:false,error:'Переписка недоступна. Начните новую или напишите в Telegram.'});return}
+  const after=Math.max(0,Math.min(1000000,Number(data.after)||0));
+  sendJSON(res,200,{ok:true,messages:s.messages.filter(m=>m.seq>after),lastSeq:s.seq});
+  return;
+ }
+ if(path==='/api/chat/message'){
+  if(tooMany(req)){sendJSON(res,429,{ok:false,error:'Пожалуйста, отправляйте сообщения реже.'});return}
+  const s=validSession(data),text=clean(data.text,1500);
+  if(!s||!text||text.length<2){sendJSON(res,400,{ok:false,error:'Нет активного чата или текста сообщения.'});return}
+  if(s.messages.filter(m=>m.by==='visitor').length>=20){sendJSON(res,429,{ok:false,error:'Достигнут лимит сообщений. Продолжите переписку в Telegram.'});return}
+  try{await notify(s,text,'followup')}catch{sendJSON(res,502,{ok:false,error:'Сообщение не доставлено. Попробуйте снова.'});return}
+  s.seq++;s.updated=Date.now();
+  s.messages.push({seq:s.seq,by:'visitor',text,at:Date.now()});
+  if(s.messages.length>50)s.messages.shift();
+  sendJSON(res,200,{ok:true,seq:s.seq});
+  return;
+ }
+ sendJSON(res,404,{ok:false,error:'Неизвестный метод'});
+}
+const server=http.createServer((req,res)=>{handle(req,res).catch(()=>{if(!res.headersSent)sendJSON(res,500,{ok:false,error:'Внутренняя ошибка'});else res.end()})});
+server.requestTimeout=20000;
+server.listen(PORT,'0.0.0.0',()=>console.log('Portfolio chat API listening on '+PORT));
+if(configured)registerWebhook();
+setInterval(clearExpired,600000).unref();
