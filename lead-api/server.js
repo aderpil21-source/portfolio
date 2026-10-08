@@ -2,6 +2,7 @@
 // Dedicated Telegram bridge. No tokens or personal Telegram identifiers in source.
 const http=require('node:http');
 const crypto=require('node:crypto');
+const net=require('node:net');
 const {URL}=require('node:url');
 const PORT=Number(process.env.PORT||3000);
 const ORIGIN=(process.env.ALLOWED_ORIGIN||'https://aderpil21-source.github.io').replace(/\/$/,'');
@@ -10,14 +11,15 @@ for(const value of (process.env.ALLOWED_ORIGINS||'').split(',')){const normalize
 const STORE_URL=(process.env.PORTFOLIO_STORE_URL||'').trim();
 const STORE_KEY=(process.env.PORTFOLIO_STORE_KEY||'').trim();
 const storageEnabled=!!(STORE_URL&&STORE_KEY);
+const storageRequired=process.env.PORTFOLIO_REQUIRE_STORAGE!=='false';
 const TOKEN=(process.env.TELEGRAM_BOT_TOKEN||'').trim();
 const OWNER=(process.env.TELEGRAM_CHAT_ID||'').trim();
 const PUBLIC_URL=(process.env.PUBLIC_BASE_URL||'https://denis-kats-portfolio-chat.onrender.com').replace(/\/$/,'');
 const configured=!!(TOKEN&&/^\d{5,20}$/.test(OWNER));
 const webhookSecret=configured?crypto.createHmac('sha256',TOKEN).update('portfolio-chat-webhook-v1').digest('hex'):null;
 const CHOICES=new Set(['Таргетированная реклама','Сайты и лендинги','AI-боты и ассистенты','Автоматизация заявок','CRM, API и интеграции','SEO и сопровождение','AI-видео и креативы','Образовательные проекты','Другая задача']);
-const sessions=new Map(),telegramMessages=new Map(),ipBuckets=new Map();
-let storageLoaded=!storageEnabled,loading=null;
+const sessions=new Map(),telegramMessages=new Map(),ipBuckets=new Map(),invalidPollBuckets=new Map(),saveQueues=new Map();
+let storageLoaded=!storageEnabled&&!storageRequired,loading=null;
 async function storageCall(action,fields={}){
  if(!storageEnabled)return null;
  const response=await fetch(STORE_URL,{method:'POST',headers:{'content-type':'application/json','x-portfolio-storage-key':STORE_KEY},body:JSON.stringify({action,...fields}),signal:AbortSignal.timeout(13000)});
@@ -45,16 +47,22 @@ async function ensureStorageReady(){
  try{await loading;return storageLoaded}catch(e){console.error('Portfolio storage unavailable:',e.message);return false}
 }
 async function saveSession(s){
- if(!storageEnabled)return;
- const record={...s,botMessages:[...s.botMessages]};
- await storageCall('save',{session:record});
+ if(!storageEnabled){if(storageRequired)throw Error('Persistent storage is required');return}
+ // Preserve database write order if visitor and owner update a conversation concurrently.
+ const previous=saveQueues.get(s.id)||Promise.resolve();
+ const next=previous.catch(()=>{}).then(async()=>{
+  const record={...s,messages:s.messages.map(item=>({...item})),botMessages:[...s.botMessages]};
+  await storageCall('save',{session:record});
+ });
+ saveQueues.set(s.id,next);
+ try{await next}finally{if(saveQueues.get(s.id)===next)saveQueues.delete(s.id)}
 }
 const markerColors=['🔵','🟣','🟢','🟠','🟡','🔴','⚪️','🟤'];
 const DIRECT_USERNAME='dnk_pr03';
 const sessionLife=48*3600*1000;
 let globalRate={start:Date.now(),count:0},webhookRegistered=false;
 function sendJSON(res,status,data){
- res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Vary':'Origin'});
+ res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-Frame-Options':'DENY','Cross-Origin-Resource-Policy':'cross-origin','Vary':'Origin'});
  res.end(JSON.stringify(data));
 }
 function allowOrigin(req,res){
@@ -76,15 +84,29 @@ function clearExpired(){
   }
  }
  for(const [ip,b] of ipBuckets)if(now-b.start>600000)ipBuckets.delete(ip);
+ for(const [ip,b] of invalidPollBuckets)if(now-b.start>60000)invalidPollBuckets.delete(ip);
+}
+function clientAddress(req){
+ // Only use the last syntactically valid forwarded address: the first entry may
+ // be supplied by an untrusted client before the hosting proxy appends its own.
+ const forwarded=String(req.headers['x-forwarded-for']||'').split(',').map(v=>v.trim()).filter(v=>net.isIP(v));
+ const address=forwarded.at(-1)||String(req.socket.remoteAddress||'unknown');
+ return crypto.createHash('sha256').update(address.slice(0,100)).digest('hex').slice(0,32);
 }
 function tooMany(req){
  const now=Date.now();
  if(now-globalRate.start>=60000)globalRate={start:now,count:0};
  if(++globalRate.count>40)return true;
- const addr=String(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').split(',')[0].slice(0,100);
+ const addr=clientAddress(req);
  const prior=ipBuckets.get(addr),r=prior&&now-prior.start<600000?prior:{start:now,count:0,last:0};
  const soon=now-r.last<4000;r.last=now;r.count++;ipBuckets.set(addr,r);
  return soon||r.count>8;
+}
+function tooManyInvalidPoll(req){
+ const key=clientAddress(req),now=Date.now();
+ const prior=invalidPollBuckets.get(key),item=prior&&now-prior.start<60000?prior:{start:now,count:0};
+ item.count++;invalidPollBuckets.set(key,item);
+ return item.count>40;
 }
 function readBody(req,max=6500){
  return new Promise((resolve,reject)=>{
@@ -237,10 +259,11 @@ async function handle(req,res){
  try{path=new URL(req.url,'http://localhost').pathname}catch{sendJSON(res,400,{ok:false});return}
  if(path==='/health'&&(req.method==='GET'||req.method==='HEAD')){
   if(storageEnabled&&!storageLoaded)await ensureStorageReady();
-  sendJSON(res,200,{ok:true,configured,webhookReady:webhookRegistered,activeConversations:sessions.size,persistenceConfigured:storageEnabled,persistenceReady:storageLoaded});
+  const healthy=configured&&webhookRegistered&&storageLoaded&&(!storageRequired||storageEnabled);
+  sendJSON(res,healthy?200:503,{ok:healthy,configured,webhookReady:webhookRegistered,persistenceConfigured:storageEnabled,persistenceReady:storageLoaded});
   return;
  }
- if(storageEnabled&&!(await ensureStorageReady())){sendJSON(res,503,{ok:false,error:'Хранилище временно недоступно'});return}
+ if((storageRequired&&!storageEnabled)||(storageEnabled&&!(await ensureStorageReady()))){sendJSON(res,503,{ok:false,error:'Хранилище временно недоступно'});return}
  if(path==='/telegram/webhook'&&req.method==='POST'){await webhook(req,res);return}
  if(!path.startsWith('/api/chat/')){sendJSON(res,404,{ok:false,error:'Не найдено'});return}
  if(!allowOrigin(req,res)){sendJSON(res,403,{ok:false,error:'Недопустимый источник'});return}
@@ -275,7 +298,7 @@ async function handle(req,res){
  }
  if(path==='/api/chat/poll'){
   const s=validSession(data);
-  if(!s){sendJSON(res,404,{ok:false,error:'Переписка недоступна. Начните новую или напишите в Telegram.'});return}
+  if(!s){if(tooManyInvalidPoll(req)){sendJSON(res,429,{ok:false,error:'Слишком много запросов.'});return}sendJSON(res,404,{ok:false,error:'Переписка недоступна. Начните новую или напишите в Telegram.'});return}
   const after=Math.max(0,Math.min(1000000,Number(data.after)||0));
   sendJSON(res,200,{ok:true,messages:s.messages.filter(m=>m.seq>after),lastSeq:s.seq});
   return;
