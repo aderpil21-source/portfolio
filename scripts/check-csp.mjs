@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import vm from 'node:vm';
 
-const html = fs.readFileSync('index.html', 'utf8');
+const html = fs.readFileSync('index.html', 'utf8').replace(/\r\n/g, '\n');
 const csp = html.match(/<meta\s+http-equiv="Content-Security-Policy"\s+content="([^"]+)"/i)?.[1];
 if (!csp) throw new Error('Missing Content-Security-Policy meta tag');
 const directive = name => csp.split(';').map(x=>x.trim()).find(x=>x.startsWith(name+' ')) || '';
