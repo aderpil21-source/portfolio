@@ -1,20 +1,32 @@
-# Portfolio leads Telegram API
-Этот API пересылает сообщения с портфолио в личный Telegram владельца. Никаких токенов в GitHub или HTML.
+# Помощник портфолио: двусторонний Telegram-чат
 
-## Render
-- Node.js runtime, repository `https://github.com/aderpil21-source/portfolio`, branch `main`.
-- Build command: `npm install --omit=dev`
-- Start command: `npm start`
-- Environment:
-  - `TELEGRAM_BOT_TOKEN` — значение, которое выдаст @BotFather (секрет, никогда не коммитить).
-  - `TELEGRAM_CHAT_ID` — числовой Telegram Chat ID владельца; предварительно отправить новому боту /start.
-  - `ALLOWED_ORIGIN` — `https://aderpil21-source.github.io`.
-- Endpoint `POST /api/leads`, health `GET /health`.
-- После запуска в HTML сайта надо записать API URL в meta `portfolio-leads-api` (полный URL с /api/leads), например `https://your-service.onrender.com/api/leads`.
+Отдельный сервис Render: **denis-kats-portfolio-chat**.
+GitHub-проект: `aderpil21-source/portfolio`.
+Render автоматически развёртывает **ветку `portfolio-chat-service`**, поэтому изменения дизайна главной страницы не перезапускают сервер чата.
 
-## Security
-- Strict allowed Origin, JSON content type, input lengths, 8 predefined categories (+ custom task), explicit consent, honeypot and per-IP + global in-memory rate limits.
-- Data is sent directly to Telegram, with no server-side persistence or request-body logs. Render / Telegram infrastructure may still process message data.
-- This is a notification backend, not an autonomous LLM chat. Assistant uses fast prewritten answers; it does not hallucinate prices or deadlines.
-- Before accepting real client data publicly, publish privacy information and verify applicable personal-data laws, including cross-border transmission where relevant.
-- Render free services may sleep, increasing first-request latency; use a paid always-on tier or existing always-on service if immediate delivery is essential.
+## Подключение
+1. Через Telegram `@BotFather` создайте **отдельного** бота, например «Денис Кац | Цифровые решения». Напишите новому боту `/start` со своего Telegram.
+2. Откройте [Render Environment](https://dashboard.render.com/web/srv-db3niad9fdbs73ehn81g/env) для сервиса `denis-kats-portfolio-chat`.
+3. Добавьте `TELEGRAM_BOT_TOKEN` — **секрет** из BotFather, только в Render, не в GitHub и не в HTML.
+4. `TELEGRAM_CHAT_ID` уже заполнен в Render для владельца. `ALLOWED_ORIGIN` — `https://aderpil21-source.github.io`; `PUBLIC_BASE_URL` — `https://denis-kats-portfolio-chat.onrender.com`.
+5. Сохраните настройки: Render перезапустит сервис, на старте он сам зарегистрирует Telegram webhook. Откройте [health](https://denis-kats-portfolio-chat.onrender.com/health): требуется `configured: true` и `webhookReady: true`.
+6. Проверьте на сайте помощника: выберите услугу, отправьте тестовую задачу, получите уведомление в боте и **ответьте на уведомление через Telegram «Ответить / Reply»**. Ответ появится в чате сайта в течение нескольких секунд (опрос 4,5 секунды).
+7. Кнопка «Перейти в личный Telegram к Денису» ведёт на `https://t.me/dnk_pr03`, независимо от работы бота.
+
+## Как устроен процесс
+`POST /api/chat/start` создаёт отдельную сессию для посетителя и отправляет уведомление владельцу.
+`POST /api/chat/poll` возвращает сообщения в этом чате (сессионный ключ обязателен).
+`POST /api/chat/message` отправляет дополнительные сообщения клиента владельцу.
+`POST /telegram/webhook` принимает **только подписанные Telegram-вебхуки** и ответы **только владельца**, сделанные через Reply на уведомление бота.
+`GET /health` сообщает, подключён ли Telegram.
+
+Токены и Telegram ID не попадают в HTML. Используется ограничение частоты запросов, длины сообщений, проверка Origin, подпись вебхуков и отдельный секрет каждой сессии. Формы не позволяют выполнить платежи и не пересылают пароли.
+
+## Ограничения и мониторинг
+Чаты **временно хранятся только в оперативной памяти сервера** (до 48 часов после последнего сообщения), поэтому при перезапуске/засыпании бесплатного Render диалоги могут потеряться. Сессионный ключ посетителя хранится в браузере в sessionStorage; закрытие вкладки/браузера может удалить этот ключ. Для надёжного длительного хранения понадобится отдельная база данных.
+
+GitHub Actions `.github/workflows/portfolio-chat-keepalive.yml` выполняет `/health` примерно каждые 5 минут. Запуски GitHub cron бывают задержаны: гарантии, что Render Free не заснёт, **нет**. Для строгого SLA выбирайте Render Starter или другой always-on хостинг после отдельного согласования расходов.
+
+**Важно о данных:** сайт принимает задачи и добровольно указанные контакты; они передаются через Render (Франкфурт) и Telegram. Перед реальными коммерческими рассылками и сбором персональных данных проверьте политику обработки, правовое основание и требования к трансграничной передаче данных применительно к РФ и месту работы заказчиков.
+
+Если потребуется расширить систему, безопаснее сначала добавить хранилище, журнал диалогов, полноценную политику конфиденциальности и проверку доставки.
