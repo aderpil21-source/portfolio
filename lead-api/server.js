@@ -194,7 +194,7 @@ async function webhook(req,res){
 async function handle(req,res){
  let path;
  try{path=new URL(req.url,'http://localhost').pathname}catch{sendJSON(res,400,{ok:false});return}
- if(path==='/health'&&req.method==='GET'){
+ if(path==='/health'&&(req.method==='GET'||req.method==='HEAD')){
   sendJSON(res,200,{ok:true,configured,webhookReady:webhookRegistered,activeConversations:sessions.size});
   return;
  }
