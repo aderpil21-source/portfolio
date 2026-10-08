@@ -729,22 +729,43 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
 .contact-telegram-icon{font-size:22px;transform:rotate(-19deg)}
 .contact-stage-signoff{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:27px;padding-top:18px;border-top:1px solid #ffffff27;color:#a2b7d4;font-size:11px;letter-spacing:.09em;font-weight:750}
 .contact-stage button:focus-visible,.contact-stage a:focus-visible{outline:3px solid #b0d5ff;outline-offset:4px}
-/* Zoom layer is out-of-flow: stable page, nothing jumps under the pointer. */
-#portfolio-zoom-lens[hidden]{display:none!important}
-#portfolio-zoom-lens{position:fixed;inset:0;z-index:180;pointer-events:none;contain:layout style;--peek-scale:2}
-.portfolio-zoom-frame{position:absolute;overflow:hidden;border-radius:17px;border:1px solid #d4e4f2;box-shadow:0 23px 85px #0411278c,0 0 0 1px #ffffff7d;background:#fff;isolation:isolate}
-.portfolio-zoom-frame.is-text{padding:19px 23px;background:#fff;color:#283c58;overflow:hidden}
-.portfolio-zoom-frame.is-text .portfolio-zoom-text{font-size:clamp(20px,1.75vw,29px);font-weight:660;line-height:1.5;letter-spacing:-.02em;overflow-wrap:anywhere;margin:0}
-.portfolio-zoom-frame.is-image{background:#14203b}
-.portfolio-zoom-frame.is-image img{width:100%;height:100%;object-fit:contain;display:block}
-.portfolio-zoom-clone{transform-origin:top left;transform:scale(var(--peek-scale));margin:0!important;max-width:none!important;max-height:none!important}
-.portfolio-zoom-clone.news-platform-card{opacity:1!important;filter:none!important;box-shadow:none!important;transform-origin:top left!important;transform:scale(var(--peek-scale))!important}
-.portfolio-zoom-frame .news-social-media img{height:100%}
-.portfolio-zoom-caption{position:absolute;z-index:5;right:13px;top:10px;background:#15294bde;border:1px solid #b9d3ff7d;color:#e5efff;font-size:11px;padding:7px 10px;border-radius:99px;font-weight:760;letter-spacing:.05em}
-@media(min-width:901px){.news-platform-card,.freshman-artwork-collage img,.case .tag,.case .copy p,.freshman-mini-features span,.brief-form-header strong,.contact-option{cursor:zoom-in}}
 @media(max-width:900px){.contact-stage-main{grid-template-columns:1fr}.contact-stage-action{max-width:570px}.contact-stage .contact-options{grid-template-columns:1fr}}
 @media(max-width:650px){.contact-stage{border-radius:24px;padding:22px 18px}.contact-stage-head{align-items:start;flex-direction:column;gap:8px}.contact-stage-main{gap:22px;padding:26px 0 14px}.contact-stage-copy h2{font-size:44px}.contact-stage .contact-option{padding:17px}.contact-stage-signoff{font-size:10px}.contact-stage-action{padding:16px}.experience-stamp{max-width:none}}
 @media(prefers-reduced-motion:reduce){.brief-dots.is-pulsing i{animation:none!important}.contact-stage-primary,.contact-stage .contact-option{transition:none!important}}
+
+/* 2026 hover polish: understated 10% cards, 15% genuinely small text.
+   Native individual 'scale' leaves existing Motion transforms and page flow intact. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .sales-solutions-grid,.sales-offers-grid,.services-grid,.trust-grid,.news-platform-stack,.contact-options{isolation:isolate}
+  :is(.sales-solution-card,.sales-offer,.services-grid>a,.trust-grid>div,.contact-option,.news-platform-card){
+    scale:1;
+    position:relative;
+    z-index:0;
+  }
+  .sales-solution-card{transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease,scale .26s cubic-bezier(.22,1,.36,1)}
+  .sales-offer{transition:box-shadow .25s ease,transform .25s ease,scale .26s cubic-bezier(.22,1,.36,1)}
+  .services-grid>a{transition:transform .25s ease,box-shadow .25s ease,scale .26s cubic-bezier(.22,1,.36,1)}
+  .trust-grid>div{transition:scale .26s cubic-bezier(.22,1,.36,1)}
+  .contact-option,.contact-stage .contact-option{transition:transform .25s ease,box-shadow .25s ease,background .23s ease,border-color .23s ease,scale .26s cubic-bezier(.22,1,.36,1)}
+  .news-platform-card{transition:opacity .35s ease,filter .35s ease,transform .45s cubic-bezier(.22,1,.36,1),scale .26s cubic-bezier(.22,1,.36,1)}
+  :is(.sales-solution-card,.sales-offer,.services-grid>a,.trust-grid>div,.contact-option):hover{scale:1.10;z-index:8}
+  .news-platform[data-state=published] .news-platform-card:hover{scale:1.10;z-index:8}
+  .news-platform:has(.news-platform-card:hover){z-index:8}
+  /* Creative collage keeps its subtle independent tilt, but never expands beyond 10%. */
+  .freshman-artwork-collage img{pointer-events:auto;scale:1;transition:transform .28s cubic-bezier(.22,1,.36,1),scale .26s cubic-bezier(.22,1,.36,1)}
+  .freshman-artwork-collage img:hover{scale:1.10;z-index:5}
+  .news-attachment-strip img{scale:1;transition:scale .26s cubic-bezier(.22,1,.36,1)}
+  .news-attachment-strip img:hover{scale:1.10}
+  /* Only micro labels, not normal-sized body text or nested card content. */
+  :is(.case .tag,.freshman-mini-features span,.brief-tip,.freshman-mini-footnote,.sales-spot,.news-results-footnote){
+    scale:1;
+    transform-origin:left center;
+    position:relative;
+    transition:scale .23s cubic-bezier(.22,1,.36,1);
+  }
+  .case .tag{display:inline-block}
+  :is(.case .tag,.freshman-mini-features span,.brief-tip,.freshman-mini-footnote,.sales-spot,.news-results-footnote):hover{scale:1.15;z-index:5}
+}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#brief">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов<br><span class="gradient">Автоматизирую бизнес</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
@@ -1993,7 +2014,7 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
     <span class="dk-la-launch-copy"><b>Есть задача?</b><small>Помогу разобраться</small></span>
     <span class="dk-la-launch-arrow" aria-hidden="true">↗</span>
   </button>
-</aside><div id="portfolio-zoom-lens" hidden aria-hidden="true"><div class="portfolio-zoom-frame" id="portfolio-zoom-frame"></div></div><script>/* Progressive form status, keyboard-safe contact action and hover detail inspector */
+</aside><script>/* Progressive form status, keyboard-safe contact action and hover detail inspector */
 (function(){
  const form=document.getElementById('brief-form');
  const dots=form?.querySelector('.brief-dots');
@@ -2029,111 +2050,7 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
   if(launcher&&root?.dataset.open!=='true')launcher.click();
   else if(launcher)document.getElementById('dk-la-close')?.focus({preventScroll:true});
  });
- // Floating 2× inspection for text and cards; never resize a real block or shift scroll.
- const query=window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 901px)');
- const lens=document.getElementById('portfolio-zoom-lens');
- const frame=document.getElementById('portfolio-zoom-frame');
- if(!lens||!frame||!query.matches)return;
- const cardSel='.news-platform-card, .sales-solution-card, .sales-offer, .services-grid>a, .trust-grid>div, .contact-option';
- const imageSel='.freshman-artwork-collage img, .news-attachment-strip img, .case-visual img:not(.news-social-media img)';
- const textSel='.case .tag, .case .copy p, .about-lead, .freshman-mini-content>p, .freshman-mini-features span, .brief-form label, .brief-tip, .brief-form-header strong, .contact-stage-action>p, .sales-education-bridge p, .contact-stage-process span';
- let active=null,lastPoint={x:0,y:0},lastMode='';
- function eligible(node){
-  if(!(node instanceof Element))return null;
-  if(node.closest('#portfolio-zoom-lens,#dk-lead-assistant'))return null;
-  const img=node.closest(imageSel);
-  if(img)return {node:img,mode:'image'};
-  const card=node.closest(cardSel);
-  if(card)return {node:card,mode:'card'};
-  const text=node.closest(textSel);
-  if(text&&!text.closest('button,a,input,textarea,select'))return {node:text,mode:'text'};
-  return null;
- }
- function place(w,h,x,y){
-  const margin=15;
-  const left=x+w+32<window.innerWidth ? x+17 : x-w-17;
-  const top=Math.max(margin,Math.min(window.innerHeight-h-margin,y-h/2));
-  frame.style.left=Math.max(margin,Math.min(window.innerWidth-w-margin,left))+'px';
-  frame.style.top=top+'px';
-  frame.style.width=w+'px';frame.style.height=h+'px';
- }
- function reset(){
-  active=null;lastMode='';
-  lens.hidden=true;frame.replaceChildren();
-  frame.className='portfolio-zoom-frame';
- }
- function paint(found,x,y){
-  if(!found)return reset();
-  const node=found.node;
-  if(found.mode==='text'&&node.textContent.trim().length<4)return reset();
-  const bounds=node.getBoundingClientRect();
-  const availW=window.innerWidth-35,availH=window.innerHeight-38;
-  frame.replaceChildren();
-  frame.className='portfolio-zoom-frame is-'+found.mode;
-  let w,h;
-  if(found.mode==='text'){
-    const text=document.createElement('p');text.className='portfolio-zoom-text';text.textContent=node.textContent.trim();
-    const measured=Math.max(22,Math.min(360,Math.round(bounds.width)));
-    w=Math.min(availW,Math.max(350,measured*1.5));h=Math.min(availH,Math.max(105,Math.ceil(text.textContent.length/34)*42+55));
-    frame.append(text);
-  }else if(found.mode==='image'){
-    const img=document.createElement('img');img.alt=node.alt||'Увеличенное изображение';
-    img.src=node.currentSrc||node.src;frame.append(img);
-    const ow=node.naturalWidth||bounds.width,oh=node.naturalHeight||bounds.height;
-    const ratio=ow/Math.max(1,oh);
-    const zoom=Math.min(3,availW/Math.max(1,bounds.width),availH/Math.max(1,bounds.height));
-    w=Math.min(availW,Math.round(bounds.width*Math.max(1,zoom)));h=Math.min(availH,Math.round(w/ratio));
-    if(h>availH){h=availH;w=Math.round(h*ratio)}
-    frame.style.background='#101e36';
-  }else{
-    const boundsW=Math.max(100,bounds.width),boundsH=Math.max(80,bounds.height);
-    const scale=Math.min(2,availW/boundsW,availH/boundsH);
-    if(scale<1.05)return reset(); // Huge full-width sections cannot be doubled in viewport.
-    w=Math.ceil(boundsW*scale);h=Math.ceil(boundsH*scale);
-    const clone=node.cloneNode(true);clone.classList.add('portfolio-zoom-clone');
-    // Avoid duplicate element IDs or tabbable interactive descendants.
-    clone.removeAttribute('id');clone.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));
-    clone.querySelectorAll('button,a,input,textarea,select').forEach(e=>{e.tabIndex=-1;e.setAttribute('aria-hidden','true')});
-    clone.style.width=boundsW+'px';clone.style.height=boundsH+'px';
-    clone.style.setProperty('--peek-scale',String(scale));
-    frame.append(clone);
-  }
-  w=Math.max(120,Math.min(availW,w));h=Math.max(80,Math.min(availH,h));
-  const badge=document.createElement('span');badge.className='portfolio-zoom-caption';
-  badge.textContent=found.mode==='text'?'Увеличенный текст':'Детальный просмотр';
-  frame.append(badge);
-  place(w,h,x,y);
-  lens.hidden=false;
-  active=node;lastMode=found.mode;
- }
- document.addEventListener('pointerover',event=>{
-  const found=eligible(event.target);
-  if(!found){if(active&&!event.target.closest?.('#portfolio-zoom-lens'))reset();return}
-  if(found.node===active)return;
-  lastPoint={x:event.clientX,y:event.clientY};
-  paint(found,lastPoint.x,lastPoint.y);
- },{passive:true});
- document.addEventListener('pointerout',event=>{
-  if(!active)return;
-  if(event.relatedTarget instanceof Element&&active.contains(event.relatedTarget))return;
-  if(!event.relatedTarget||!active.contains(event.relatedTarget))reset();
- },{passive:true});
- document.addEventListener('pointermove',event=>{
-  // A scroll event may hide a preview after pointerover; reopen on the
-  // next deliberate mouse movement without waiting for another pointerover.
-  if(!active||lens.hidden){
-    const candidate=eligible(event.target);
-    if(candidate){paint(candidate,event.clientX,event.clientY)}
-    return;
-  }
-  if(active.contains(event.target)){
-    lastPoint={x:event.clientX,y:event.clientY};
-    place(frame.offsetWidth,frame.offsetHeight,lastPoint.x,lastPoint.y);
-  }else reset();
- },{passive:true});
- window.addEventListener('scroll',reset,{passive:true});
- window.addEventListener('resize',reset,{passive:true});
- document.addEventListener('keydown',event=>{if(event.key==='Escape')reset()});
+
 })();
 </script><script>
 /* Eight services + reply-enabled Telegram bridge, no public bot secrets */
