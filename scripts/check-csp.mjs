@@ -26,4 +26,14 @@ for (let i=0;i<styleBlocks.length;i++) {
 for(const d of ['object-src','base-uri','connect-src','frame-src']) if(!directive(d))
  throw new Error('Missing CSP directive: '+d);
 if (!fs.existsSync('privacy.html')) throw new Error('Privacy notice missing');
-console.log('PASS: '+scripts.length+' script hashes, '+styleBlocks.length+' style hashes, JS syntax and required security directives');
+for (const file of ['privacy.html','education.html']) {
+ const page=fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n');
+ const policy=page.match(/<meta\s+http-equiv="Content-Security-Policy"\s+content="([^"]+)"/i)?.[1];
+ if (!policy || !policy.includes("script-src 'none'")) throw new Error(file+': missing script-blocking CSP');
+ const blocks=[...page.matchAll(/<style(?:\s[^>]*)?>([\s\S]*?)<\/style>/gi)];
+ if(!blocks.length || blocks.some(b=>!policy.includes(sha(b[1]))))throw new Error(file+': unsafe or outdated style hash');
+ const executable=[...page.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
+  .filter(([,attrs])=>!attrs.includes('application/ld+json'));
+ if(executable.length)throw new Error(file+': unexpected executable inline JavaScript');
+}
+console.log('PASS: '+scripts.length+' main script hashes, '+styleBlocks.length+' style hash, two protected secondary pages and JavaScript syntax');
