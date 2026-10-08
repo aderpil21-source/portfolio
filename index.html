@@ -1054,6 +1054,44 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
   .nav{justify-content:flex-start}
   .site-brand{min-width:0}
 }
+
+/* Touch-first navigation and opt-in result discovery. */
+.news-view-results[hidden]{display:none!important}
+.news-view-results{border:1px solid #82b7f7;background:#e7f2ff;color:#215d9b;font-size:13px;line-height:1.4;font-weight:800;padding:13px 14px;min-height:48px;width:100%;border-radius:12px;cursor:pointer;margin:10px 0 5px;transition:background .2s ease,border-color .2s ease}
+.news-view-results:hover{background:#d6e8ff;border-color:#4b97df}
+.news-view-results:focus-visible{outline:3px solid #3c82cd;outline-offset:3px}
+@media(min-width:861px){.news-view-results{display:none!important}}
+#news-distribution-results{scroll-margin-top:115px}
+@media(max-width:700px){
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:57px;flex-wrap:wrap}
+  .nav-links{display:flex!important;visibility:visible!important;pointer-events:auto!important;flex:0 1 auto;max-width:100%;margin-left:auto;align-items:center;gap:3px;overflow:visible}
+  .nav-links a{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;min-height:38px;padding:7px clamp(5px,1.8vw,11px);border-radius:10px;font-size:clamp(10px,2.7vw,12px);line-height:1.25}
+  .nav-links a:focus-visible{outline:2px solid #4c83d1;outline-offset:1px}
+  .sales-solution-card:before{right:0;width:140px;height:140px;top:0}
+  .contact-stage:after{right:0;width:40%}
+  .freshman-artwork-poster{left:5%;width:35%}
+  .freshman-artwork-banner{right:3%;width:59%}
+  .freshman-artwork-collage{overflow:hidden}
+  :is(.news-channel-option,.dpo-pill,.form-tab,.pay-bank,.guide-switch,.quick-reply){min-height:44px;touch-action:manipulation}
+  :is(.news-field-label,.news-media-caption,.news-channels-label){overflow-wrap:anywhere}
+  :is(#news-demo-headline,#news-demo-lead,#news-demo-body){box-sizing:border-box;resize:vertical}
+  #news-preview-button{width:100%;overflow-wrap:break-word}
+  .news-publish-options{min-width:0}
+  .news-channel-option{cursor:pointer}
+  :is(.section[id],article.case[id],#freshman-guide){scroll-margin-top:87px}
+}
+@media(max-width:355px){
+  .nav{justify-content:center}
+  .site-brand{flex-basis:100%;justify-content:center}
+  .nav-links{flex-basis:100%;margin-left:0;justify-content:space-around}
+  .nav-links a{flex:1}
+  :is(.section[id],article.case[id],#freshman-guide){scroll-margin-top:119px}
+}
+@media(max-width:510px){
+  .freshman-artwork-poster{left:4%;width:38%}
+  .freshman-artwork-banner{right:4%;width:57%}
+}
+@media(prefers-reduced-motion:reduce){.news-view-results{transition:none!important}}
 </style></head><body>
 <nav class="nav"><a href="#top" class="site-brand"><img src="assets/k-reference.png" class="site-brand-image" width="34" height="34" alt="" aria-hidden="true"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов<br><span class="gradient">Автоматизирую бизнес</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Направления работы ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#contact">Обсудить свою задачу ↗</a></p></header>
@@ -1322,12 +1360,12 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
        <label class="news-channel-option" for="news-publish-tg"><input type="checkbox" id="news-publish-tg" checked><span class="news-channel-icon news-icon-tg"><img src="assets/brand-telegram.webp" class="brand-logo" alt="" aria-hidden="true" width="32" height="32" decoding="async"></span><span><b>Telegram</b><small>Пост с обложкой Академии</small></span><span class="news-option-check">✓</span></label>
        <label class="news-channel-option" for="news-publish-dzen"><input type="checkbox" id="news-publish-dzen" checked><span class="news-channel-icon news-icon-dzen"><img src="assets/brand-dzen.png" class="brand-logo" alt="" aria-hidden="true" width="32" height="32" decoding="async"></span><span><b>Яндекс Дзен</b><small>Превью видеопубликации</small></span><span class="news-option-check">✓</span></label>
      </div>
-     <button type="button" class="news-publish-action" id="news-preview-button" aria-describedby="news-save-hint"><span>↗</span> Сохранить и показать публикации</button><p class="news-save-hint" id="news-save-hint">↓ На телефоне результаты откроются ниже редактора, на компьютере — справа.</p>
+     <button type="button" class="news-publish-action" id="news-preview-button" aria-describedby="news-save-hint"><span>↗</span> Сохранить и показать публикации</button><p class="news-save-hint" id="news-save-hint">↓ На телефоне публикации появятся ниже редактора, на компьютере — справа.</p><button type="button" class="news-view-results" id="news-view-results" aria-controls="news-distribution-results" hidden>↓ Смотреть созданные публикации</button>
      <button type="button" class="news-repeat-button" id="news-repeat-button" hidden>↺ Изменить выбор и повторить</button>
      <div class="news-demo-status" id="news-preview-result" aria-live="polite">Готово к демонстрации. Материалы появятся справа после нажатия.</div>
     </div>
    </div>
-   <div class="news-distribution-results" data-revealed="false" aria-hidden="true" inert>
+   <div class="news-distribution-results" id="news-distribution-results" data-revealed="false" aria-hidden="true" inert>
       <div class="news-results-top"><div><span class="news-result-dot"></span><strong id="news-delivery-title">Ожидается публикация</strong></div><span id="news-delivery-count">0 / 3</span></div>
       <div class="news-platform-stack">
        <section class="news-platform news-platform-vk" data-publish-channel="vk" data-state="idle" aria-label="Демонстрация публикации ВКонтакте">
@@ -1670,7 +1708,12 @@ document.querySelectorAll('[data-guide]').forEach(btn=>btn.addEventListener('cli
  const publishButton=document.getElementById('news-preview-button');
  const repeatButton=document.getElementById('news-repeat-button');
  const status=document.getElementById('news-preview-result');
+ const jumpToResults=document.getElementById('news-view-results');
  const results=board.querySelector('.news-distribution-results');
+ jumpToResults?.addEventListener('click',()=>{
+   if(results?.dataset.revealed!=='true')return;
+   results.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+ });
  function showResults(show){
    results.dataset.revealed=show?'true':'false';
    results.setAttribute('aria-hidden',String(!show));
@@ -1699,6 +1742,7 @@ document.querySelectorAll('[data-guide]').forEach(btn=>btn.addEventListener('cli
   cancelTimers();
   board.classList.remove('is-publishing','is-published');
   showResults(false);
+  if(jumpToResults)jumpToResults.hidden=true;
   for(const c of platformEntries){
     c.card.dataset.state='idle';
     c.card.querySelector('.news-platform-status').textContent=c.input.checked?'Ожидает сохранения':'Канал не выбран';
@@ -1720,6 +1764,7 @@ document.querySelectorAll('[data-guide]').forEach(btn=>btn.addEventListener('cli
   board.classList.remove('is-published');
   board.classList.add('is-publishing');
   showResults(selected.length>0);
+  if(jumpToResults)jumpToResults.hidden=selected.length===0;
   publishButton.disabled=true;
   publishButton.innerHTML='<span>◌</span> Сохраняем новость…';
   title.textContent='Размещение по каналам';
