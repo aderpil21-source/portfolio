@@ -140,9 +140,67 @@
  .motion-tile{opacity:1!important;transform:none!important}
  .hero:before{transform:none!important;transition:none!important}
 }
+
+/* Business-first positioning; all existing live projects retained */
+.hero .hero-inline-contact{display:inline-block;color:#315c9c;font-weight:700;margin-left:5px;transition:color .2s}
+.hero .hero-inline-contact:hover{color:#1e3b67;text-decoration:underline;text-underline-offset:3px}
+.hero h1{font-size:clamp(45px,7.2vw,94px)}
+.sales-solutions{padding-top:52px;padding-bottom:52px}
+.sales-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:22px}
+.sales-section-head h2{margin-top:16px;margin-bottom:5px}
+.sales-section-head>p{max-width:335px;color:#818898;font-size:15px;line-height:1.7;margin:0 0 5px}
+.sales-solutions-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.sales-solution-card{background:#fff;border:1px solid #e4e8ef;border-radius:26px;padding:clamp(20px,2.6vw,28px);min-height:385px;display:flex;flex-direction:column;position:relative;isolation:isolate;overflow:hidden;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+.sales-solution-card:before{content:"";position:absolute;inset:-100px -60px auto auto;width:200px;height:200px;border-radius:50%;z-index:-1;background:radial-gradient(circle,#acc4ee55,transparent 65%);opacity:.6}
+.sales-solution-card:hover{transform:translateY(-4px);box-shadow:0 20px 48px #20345113}
+.sales-solution-number{font-size:12px;color:#7184a2;font-weight:820;display:flex;gap:12px;align-items:center}
+.sales-spot{display:inline-block;background:#f0f4fc;color:#5676a8;border-radius:100px;padding:7px 11px;font-size:11px;font-weight:650}
+.sales-solution-icon{font-size:35px;line-height:1;letter-spacing:-.06em;color:#5e7ead;margin:29px 0 5px}
+.sales-solution-card h3{font-size:clamp(21px,2.5vw,29px);letter-spacing:-.045em;line-height:1.17;color:#28334a;margin:11px 0 10px;max-width:260px}
+.sales-solution-card p{font-size:14px;line-height:1.7;color:#758092;margin:0 0 20px}
+.sales-solution-actions{margin-top:auto;display:flex;flex-direction:column;gap:11px;align-items:flex-start}
+.sales-solution-actions a{font-size:12px;font-weight:720;color:#3c639f;line-height:1.5}
+.sales-solution-actions .sales-solution-quote{color:#1d293d;background:#eef2f8;border-radius:12px;padding:11px 13px;transition:transform .2s,background .2s}
+.sales-solution-actions .sales-solution-quote:hover{background:#dae6f8;transform:translateX(3px)}
+.sales-path-bridge{display:flex;align-items:center;gap:15px;margin-top:17px;border-radius:18px;background:#ebeff7;padding:15px 19px;color:#606f86}
+.sales-path-dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#7c9dd4;box-shadow:0 0 0 5px #7c9dd41a}
+.sales-path-bridge p{font-size:13px;line-height:1.5;flex:1;margin:0}.sales-path-bridge b{color:#354b69}
+.sales-path-bridge>a{font-size:12px;font-weight:750;color:#345c9b;white-space:nowrap}
+.sales-solutions a:focus-visible{outline:3px solid #608bda;outline-offset:4px}
+@media(max-width:900px){.sales-solutions-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sales-solution-card{min-height:335px}.sales-solutions-grid .sales-solution-card:last-child{grid-column:1/-1;min-height:260px}}
+@media(max-width:700px){.sales-solutions{padding-top:32px;padding-bottom:24px}.sales-section-head{flex-direction:column;align-items:flex-start;gap:6px}.sales-section-head>p{max-width:100%}.sales-solutions-grid{grid-template-columns:1fr}.sales-solutions-grid .sales-solution-card:last-child{grid-column:auto;min-height:unset}.sales-solution-card{min-height:unset;padding:22px}.sales-solution-icon{margin:20px 0 0}.sales-solution-card h3{font-size:24px}.sales-path-bridge{flex-wrap:wrap}.sales-path-bridge a{margin-left:22px}.hero .hero-inline-contact{margin-top:7px}}
+@media(prefers-reduced-motion:reduce){.sales-solution-card,.sales-solution-actions .sales-solution-quote{transition:none!important}}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Контакт</a></div></nav>
-<main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Сложные процессы.<br><span class="gradient">Простые решения.</span></h1><p class="lead">Объединяю маркетинг и технологии: таргетированная реклама, посевы, контент и AI-креативы, сайты, SEO, боты и автоматизация бизнес-процессов под ключ.</p><div class="actions"><a class="btn" href="#journey">Начать экскурсию ↓</a><a class="btn secondary" href="https://t.me/dnk_pr03" target="_blank" rel="noopener">Обсудить задачу</a></div><p class="hero-subnote">От первой заявки до работы сотрудников — проектирую весь маршрут.</p></header><nav class="tour-strip wrap" id="journey" aria-label="Навигация по кейсам"><span>КЕЙСЫ:</span><a href="#creative">AI-видео и реклама</a><a href="#cinematic">AI-анимация</a><a href="#cat">Telegram-бот</a><a href="#dpo">Экосистема ДПО</a><a href="#form">Яндекс Форма</a><a href="#payment">Оплата</a><a href="#news">Новости</a><a href="#guide">Инструкции</a></nav>
+<main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов.<br><span class="gradient">Автоматизирую бизнес.</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
+<section class="section wrap sales-solutions" id="solutions" aria-labelledby="solutions-title">
+  <div class="sales-section-head"><div><span class="eyebrow">Для руководителей и владельцев бизнеса</span><h2 id="solutions-title">Что нужно решить<br><span class="gradient">в вашей компании?</span></h2></div><p>Не обязательно разбираться в технологиях. Выберите задачу — я покажу, как её можно решить, и какие подобные системы уже создавал.</p></div>
+  <div class="sales-solutions-grid">
+    <article class="sales-solution-card" data-solution="leads">
+      <div class="sales-solution-number">01 <span class="sales-spot">Привлечение</span></div>
+      <div class="sales-solution-icon" aria-hidden="true">↗</div>
+      <h3>Нужны новые клиенты и заявки</h3>
+      <p>Таргетированная реклама, посевы, анализ аудитории, AI-креативы и посадочные страницы. Рекламное сообщение ведёт к понятному следующему действию.</p>
+      <div class="sales-solution-actions"><a href="#creative">Посмотреть рекламный креатив ↗</a><a href="#brief" class="sales-solution-quote">Обсудить продвижение →</a></div>
+    </article>
+    <article class="sales-solution-card" data-solution="automation">
+      <div class="sales-solution-number">02 <span class="sales-spot">Автоматизация</span></div>
+      <div class="sales-solution-icon" aria-hidden="true">⌘</div>
+      <h3>Сотрудники тонут в рутине</h3>
+      <p>AI-боты, умные формы, обработка обращений, уведомления, документы и интеграции. Убираю лишние ручные операции и упрощаю путь клиента.</p>
+      <div class="sales-solution-actions"><a href="#form">Попробовать сценарии формы ↗</a><a href="#brief" class="sales-solution-quote">Обсудить автоматизацию →</a></div>
+    </article>
+    <article class="sales-solution-card" data-solution="ecosystem">
+      <div class="sales-solution-number">03 <span class="sales-spot">Система под ключ</span></div>
+      <div class="sales-solution-icon" aria-hidden="true">◈</div>
+      <h3>Нужен один работающий сервис</h3>
+      <p>Сайт, маркетинг, заявки, AI-помощник, оплата, админ-панель, SEO и обучение сотрудников. Не набор отдельных инструментов, а согласованная система.</p>
+      <div class="sales-solution-actions"><a href="#dpo">Исследовать экосистему ДПО ↗</a><a href="#brief" class="sales-solution-quote">Обсудить разработку →</a></div>
+    </article>
+  </div>
+  <div class="sales-path-bridge"><span class="sales-path-dot" aria-hidden="true"></span><p><b>Хотите посмотреть всё?</b> Ниже — все реальные проекты, сценарии, AI-видео, инструкции и технологии.</p><a href="#journey">Перейти к полной экскурсии <span aria-hidden="true">↓</span></a></div>
+</section>
+<nav class="tour-strip wrap" id="journey" aria-label="Навигация по кейсам"><span>КЕЙСЫ:</span><a href="#creative">AI-видео и реклама</a><a href="#cinematic">AI-анимация</a><a href="#cat">Telegram-бот</a><a href="#dpo">Экосистема ДПО</a><a href="#form">Яндекс Форма</a><a href="#payment">Оплата</a><a href="#news">Новости</a><a href="#guide">Инструкции</a></nav>
 <section class="section wrap" id="work"><div class="eyebrow">Избранные работы</div><h2>Не концепты.<br>Реальные решения.</h2><p class="muted">Реальные проекты на стыке продвижения, контента, разработки и автоматизации. Смотрите видеокреативы, переходите в работающие сервисы и пробуйте интерактивные сценарии.</p>
 <div class="projects case-grid">
 
