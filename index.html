@@ -92,6 +92,54 @@
 @keyframes cinematic-still-life{from{transform:scale(1.01)}to{transform:scale(1.055)}}
 @media(max-width:700px),(prefers-reduced-motion:reduce){.cinematic-scene.is-finished .cinematic-video{animation:none!important}}
 @media(prefers-reduced-motion:reduce){.cinematic-primary,.cinematic-replay,.cinematic-progress i{transition:none!important}}
+
+/* Premium origin-aware navigation: lightweight desktop motion and native-history support */
+.page-journey-progress{position:fixed;z-index:110;top:0;left:0;width:100%;height:3px;pointer-events:none;background:transparent}
+.page-journey-progress i{display:block;height:100%;width:100%;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,#516da5,#a3b7db 73%,#d1dcef);box-shadow:0 0 14px #7d9ccb50;will-change:transform}
+.portfolio-wayback[hidden],.portfolio-wayback-back[hidden]{display:none!important}
+.portfolio-wayback{position:fixed;z-index:120;bottom:max(25px,env(safe-area-inset-bottom) + 12px);left:clamp(16px,3vw,44px);display:flex;align-items:stretch;min-height:56px;max-width:min(90vw,315px);border:1px solid #ffffff44;border-radius:20px;background:#1b2943ef;box-shadow:0 15px 48px #111e3352,0 2px 10px #111e3320;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);overflow:hidden;animation:wayback-enter .35s cubic-bezier(.22,1,.36,1) both}
+.portfolio-wayback-back{display:flex;align-items:center;gap:12px;min-width:0;text-align:left;flex:1;border:0;cursor:pointer;background:transparent;color:white;padding:9px 14px;font-family:inherit;transition:background .2s ease}
+.portfolio-wayback-back:hover,.portfolio-wayback-up:hover{background:#ffffff1f}
+.portfolio-wayback-arrow{width:35px;height:35px;flex:0 0 35px;display:grid;place-items:center;border-radius:12px;background:#ffffff20;font-size:20px;transition:transform .28s}
+.portfolio-wayback-back:hover .portfolio-wayback-arrow{transform:translateX(-4px)}
+.portfolio-wayback-copy{min-width:0;display:flex;flex-direction:column;gap:3px}
+.portfolio-wayback-copy small{font-size:9px;color:#a8bcdf;letter-spacing:.15em;font-weight:850}
+.portfolio-wayback-copy strong{font-size:12px;color:#fff;font-weight:690;line-height:1.35;max-width:205px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.portfolio-wayback-up{display:grid;place-items:center;flex:0 0 48px;border-left:1px solid #ffffff25;color:#f8fbff;font-size:22px;transition:background .2s}
+.portfolio-wayback-back:focus-visible,.portfolio-wayback-up:focus-visible{outline:3px solid #9cc4ff;outline-offset:-4px}
+@keyframes wayback-enter{from{opacity:0;transform:translateY(16px) scale(.955)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(min-width:900px) and (hover:hover) and (pointer:fine){
+ .hero:before{transform:translate3d(var(--hero-glow-x,0px),var(--hero-glow-y,0px),0);transition:transform .55s cubic-bezier(.2,.8,.2,1);will-change:transform}
+ .hero .gradient{background-image:linear-gradient(110deg,#17171b 5%,#476598 36%,#acc2e4 50%,#566d97 68%,#17171b 96%);background-size:205% 205%;animation:hero-premium-shimmer 10s ease-in-out infinite alternate}
+ .hero h1{animation:hero-entrance .95s cubic-bezier(.22,1,.36,1) both}
+ .hero .lead{animation:hero-entrance .95s .13s cubic-bezier(.22,1,.36,1) both}
+ .hero .actions{animation:hero-entrance .95s .26s cubic-bezier(.22,1,.36,1) both}
+ .project.case.feature{position:relative}
+ .project.case.feature:after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:inherit;background:radial-gradient(380px circle at var(--case-glow-x,50%) var(--case-glow-y,50%),#adc8fa16,transparent 68%);opacity:0;transition:opacity .28s ease}
+ .project.case.feature:hover:after{opacity:1}
+ .motion-tile{opacity:0;transform:translateY(20px) scale(.985);transition:opacity .85s cubic-bezier(.22,1,.36,1),transform .85s cubic-bezier(.22,1,.36,1);transition-delay:var(--motion-delay,0ms)}
+ .motion-tile.motion-shown{opacity:1;transform:translateY(0) scale(1)}
+ .services-grid .motion-tile.motion-shown:hover{transform:translateY(-5px)}
+ .engineering-grid .motion-tile.motion-shown:hover{transform:translateY(-4px)}
+ .trust-grid .motion-tile.motion-shown:hover{transform:translateY(-2px)}
+}
+@keyframes hero-premium-shimmer{0%{background-position:15% 50%}100%{background-position:88% 50%}}
+@keyframes hero-entrance{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.tour-strip a.is-current{background:#253b60;color:#fff;box-shadow:0 5px 15px #253b6021}
+.tour-strip a.is-current:hover{background:#314b79;color:#fff}
+@media(max-width:700px){
+ .portfolio-wayback{left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100vw - 24px);border-radius:17px;animation:wayback-mobile-enter .32s cubic-bezier(.22,1,.36,1) both}
+ .portfolio-wayback-back{gap:9px;padding:9px 10px}
+ .portfolio-wayback-arrow{width:32px;height:32px;flex-basis:32px}
+ .portfolio-wayback-copy strong{font-size:11px;max-width:177px}
+ .portfolio-wayback-up{flex-basis:45px}
+ @keyframes wayback-mobile-enter{from{opacity:0;transform:translate(-50%,12px) scale(.97)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+}
+@media(prefers-reduced-motion:reduce){
+ .portfolio-wayback,.portfolio-wayback-arrow,.hero .gradient,.hero h1,.hero .lead,.hero .actions,.motion-tile{animation:none!important;transition:none!important}
+ .motion-tile{opacity:1!important;transform:none!important}
+ .hero:before{transform:none!important;transition:none!important}
+}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Контакт</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Сложные процессы.<br><span class="gradient">Простые решения.</span></h1><p class="lead">Объединяю маркетинг и технологии: таргетированная реклама, посевы, контент и AI-креативы, сайты, SEO, боты и автоматизация бизнес-процессов под ключ.</p><div class="actions"><a class="btn" href="#journey">Начать экскурсию ↓</a><a class="btn secondary" href="https://t.me/dnk_pr03" target="_blank" rel="noopener">Обсудить задачу</a></div><p class="hero-subnote">От первой заявки до работы сотрудников — проектирую весь маршрут.</p></header><nav class="tour-strip wrap" id="journey" aria-label="Навигация по кейсам"><span>КЕЙСЫ:</span><a href="#creative">AI-видео и реклама</a><a href="#cinematic">AI-анимация</a><a href="#cat">Telegram-бот</a><a href="#dpo">Экосистема ДПО</a><a href="#form">Яндекс Форма</a><a href="#payment">Оплата</a><a href="#news">Новости</a><a href="#guide">Инструкции</a></nav>
@@ -631,5 +679,169 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
    observer.observe(scene);
  }else if(!reduce){start(true)}
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&started&&!video.paused){video.pause();pausedByView=true}else if(!document.hidden&&pausedByView&&scene.getBoundingClientRect().top<window.innerHeight&&scene.getBoundingClientRect().bottom>0){video.play().catch(()=>{});pausedByView=false}});
+})();
+</script>
+<div class="page-journey-progress" aria-hidden="true"><i id="page-journey-fill"></i></div>
+<nav class="portfolio-wayback" id="portfolio-wayback" aria-label="Навигация по истории переходов" hidden>
+  <button class="portfolio-wayback-back" id="portfolio-wayback-back" type="button" hidden>
+    <span class="portfolio-wayback-arrow" aria-hidden="true">←</span>
+    <span class="portfolio-wayback-copy"><small>ВАШ МАРШРУТ</small><strong id="portfolio-wayback-text">Назад к предыдущему месту</strong></span>
+  </button>
+  <a class="portfolio-wayback-up" href="#top" id="portfolio-wayback-up" aria-label="Перейти к началу страницы" title="К началу страницы">↑</a>
+</nav>
+<script>
+/* Origin-aware in-page history: back returns to the exact scroll position of the click. */
+(function(){
+ const dock=document.getElementById('portfolio-wayback');
+ const goBack=document.getElementById('portfolio-wayback-back');
+ const goUp=document.getElementById('portfolio-wayback-up');
+ const backText=document.getElementById('portfolio-wayback-text');
+ const progress=document.getElementById('page-journey-fill');
+ if(!dock||!goBack||!goUp||!backText||!progress)return;
+ const motionReduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+ const STORAGE_KEY='dk.portfolio.navigation.v2';
+ const STATE_KEY='dkPortfolioNode';
+ const labels={top:'началу страницы',journey:'экскурсии',work:'списку проектов',creative:'AI-видео',cinematic:'AI-анимации',cat:'Telegram-коту',dpo:'экосистеме ДПО',form:'Яндекс Форме',payment:'оплате',news:'новостям',guide:'инструкциям',engineering:'техническим возможностям',capabilities:'услугам',about:'разделу «Обо мне»',contact:'контактам'};
+ let memory;
+ try{memory=JSON.parse(sessionStorage.getItem(STORAGE_KEY))}catch(e){}
+ let nodes=memory&&memory.nodes&&typeof memory.nodes==='object'?memory.nodes:{};
+ let serial=memory&&Number.isFinite(memory.serial)?memory.serial:0;
+ let state=history.state&&typeof history.state==='object'?history.state:{};
+ let currentId=state[STATE_KEY];
+ if(!currentId||!nodes[currentId]){
+   currentId='nav-'+Date.now()+'-'+(++serial);
+   nodes[currentId]={parent:null,y:window.scrollY,originLabel:''};
+   history.replaceState({...state,[STATE_KEY]:currentId},'',location.href);
+ }
+ history.scrollRestoration='manual';
+ const persist=()=>{try{sessionStorage.setItem(STORAGE_KEY,JSON.stringify({nodes,serial}))}catch(e){}};
+ const reduced=()=>motionReduced.matches;
+ const animateScroll=(y)=>{const max=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);window.scrollTo({top:Math.max(0,Math.min(max,y)),behavior:reduced()?'instant':'smooth'})};
+ const targetY=(el)=>el.id==='top'?0:Math.max(0,Math.round(window.scrollY+el.getBoundingClientRect().top-108));
+ function sectionAt(y){
+   if(y<250)return 'началу страницы';
+   let result='месту перехода';
+   const focus=Math.min(window.innerHeight*.39,335);
+   document.querySelectorAll('.hero,#journey,article.case[id],section.section[id]').forEach(el=>{
+     const b=el.getBoundingClientRect();
+     if(b.top<=focus&&b.bottom>=focus){
+       const id=el.id||(el.classList.contains('hero')?'top':'');
+       if(labels[id])result=labels[id];
+     }
+   });
+   return result;
+ }
+ function updateDock(){
+   const entry=nodes[currentId];
+   const hasBack=!!(entry&&entry.parent&&nodes[entry.parent]);
+   const show=hasBack||window.scrollY>650;
+   dock.hidden=!show;
+   goBack.hidden=!hasBack;
+   if(hasBack){
+     const msg='Назад к '+(entry.originLabel||'предыдущему месту');
+     backText.textContent=msg;
+     goBack.setAttribute('aria-label','Вернуться точно '+(entry.originLabel||'туда, откуда пришли'));
+     goBack.title=msg;
+   }
+ }
+ function navigateTarget(el,y){animateScroll(Number.isFinite(y)?y:targetY(el))}
+ document.addEventListener('click',event=>{
+   if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.altKey||event.shiftKey)return;
+   const link=event.target.closest('a[href^="#"]');
+   if(!link||link.hasAttribute('download')||link.target&&link.target!=='_self')return;
+   const hash=link.getAttribute('href');
+   if(!hash||hash==='#')return;
+   let id;
+   try{id=decodeURIComponent(hash.slice(1))}catch(e){return}
+   const destination=document.getElementById(id);
+   if(!destination)return;
+   event.preventDefault();
+   const y=targetY(destination);
+   if(Math.abs(window.scrollY-y)<18){navigateTarget(destination,y);return;}
+   if(!nodes[currentId]){
+     const fresh='nav-'+Date.now()+'-'+(++serial);
+     nodes[fresh]={parent:null,y:window.scrollY};
+     currentId=fresh;
+     history.replaceState({...history.state||{},[STATE_KEY]:currentId},'',location.href);
+   }
+   nodes[currentId].y=window.scrollY;
+   const childId='nav-'+Date.now()+'-'+(++serial);
+   nodes[childId]={parent:currentId,y,originLabel:sectionAt(window.scrollY)};
+   history.pushState({...history.state||{},[STATE_KEY]:childId},'',hash);
+   currentId=childId;
+   persist();
+   updateDock();
+   navigateTarget(destination,y);
+ });
+ goBack.addEventListener('click',()=>{const entry=nodes[currentId];if(entry&&entry.parent&&nodes[entry.parent])history.back()});
+ window.addEventListener('popstate',event=>{
+   const id=event.state&&event.state[STATE_KEY];
+   if(id&&nodes[id]){
+     currentId=id;
+     persist();
+     requestAnimationFrame(()=>animateScroll(nodes[id].y||0));
+   }else{
+     currentId='';
+   }
+   updateDock();
+ });
+ let paintQueued=false;
+ const spy=Array.from(document.querySelectorAll('.tour-strip a[href^="#"]')).map(a=>({a,id:a.hash.slice(1)})).filter(x=>document.getElementById(x.id));
+ function onScrollFrame(){
+   paintQueued=false;
+   const max=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
+   progress.style.transform='scaleX('+Math.max(0,Math.min(1,window.scrollY/max))+')';
+   updateDock();
+   const focus=window.innerHeight*.37;
+   let active='';
+   if(window.scrollY>=200){
+     for(const entry of spy){
+       const el=document.getElementById(entry.id),b=el.getBoundingClientRect();
+       if(b.top<=focus&&b.bottom>focus)active=entry.id;
+     }
+   }
+   for(const entry of spy)entry.a.classList.toggle('is-current',entry.id===active);
+ }
+ function scrollActivity(){if(!paintQueued){paintQueued=true;requestAnimationFrame(onScrollFrame)}}
+ window.addEventListener('scroll',scrollActivity,{passive:true});
+ window.addEventListener('resize',scrollActivity,{passive:true});
+ persist();onScrollFrame();
+ // Extra motion never touches the existing one-shot project reveal animations.
+ if(window.matchMedia('(min-width: 900px) and (hover: hover) and (pointer: fine)').matches&&!reduced()){
+   const hero=document.querySelector('.hero');
+   if(hero){
+     let raf=0,latest=null;
+     hero.addEventListener('pointermove',e=>{
+       latest=e;if(raf)return;raf=requestAnimationFrame(()=>{
+         raf=0;
+         const r=hero.getBoundingClientRect();
+         hero.style.setProperty('--hero-glow-x',((latest.clientX-r.left-r.width/2)/r.width*35).toFixed(1)+'px');
+         hero.style.setProperty('--hero-glow-y',((latest.clientY-r.top-r.height/2)/r.height*28).toFixed(1)+'px');
+       });
+     },{passive:true});
+     hero.addEventListener('pointerleave',()=>{hero.style.setProperty('--hero-glow-x','0px');hero.style.setProperty('--hero-glow-y','0px')});
+   }
+   document.querySelectorAll('.project.case.feature').forEach(card=>{
+     let raf=0,point=null;
+     card.addEventListener('pointermove',e=>{
+       point={x:e.clientX,y:e.clientY};if(raf)return;
+       raf=requestAnimationFrame(()=>{
+         raf=0;const b=card.getBoundingClientRect();
+         card.style.setProperty('--case-glow-x',(point.x-b.left)+'px');
+         card.style.setProperty('--case-glow-y',(point.y-b.top)+'px');
+       });
+     },{passive:true});
+   });
+   if('IntersectionObserver' in window){
+     const tileObserver=new IntersectionObserver(entries=>{
+       for(const entry of entries){if(entry.isIntersecting){entry.target.classList.add('motion-shown');tileObserver.unobserve(entry.target)}}
+     },{threshold:.11,rootMargin:'0px 0px -5% 0px'});
+     document.querySelectorAll('.services-grid a,.engineering-grid a,.trust-grid > div').forEach((tile,i)=>{
+       tile.style.setProperty('--motion-delay',((i%4)*65)+'ms');
+       tile.classList.add('motion-tile');
+       tileObserver.observe(tile);
+     });
+   }
+ }
 })();
 </script></body></html>
