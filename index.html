@@ -42,6 +42,16 @@
 .news-automation-proof{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:17px 0 4px}.news-automation-proof span{font-size:11px;font-weight:650;color:#596a84;background:#f1f4fa;border-radius:10px;padding:9px 11px}.news-automation-proof b{color:#3d68ac;margin-right:3px}.news-automation-proof i{font-style:normal;color:#a7b5c7;font-size:12px}
 .engineering-intro{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:26px}.engineering-intro h2{margin-bottom:0}.engineering-intro>p{font-size:16px;line-height:1.6;color:#858b99;max-width:360px}.engineering-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.engineering-item{background:linear-gradient(135deg,#fff,#fbfcff);border:1px solid #e7eaf0;border-radius:24px;padding:clamp(20px,2.5vw,29px);min-height:210px;display:flex;flex-direction:column;gap:9px;transition:transform .3s,box-shadow .3s}.engineering-item:hover{transform:translateY(-4px);box-shadow:0 18px 40px #293b5b10}.eng-no{letter-spacing:.1em;font-size:10px;text-transform:uppercase;color:#8b98b0;font-weight:800}.engineering-item strong{font-size:clamp(20px,2.2vw,27px);line-height:1.2;letter-spacing:-.04em;color:#263852;max-width:380px}.engineering-item p{font-size:13px;line-height:1.65;color:#7b8798;max-width:490px;margin:3px 0 7px}.eng-more{color:#3769af;font-size:13px;font-weight:700;margin-top:auto}
 @media(max-width:700px){.engineering-intro{align-items:start;flex-direction:column}.engineering-grid{grid-template-columns:1fr}.engineering-item{min-height:190px}.engineering-intro>p{max-width:100%}}@media(prefers-reduced-motion:reduce){.engineering-item{transition:none}}
+
+/* Cat promo — quiet teaser, water ripple expansion, accessible video modal */
+.cat-promo-trigger{display:flex;align-items:center;gap:11px;border:1px solid #fff8;background:rgba(255,255,255,.56);border-radius:999px;padding:9px 15px 9px 10px;margin:18px auto 2px;cursor:pointer;box-shadow:0 4px 22px #4d4a8020;backdrop-filter:blur(8px);font-family:inherit;text-align:left;color:#3d4667;transition:background .22s,box-shadow .22s,transform .22s;max-width:330px;width:fit-content}.cat-promo-trigger:hover{background:#fff;box-shadow:0 10px 30px #3a427e36;transform:translateY(-2px)}.cat-promo-trigger:focus-visible{outline:3px solid #667fc2;outline-offset:3px}.cat-promo-dot{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#e7f6ff,#6098df 63%,#385fb9);display:grid;place-items:center;flex:0 0 28px;box-shadow:0 0 0 4px #83a6ef2b,0 0 0 8px #83a6ef16,0 4px 12px #4b72b757;position:relative}.cat-promo-dot:before,.cat-promo-dot:after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid #729cf1aa;animation:cat-ping 3.1s ease-out infinite}.cat-promo-dot:after{animation-delay:1.55s}.cat-promo-dot i{background:#fff;width:6px;height:6px;border-radius:50%;box-shadow:0 0 9px #fff}.cat-promo-copy{display:flex;flex-direction:column;gap:3px}.cat-promo-copy b{font-size:12px;letter-spacing:.015em;color:#3d4b72}.cat-promo-copy small{font-size:10px;color:#828da9}.cat-promo-arrow{color:#6788c5;font-size:17px;margin-left:8px}
+.cat-promo-overlay{position:fixed;inset:0;z-index:999;display:grid;place-items:center;padding:18px;background:rgba(11,16,32,0);opacity:0;pointer-events:none;transition:opacity .55s,background .55s;isolation:isolate}.cat-promo-overlay.is-open{opacity:1;background:rgba(9,14,28,.82);pointer-events:auto;backdrop-filter:blur(13px)}.cat-promo-backdrop{position:absolute;inset:0;z-index:0;cursor:pointer}.cat-promo-ripples{position:fixed;top:var(--tap-y,50%);left:var(--tap-x,50%);width:0;height:0;pointer-events:none;z-index:1}.cat-promo-ripples span{display:block;position:absolute;width:54px;height:54px;left:-27px;top:-27px;border:2px solid rgba(156,203,255,.82);border-radius:50%;opacity:0;box-shadow:0 0 0 1px #ffffff09,0 0 25px #6b9edb35}.cat-promo-overlay.is-open .cat-promo-ripples span{animation:cat-water-ripple 1.65s ease-out forwards}.cat-promo-overlay.is-open .cat-promo-ripples span:nth-child(2){animation-delay:.2s}.cat-promo-overlay.is-open .cat-promo-ripples span:nth-child(3){animation-delay:.4s}
+.cat-promo-dialog{--move-x:0px;--move-y:0px;position:relative;z-index:2;max-width:min(94vw,440px);width:440px;max-height:calc(100dvh - 28px);border:1px solid #ffffff29;border-radius:24px;background:linear-gradient(150deg,#202943,#121927);box-shadow:0 45px 120px #0009,0 0 0 1px #ffffff07;overflow:hidden;opacity:0;transform:translate(var(--move-x),var(--move-y)) scale(.055);transition:transform 1.05s cubic-bezier(.14,1.08,.26,1),opacity .45s ease;display:flex;flex-direction:column;outline:none}.cat-promo-overlay.is-open .cat-promo-dialog{transform:translate(0,0) scale(1);opacity:1}.cat-promo-header{padding:17px 18px 15px;display:flex;justify-content:space-between;align-items:flex-start;gap:15px;color:#f5f8ff}.cat-promo-eyebrow{font-size:9px;letter-spacing:.17em;color:#99b1e0;font-weight:800}.cat-promo-header h2{font-size:clamp(17px,3.2vw,22px);letter-spacing:-.04em;line-height:1.15;margin:5px 0 0;font-weight:720}.cat-promo-close{background:#ffffff16;color:white;border:1px solid #ffffff25;width:38px;height:38px;min-width:38px;border-radius:50%;font:300 29px/1 inherit;font-family:inherit;display:grid;place-items:center;cursor:pointer;transition:background .2s,transform .2s}.cat-promo-close:hover{background:#ffffff2b;transform:rotate(90deg)}.cat-promo-close:focus-visible,.cat-promo-play-hint button:focus-visible,.cat-promo-error button:focus-visible{outline:3px solid #b6d6ff;outline-offset:2px}
+.cat-promo-player{position:relative;display:flex;align-items:center;justify-content:center;background:#060910;min-height:220px;flex:1;overflow:hidden}.cat-promo-player video{display:block;width:100%;height:auto;max-height:min(72dvh,730px);object-fit:contain;aspect-ratio:512/910;background:linear-gradient(140deg,#0f1830,#070b14);outline:none}.cat-promo-loading{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px;pointer-events:none;color:#e7f0ff;background:#080d19c9;font-size:13px;z-index:2}.cat-promo-spinner{display:block;width:36px;height:36px;border:2px solid #ffffff33;border-top-color:#90bfff;border-radius:50%;animation:cat-spin 1s linear infinite}.cat-promo-play-hint,.cat-promo-error{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;color:white;background:#070c19df;z-index:4;padding:20px;text-align:center}.cat-promo-play-hint button,.cat-promo-error button{border:0;border-radius:999px;padding:14px 18px;background:#e9f2ff;color:#21416c;font-weight:750;font-family:inherit;cursor:pointer;font-size:13px}.cat-promo-error strong{font-size:15px}.cat-promo-error span{font-size:12px;color:#abb9d1;line-height:1.5}.cat-promo-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#aebcdb;font-size:10px;line-height:1.45;padding:13px 18px 16px}.cat-promo-sound{display:flex;gap:11px;align-items:center}.sound-bars{display:flex;gap:3px;align-items:center;height:18px}.sound-bars i{display:block;width:3px;height:4px;background:#91b7f2;border-radius:99px;animation:cat-bar 1.1s ease-in-out infinite alternate;animation-play-state:paused}.sound-bars i:nth-child(2){animation-delay:.12s}.sound-bars i:nth-child(3){animation-delay:.24s}.sound-bars i:nth-child(4){animation-delay:.36s}.sound-bars i:nth-child(5){animation-delay:.48s}.cat-promo-overlay.is-playing .sound-bars i{animation-play-state:running}.cat-promo-overlay.is-ramping .cat-promo-sound{color:#edf5ff}
+@keyframes cat-ping{0%{transform:scale(.6);opacity:0}15%{opacity:.9}75%,100%{transform:scale(2);opacity:0}}@keyframes cat-water-ripple{0%{transform:scale(.1);opacity:.9;border-width:4px}40%{opacity:.8}100%{transform:scale(38);opacity:0;border-width:.1px}}@keyframes cat-spin{to{transform:rotate(360deg)}}@keyframes cat-bar{0%{height:4px;opacity:.6}100%{height:17px;opacity:1}}
+@media(max-width:700px){.cat-promo-dialog{max-width:min(96vw,420px)}.cat-promo-trigger{max-width:min(100%,330px);min-height:48px}.cat-promo-player video{max-height:71dvh}.cat-promo-header{padding:15px}.cat-promo-footer{padding:12px 14px}.cat-promo-overlay{padding:9px}}
+@media(max-height:740px){.cat-promo-header{padding:11px 15px}.cat-promo-player video{max-height:67dvh}.cat-promo-footer{padding:8px 15px}}
+@media(prefers-reduced-motion:reduce){.cat-promo-trigger,.cat-promo-dialog,.cat-promo-overlay,.cat-promo-close{transition:none!important}.cat-promo-dot:before,.cat-promo-dot:after,.cat-promo-ripples span,.cat-promo-spinner,.sound-bars i{animation:none!important}}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Контакт</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">ЦИФРОВЫЕ ПРОДУКТЫ · AI · АВТОМАТИЗАЦИЯ</div><h1>Сложные процессы.<br><span class="gradient">Простые решения.</span></h1><p class="lead">Создаю сайты и цифровые экосистемы под ключ: AI-помощники, Telegram-боты, сложные формы, платежи, интеграции и интерактивные инструкции.</p><div class="actions"><a class="btn" href="#journey">Начать экскурсию ↓</a><a class="btn secondary" href="https://t.me/dnk_pr03" target="_blank" rel="noopener">Обсудить задачу</a></div><p class="hero-subnote">От первой заявки до работы сотрудников — проектирую весь маршрут.</p></header><nav class="tour-strip wrap" id="journey" aria-label="Навигация по кейсам"><span>КЕЙСЫ:</span><a href="#cat">Telegram-бот</a><a href="#dpo">Экосистема ДПО</a><a href="#form">Яндекс Форма</a><a href="#payment">Оплата</a><a href="#news">Новости</a><a href="#guide">Инструкции</a></nav>
@@ -67,6 +77,11 @@
       <div class="chat-bottom"><span>Интерактивная демонстрация</span><span class="green-dot"></span></div>
     </div>
     <div class="visual-caption">Интерактивные примеры на основе возможностей бота · без доступа к данным абитуриентов</div>
+    <button class="cat-promo-trigger" type="button" id="cat-promo-trigger" aria-haspopup="dialog" aria-controls="cat-promo-dialog" aria-label="Открыть видео-промо Telegram-кота со звуком">
+      <span class="cat-promo-dot" aria-hidden="true"><i></i></span>
+      <span class="cat-promo-copy"><b>Нажми здесь</b><small>Видео-промо кота · 44 секунды</small></span>
+      <span class="cat-promo-arrow" aria-hidden="true">↗</span>
+    </button>
   </div>
   <div class="copy case-copy">
     <div class="tag">Telegram · Автоматизация приёмной комиссии</div>
@@ -286,4 +301,144 @@ document.querySelectorAll('[data-guide]').forEach(btn=>btn.addEventListener('cli
   const status=document.getElementById('news-preview-result');status.textContent='Пример анонса подготовлен для перехода во ВКонтакте. Ничего не опубликовано.';status.classList.add('is-ready');this.textContent='Анонс подготовлен ✓';
  });
 })();
-</script><script>(function(){const b=document.getElementById('toggle-real-form'),w=document.getElementById('real-form-wrap'),f=document.getElementById('real-form-iframe');if(!b||!w||!f)return;b.addEventListener('click',function(){const opening=w.hidden;w.hidden=!opening;b.setAttribute('aria-expanded',String(opening));b.textContent=opening?'Свернуть живую форму ↑':'Развернуть живую форму ↓';if(opening&&!f.getAttribute('src'))f.setAttribute('src',f.getAttribute('data-src'));});})();</script></body></html>
+</script><script>(function(){const b=document.getElementById('toggle-real-form'),w=document.getElementById('real-form-wrap'),f=document.getElementById('real-form-iframe');if(!b||!w||!f)return;b.addEventListener('click',function(){const opening=w.hidden;w.hidden=!opening;b.setAttribute('aria-expanded',String(opening));b.textContent=opening?'Свернуть живую форму ↑':'Развернуть живую форму ↓';if(opening&&!f.getAttribute('src'))f.setAttribute('src',f.getAttribute('data-src'));});})();</script>
+<div id="cat-promo-overlay" class="cat-promo-overlay" hidden>
+  <div class="cat-promo-backdrop" data-close-promo="true"></div>
+  <div class="cat-promo-ripples" aria-hidden="true"><span></span><span></span><span></span></div>
+  <section id="cat-promo-dialog" class="cat-promo-dialog" role="dialog" aria-modal="true" aria-labelledby="cat-promo-dialog-title" tabindex="-1">
+    <div class="cat-promo-header">
+      <div><span class="cat-promo-eyebrow">КОТ ПРИЁМНОЙ КОМИССИИ</span><h2 id="cat-promo-dialog-title">Знакомься с помощником 🐾</h2></div>
+      <button id="cat-promo-close" class="cat-promo-close" type="button" aria-label="Закрыть видео">×</button>
+    </div>
+    <div class="cat-promo-player">
+      <video id="cat-promo-video" playsinline webkit-playsinline controls preload="none" poster="assets/cat-promo/poster.jpg" aria-label="Промо-видео Telegram-кота" controlsList="nodownload"></video>
+      <div id="cat-promo-loading" class="cat-promo-loading" role="status"><span class="cat-promo-spinner"></span><span>Готовлю видео…</span></div>
+      <div id="cat-promo-play-hint" class="cat-promo-play-hint" hidden><button type="button" id="cat-promo-resume">▶ Нажми, чтобы начать со звуком</button></div>
+      <div id="cat-promo-error" class="cat-promo-error" hidden><strong>Видео пока не загрузилось</strong><span>Проверь соединение или попробуй ещё раз.</span><button type="button" id="cat-promo-retry">Попробовать снова ↻</button></div>
+    </div>
+    <div class="cat-promo-footer"><div class="cat-promo-sound"><span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span id="cat-promo-sound-label">Звук плавно нарастает за 3 секунды</span></div><span>Закрой в любой момент</span></div>
+  </section>
+</div>
+<script>
+/* Cat video: click-to-play with audio, 3-second gain ramp, ripple reveal, easy dismissal. */
+(function(){
+const trigger=document.getElementById('cat-promo-trigger'), overlay=document.getElementById('cat-promo-overlay'), dialog=document.getElementById('cat-promo-dialog');
+const video=document.getElementById('cat-promo-video'), closeBtn=document.getElementById('cat-promo-close'), loading=document.getElementById('cat-promo-loading');
+const hint=document.getElementById('cat-promo-play-hint'), resume=document.getElementById('cat-promo-resume'), error=document.getElementById('cat-promo-error'), retry=document.getElementById('cat-promo-retry'), label=document.getElementById('cat-promo-sound-label');
+if(!trigger||!overlay||!video)return;
+const directSrc=new URL('assets/cat-promo.mp4',document.baseURI).href;
+const segments=Array.from({length:12},(_,i)=>new URL('assets/cat-promo/part-'+String(i+1).padStart(2,'0')+'.bin',document.baseURI).href);
+let ctx=null,source=null,gain=null,volFrame=0,task=null,controller=null,localBlob=null,open=false,previousOverflow='',prevFocus=null,fadeStart=0,loadTimeout=0,fallingBack=false;
+const setVisible=(el,on)=>{if(el)el.hidden=!on};
+const showLoading=(on)=>setVisible(loading,on);
+function unlockAudio(){
+ try{
+ const AudioEngine=window.AudioContext||window.webkitAudioContext;
+ if(AudioEngine&&!ctx){
+  ctx=new AudioEngine();
+  source=ctx.createMediaElementSource(video);
+  gain=ctx.createGain();
+  gain.gain.value=0;
+  source.connect(gain);
+  gain.connect(ctx.destination);
+ }
+ if(ctx&&ctx.state!=='running')ctx.resume().catch(()=>{});
+ }catch(e){ctx=null;gain=null}
+}
+function setVolumeZero(){
+ cancelAnimationFrame(volFrame);
+ if(gain&&ctx){try{gain.gain.cancelScheduledValues(ctx.currentTime);gain.gain.setValueAtTime(0,ctx.currentTime)}catch(e){}}
+ else{try{video.volume=0}catch(e){}}
+}
+function fadeIn(){
+ if(!open)return;
+ overlay.classList.add('is-playing','is-ramping');
+ label.textContent='Звук нарастает в течение 3 секунд';
+ setVolumeZero();
+ if(gain&&ctx){
+  const time=ctx.currentTime;
+  gain.gain.setValueAtTime(0,time);
+  gain.gain.linearRampToValueAtTime(1,time+3);
+ }else{
+  const from=performance.now();
+  function step(now){if(!open||video.paused)return;const v=Math.min(1,Math.max(0,(now-from)/3000));try{video.volume=v}catch(e){}if(v<1)volFrame=requestAnimationFrame(step);}
+  volFrame=requestAnimationFrame(step);
+ }
+ window.setTimeout(()=>{if(open&&!video.paused){label.textContent='Звук включён';overlay.classList.remove('is-ramping')}},3000);
+}
+function teardownMedia(){
+ if(controller){controller.abort();controller=null}
+ window.clearTimeout(loadTimeout);
+ video.pause();video.removeAttribute('src');video.load();setVolumeZero();
+ if(localBlob){URL.revokeObjectURL(localBlob);localBlob=null}
+ fallingBack=false;task=null;showLoading(false);setVisible(hint,false);setVisible(error,false);
+}
+function dismiss(){
+ if(!open)return;open=false;
+ overlay.classList.remove('is-open','is-playing','is-ramping');
+ document.body.style.overflow=previousOverflow;
+ teardownMedia();
+ overlay.hidden=true;
+ if(prevFocus&&typeof prevFocus.focus==='function')prevFocus.focus({preventScroll:true});
+}
+async function loadSegments(){
+ if(fallingBack||!open)return;fallingBack=true;
+ showLoading(true);setVisible(hint,false);setVisible(error,false);
+ controller=new AbortController();
+ try{
+  const buffers=await Promise.all(segments.map(async url=>{
+   const res=await fetch(url,{signal:controller.signal,cache:'force-cache'});
+   if(!res.ok)throw Error('Медиафрагмент не найден ('+res.status+')');
+   return await res.arrayBuffer();
+  }));
+  if(!open)return;
+  localBlob=URL.createObjectURL(new Blob(buffers,{type:'video/mp4'}));
+  video.src=localBlob;video.load();
+  attemptPlay();
+ }catch(err){
+  if(!open||err.name==='AbortError')return;
+  showLoading(false);setVisible(error,true);label.textContent='Видео временно недоступно';
+ }
+}
+function attemptPlay(){
+ if(!open)return;
+ setVisible(hint,false);
+ let p;
+ try{video.muted=false;p=video.play()}catch(e){p=Promise.reject(e)}
+ if(p&&typeof p.catch==='function')p.catch(e=>{
+   if(!open)return;
+   if(e.name==='NotAllowedError'){showLoading(false);setVisible(hint,true);label.textContent='Нажми ▶ для запуска со звуком';return}
+   if(!fallingBack){loadSegments();return}
+   showLoading(false);setVisible(error,true);label.textContent='Пожалуйста, попробуй ещё раз';
+ });
+}
+function openModal(){
+ if(open)return;open=true;prevFocus=document.activeElement;
+ previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';
+ const p=trigger.getBoundingClientRect(),cx=p.left+p.width/2,cy=p.top+p.height/2;
+ overlay.hidden=false;
+ overlay.style.setProperty('--tap-x',cx+'px');overlay.style.setProperty('--tap-y',cy+'px');
+ const rect=dialog.getBoundingClientRect();
+ dialog.style.setProperty('--move-x',(cx-(rect.left+rect.width/2))+'px');
+ dialog.style.setProperty('--move-y',(cy-(rect.top+rect.height/2))+'px');
+ void overlay.offsetWidth;overlay.classList.add('is-open');
+ closeBtn.focus({preventScroll:true});
+ setVisible(error,false);setVisible(hint,false);showLoading(true);
+ label.textContent='Звук плавно нарастает за 3 секунды';
+ unlockAudio();setVolumeZero();video.muted=false;
+ fallingBack=false;
+ video.src=directSrc;video.load();attemptPlay();
+ loadTimeout=window.setTimeout(()=>{if(open&&!fallingBack&&video.readyState===0)loadSegments()},8500);
+}
+trigger.addEventListener('click',openModal);
+closeBtn.addEventListener('click',dismiss);
+overlay.addEventListener('click',e=>{if(e.target===overlay||e.target.dataset.closePromo==='true')dismiss()});
+document.addEventListener('keydown',e=>{if(open&&e.key==='Escape'){e.preventDefault();dismiss()}});
+video.addEventListener('playing',()=>{if(!open)return;showLoading(false);setVisible(hint,false);fadeIn()});
+video.addEventListener('waiting',()=>{if(open&&!video.ended)showLoading(true)});
+video.addEventListener('error',()=>{if(open&&!fallingBack)loadSegments();else if(open){showLoading(false);setVisible(error,true)}});
+video.addEventListener('ended',()=>{overlay.classList.remove('is-playing');label.textContent='Видео завершилось';setVolumeZero()});
+resume.addEventListener('click',()=>{unlockAudio();attemptPlay()});
+retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);video.src=directSrc;video.load();attemptPlay()});
+})();
+</script></body></html>
