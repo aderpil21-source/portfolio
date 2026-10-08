@@ -1,0 +1,23 @@
+name: Portfolio security checks
+on:
+  push:
+    branches: [main, portfolio-chat-service]
+  pull_request:
+    branches: [main, portfolio-chat-service]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate server syntax
+        run: node --check lead-api/server.js
+      - name: Validate browser scripts and CSP
+        if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
+        run: node scripts/check-csp.mjs
