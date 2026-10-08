@@ -84,7 +84,7 @@ function clientTag(s){
  return s.id.slice(0,8).toUpperCase();
 }
 function markerFor(s){
- const value=[...clientTag(s)].reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
+ const value=Number.parseInt(s.id.slice(0,8),16)>>>0;
  return markerColors[value%markerColors.length];
 }
 function clientName(s){return s.name||'Посетитель без имени'}
