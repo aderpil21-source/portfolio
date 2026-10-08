@@ -5,6 +5,11 @@ const crypto=require('node:crypto');
 const {URL}=require('node:url');
 const PORT=Number(process.env.PORT||3000);
 const ORIGIN=(process.env.ALLOWED_ORIGIN||'https://aderpil21-source.github.io').replace(/\/$/,'');
+const ALLOWED_ORIGINS=new Set([ORIGIN,'https://aderpil21-source.github.io','https://katsstudio.eu.org']);
+for(const value of (process.env.ALLOWED_ORIGINS||'').split(',')){const normalized=value.trim().replace(/\/$/,'');if(/^https:\/\/[^/]+$/.test(normalized))ALLOWED_ORIGINS.add(normalized);}
+const STORE_URL=(process.env.PORTFOLIO_STORE_URL||'').trim();
+const STORE_KEY=(process.env.PORTFOLIO_STORE_KEY||'').trim();
+const storageEnabled=!!(STORE_URL&&STORE_KEY);
 const TOKEN=(process.env.TELEGRAM_BOT_TOKEN||'').trim();
 const OWNER=(process.env.TELEGRAM_CHAT_ID||'').trim();
 const PUBLIC_URL=(process.env.PUBLIC_BASE_URL||'https://denis-kats-portfolio-chat.onrender.com').replace(/\/$/,'');
@@ -12,6 +17,38 @@ const configured=!!(TOKEN&&/^\d{5,20}$/.test(OWNER));
 const webhookSecret=configured?crypto.createHmac('sha256',TOKEN).update('portfolio-chat-webhook-v1').digest('hex'):null;
 const CHOICES=new Set(['Таргетированная реклама','Сайты и лендинги','AI-боты и ассистенты','Автоматизация заявок','CRM, API и интеграции','SEO и сопровождение','AI-видео и креативы','Образовательные проекты','Другая задача']);
 const sessions=new Map(),telegramMessages=new Map(),ipBuckets=new Map();
+let storageLoaded=!storageEnabled,loading=null;
+async function storageCall(action,fields={}){
+ if(!storageEnabled)return null;
+ const response=await fetch(STORE_URL,{method:'POST',headers:{'content-type':'application/json','x-portfolio-storage-key':STORE_KEY},body:JSON.stringify({action,...fields}),signal:AbortSignal.timeout(13000)});
+ if(!response.ok)throw Error('Portfolio storage HTTP '+response.status);
+ const body=await response.json();
+ if(!body?.ok)throw Error('Portfolio storage rejected '+action);
+ return body;
+}
+async function restoreChats(){
+ const data=await storageCall('load');
+ const items=Array.isArray(data.sessions)?data.sessions:[];
+ for(const record of items){
+  if(!record||typeof record.id!=='string'||typeof record.keyHash!=='string'||!Array.isArray(record.messages)||!Array.isArray(record.botMessages)||!Number.isFinite(record.updated))continue;
+  if(Date.now()-record.updated>48*3600*1000)continue;
+  const s={...record,botMessages:new Set(record.botMessages.filter(Number.isInteger))};
+  sessions.set(s.id,s);
+  for(const messageId of s.botMessages)telegramMessages.set(messageId,s.id);
+ }
+ storageLoaded=true;
+ console.log('Restored portfolio chats:',sessions.size);
+}
+async function ensureStorageReady(){
+ if(storageLoaded)return true;
+ if(!loading)loading=restoreChats().finally(()=>{loading=null});
+ try{await loading;return storageLoaded}catch(e){console.error('Portfolio storage unavailable:',e.message);return false}
+}
+async function saveSession(s){
+ if(!storageEnabled)return;
+ const record={...s,botMessages:[...s.botMessages]};
+ await storageCall('save',{session:record});
+}
 const markerColors=['🔵','🟣','🟢','🟠','🟡','🔴','⚪️','🟤'];
 const DIRECT_USERNAME='dnk_pr03';
 const sessionLife=48*3600*1000;
@@ -22,8 +59,8 @@ function sendJSON(res,status,data){
 }
 function allowOrigin(req,res){
  const origin=String(req.headers.origin||'');
- if(origin!==ORIGIN)return false;
- res.setHeader('Access-Control-Allow-Origin',ORIGIN);
+ if(!ALLOWED_ORIGINS.has(origin))return false;
+ res.setHeader('Access-Control-Allow-Origin',origin);
  res.setHeader('Access-Control-Allow-Methods','POST, OPTIONS');
  res.setHeader('Access-Control-Allow-Headers','Content-Type');
  res.setHeader('Access-Control-Max-Age','600');
@@ -154,7 +191,8 @@ async function webhook(req,res){
     s.messages.push({seq:s.seq,by:'system',kind:'telegram_invite',text:'Денис предлагает продолжить переписку в личном Telegram.',url:prepared.url,draft:prepared.draft,at:Date.now()});
     if(s.messages.length>50)s.messages.shift();
     s.updated=Date.now();s.handoffSeq=s.seq;
-    response='✓ Приглашение отправлено клиенту в чат #'+clientTag(s)+'.';
+    try{await saveSession(s);response='✓ Приглашение отправлено клиенту в чат #'+clientTag(s)+'.';}
+    catch(e){console.error('Invite persistence failed',e.message);response='Ошибка сохранения приглашения. Повторите позже.';}
    }
   }
   try{await telegram('answerCallbackQuery',{callback_query_id:callback.id,text:response,show_alert:false,cache_time:0})}catch{}
@@ -166,6 +204,7 @@ async function webhook(req,res){
   const s=sessionId&&sessions.get(sessionId);
   const text=clean(message.text||message.caption,2200);
   if(s&&text&&Date.now()-s.updated<sessionLife){
+   if(s.botMessages.has(message.message_id)){sendJSON(res,200,{ok:true,duplicate:true});return}
    s.seq++;
    s.messages.push({seq:s.seq,by:'owner',text,at:Date.now()});
    if(s.messages.length>50)s.messages.shift();
@@ -173,6 +212,7 @@ async function webhook(req,res){
    // Accept a reply to ANY message in the same dialogue: visitor notices,
    // the owner's own prior replies, and these confirmation messages.
    linkReply(message.message_id,s);
+   try{await saveSession(s)}catch(e){console.error('Owner reply persistence failed',e.message);sendJSON(res,503,{ok:false});return}
    try{
     const ack=await telegram('sendMessage',{
      chat_id:OWNER,
@@ -181,8 +221,9 @@ async function webhook(req,res){
      reply_markup:telegramKeyboard(s)
     });
     linkReply(ack.message_id,s);
+    await saveSession(s);
    }catch{
-    // Reply has already been queued for the site; failed confirmation is non-fatal.
+    // Reply is already saved; failed acknowledgement remains non-fatal.
    }
   }else if(message.reply_to_message&&text){
    // Never silently redirect to another visitor if the referenced session expired.
@@ -195,9 +236,11 @@ async function handle(req,res){
  let path;
  try{path=new URL(req.url,'http://localhost').pathname}catch{sendJSON(res,400,{ok:false});return}
  if(path==='/health'&&(req.method==='GET'||req.method==='HEAD')){
-  sendJSON(res,200,{ok:true,configured,webhookReady:webhookRegistered,activeConversations:sessions.size});
+  if(storageEnabled&&!storageLoaded)await ensureStorageReady();
+  sendJSON(res,200,{ok:true,configured,webhookReady:webhookRegistered,activeConversations:sessions.size,persistenceConfigured:storageEnabled,persistenceReady:storageLoaded});
   return;
  }
+ if(storageEnabled&&!(await ensureStorageReady())){sendJSON(res,503,{ok:false,error:'Хранилище временно недоступно'});return}
  if(path==='/telegram/webhook'&&req.method==='POST'){await webhook(req,res);return}
  if(!path.startsWith('/api/chat/')){sendJSON(res,404,{ok:false,error:'Не найдено'});return}
  if(!allowOrigin(req,res)){sendJSON(res,403,{ok:false,error:'Недопустимый источник'});return}
@@ -226,6 +269,7 @@ async function handle(req,res){
    sendJSON(res,502,{ok:false,error:'Telegram не принял сообщение. Попробуйте ещё раз или перейдите в личный чат.'});return;
   }
   sessions.set(id,s);
+  try{await saveSession(s)}catch(e){console.error('New chat persistence failed',e.message);sendJSON(res,503,{ok:false,error:'Не удалось сохранить диалог. Попробуйте позже.'});return}
   sendJSON(res,200,{ok:true,sessionId:id,sessionKey:secret,expiresInHours:48});
   return;
  }
@@ -245,6 +289,7 @@ async function handle(req,res){
   s.seq++;s.updated=Date.now();
   s.messages.push({seq:s.seq,by:'visitor',text,at:Date.now()});
   if(s.messages.length>50)s.messages.shift();
+  try{await saveSession(s)}catch(e){console.error('Visitor message persistence failed',e.message);sendJSON(res,503,{ok:false,error:'Сообщение не удалось сохранить. Попробуйте позже.'});return}
   sendJSON(res,200,{ok:true,seq:s.seq});
   return;
  }
@@ -253,5 +298,6 @@ async function handle(req,res){
 const server=http.createServer((req,res)=>{handle(req,res).catch(()=>{if(!res.headersSent)sendJSON(res,500,{ok:false,error:'Внутренняя ошибка'});else res.end()})});
 server.requestTimeout=20000;
 server.listen(PORT,'0.0.0.0',()=>console.log('Portfolio chat API listening on '+PORT));
+ensureStorageReady().catch(()=>{});
 if(configured)registerWebhook();
 setInterval(clearExpired,600000).unref();
