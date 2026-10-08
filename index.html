@@ -2119,10 +2119,17 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
   if(!event.relatedTarget||!active.contains(event.relatedTarget))reset();
  },{passive:true});
  document.addEventListener('pointermove',event=>{
-  if(!active||lens.hidden)return;
-  lastPoint={x:event.clientX,y:event.clientY};
-  const w=frame.offsetWidth,h=frame.offsetHeight;
-  place(w,h,lastPoint.x,lastPoint.y);
+  // A scroll event may hide a preview after pointerover; reopen on the
+  // next deliberate mouse movement without waiting for another pointerover.
+  if(!active||lens.hidden){
+    const candidate=eligible(event.target);
+    if(candidate){paint(candidate,event.clientX,event.clientY)}
+    return;
+  }
+  if(active.contains(event.target)){
+    lastPoint={x:event.clientX,y:event.clientY};
+    place(frame.offsetWidth,frame.offsetHeight,lastPoint.x,lastPoint.y);
+  }else reset();
  },{passive:true});
  window.addEventListener('scroll',reset,{passive:true});
  window.addEventListener('resize',reset,{passive:true});
