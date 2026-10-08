@@ -507,7 +507,11 @@
 @media(max-width:860px){.news-flow-grid{grid-template-columns:1fr}.news-platform-stack{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.news-platform{padding-left:0}.news-platform:before,.news-platform-stack:before{display:none}.news-vk-media,.news-tg-media{height:135px}.news-dzen-preview{grid-template-columns:1fr}.news-dzen-media{height:135px}.news-platform-card{padding:9px}.news-social-actions{flex-wrap:wrap}}
 @media(max-width:650px){.case-news .news-distribution{padding:20px 12px}.news-distribution-heading{padding:0 6px;flex-wrap:wrap;gap:10px}.news-distribution-heading h4{font-size:39px}.news-demo-label{order:-1}.news-platform-stack{grid-template-columns:1fr}.news-platform{padding-left:24px}.news-platform:before,.news-platform-stack:before{display:block}.news-vk-media,.news-tg-media{height:200px}.news-dzen-preview{grid-template-columns:45% 1fr}.news-dzen-media{height:120px}.news-author-body{padding:15px}.news-author-top{padding:15px}.news-author-top small{font-size:9px}.news-media-caption span,.news-channels-label span{font-size:8px}.news-attachment-strip small{font-size:8px}.case-news .news-case-copy{padding:23px}}
 @media(prefers-reduced-motion:reduce){.news-platform-card,.news-channel-option{transition:none!important;transform:none!important}}
-.case-dpo .dpo-feature .dpo-publishing-walkthrough{display:inline-flex;margin:12px 0 0 11px;padding:8px 11px;background:#e6effc;border:1px solid #c8dcf7;border-radius:9px;font-size:12px;font-weight:760;color:#315e9e}.case-dpo .dpo-feature .dpo-publishing-walkthrough[hidden]{display:none!important}.case-dpo .dpo-feature .dpo-publishing-walkthrough:hover{background:#d8e8fc}</style></head><body>
+.case-dpo .dpo-feature .dpo-publishing-walkthrough{display:inline-flex;margin:12px 0 0 11px;padding:8px 11px;background:#e6effc;border:1px solid #c8dcf7;border-radius:9px;font-size:12px;font-weight:760;color:#315e9e}.case-dpo .dpo-feature .dpo-publishing-walkthrough[hidden]{display:none!important}.case-dpo .dpo-feature .dpo-publishing-walkthrough:hover{background:#d8e8fc}/* Stable scroll: single engine; never animate browser and JS at the same time. */
+html{scroll-behavior:auto!important;scroll-padding-top:108px}
+main{overflow-x:clip;overflow-y:visible}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+</style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#brief">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов.<br><span class="gradient">Автоматизирую бизнес.</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
 <section class="section wrap sales-solutions" id="solutions" aria-labelledby="solutions-title">
@@ -1426,7 +1430,30 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
  history.scrollRestoration='manual';
  const persist=()=>{try{sessionStorage.setItem(STORAGE_KEY,JSON.stringify({nodes,serial}))}catch(e){}};
  const reduced=()=>motionReduced.matches;
- const animateScroll=(y)=>{const max=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);window.scrollTo({top:Math.max(0,Math.min(max,y)),behavior:reduced()?'instant':'smooth'})};
+ let navigationFrame=0;
+ const stopNavigation=()=>{if(navigationFrame){cancelAnimationFrame(navigationFrame);navigationFrame=0;}};
+ // Use one scroll engine: browser smooth scrolling and scripted scrolling must not compete.
+ const animateScroll=(y,immediate=false)=>{
+   const max=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+   const end=Math.max(0,Math.min(max,Math.round(y)));
+   stopNavigation();
+   const start=window.scrollY,delta=end-start;
+   if(Math.abs(delta)<2)return;
+   // Never glide across several sections. Large jumps are deliberate navigation.
+   if(immediate||reduced()||Math.abs(delta)>window.innerHeight*1.45){
+      window.scrollTo({top:end,behavior:'instant'});return;
+   }
+   const duration=Math.max(200,Math.min(390,Math.abs(delta)*.48)),begun=performance.now();
+   const tick=now=>{
+      const t=Math.min(1,Math.max(0,(now-begun)/duration));
+      const ease=1-Math.pow(1-t,3);
+      window.scrollTo({top:start+delta*ease,behavior:'instant'});
+      if(t<1)navigationFrame=requestAnimationFrame(tick);else navigationFrame=0;
+   };
+   navigationFrame=requestAnimationFrame(tick);
+ };
+ ['wheel','touchstart','pointerdown'].forEach(type=>window.addEventListener(type,stopNavigation,{passive:true}));
+ window.addEventListener('keydown',e=>{if(['PageDown','PageUp','ArrowDown','ArrowUp','Home','End',' '].includes(e.key))stopNavigation();});
  const targetY=(el)=>el.id==='top'?0:Math.max(0,Math.round(window.scrollY+el.getBoundingClientRect().top-108));
  function sectionAt(y){
    if(y<250)return 'началу страницы';
@@ -1489,7 +1516,7 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
    if(id&&nodes[id]){
      currentId=id;
      persist();
-     requestAnimationFrame(()=>animateScroll(nodes[id].y||0));
+     requestAnimationFrame(()=>animateScroll(nodes[id].y||0,true));
    }else{
      currentId='';
    }
