@@ -1,0 +1,43 @@
+name: Assemble cat promo video
+on:
+  push:
+    paths:
+      - ".github/workflows/assemble-cat-promo.yml"
+      - "assets/cat-promo/part-*.bin"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout portfolio
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Restore optimized promo MP4
+        shell: python
+        run: |
+          from pathlib import Path
+          from hashlib import sha256
+          chunks = sorted(Path("assets/cat-promo").glob("part-*.bin"))
+          if len(chunks) != 12:
+              raise SystemExit(f"Expected 12 video chunks; found {len(chunks)}")
+          content = b"".join(p.read_bytes() for p in chunks)
+          expected = "0efd241903606f511cb8e2b1cd9137a4c936a907f45089eedb4dc47be6d082bb"
+          if sha256(content).hexdigest() != expected:
+              raise SystemExit("Promo integrity verification failed.")
+          path = Path("assets/cat-promo.mp4")
+          path.write_bytes(content)
+          print(f"Video ready: {len(content):,} bytes")
+      - name: Publish verified video
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/cat-promo.mp4
+          if ! git diff --cached --quiet; then
+            git commit -m "Add assembled cat promo MP4"
+            git push
+          fi
