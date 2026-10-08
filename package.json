@@ -1,0 +1,9 @@
+{
+  "name": "denis-kats-portfolio-leads",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Minimal Telegram lead-notification API for the portfolio",
+  "type": "commonjs",
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "node lead-api/server.js" }
+}
