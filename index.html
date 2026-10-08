@@ -791,6 +791,68 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
     padding-block:.1em .13em;
   }
 }
+
+/* Premium ad preview: deliberately compact (source is 910×512) and inline-only.
+   No native player controls, fullscreen, picture-in-picture, enlarging hover
+   or blurred upscaling. Other site videos are unchanged. */
+.case-creative .creative-stage{align-items:center;justify-content:center}
+.case-creative .creative-frame{width:100%;max-width:490px;min-width:0;margin-inline:auto;transform:none!important;scale:1!important}
+.case-creative .creative-film{width:100%;aspect-ratio:910/512;overflow:hidden}
+.case-creative .creative-film video{
+  width:100%;height:100%;display:block;object-fit:contain;
+  max-width:100%;max-height:100%;transform:none!important;scale:1!important;
+  touch-action:pan-y;
+}
+.case-creative .creative-frame:hover,
+.case-creative .creative-film:hover,
+.case-creative .creative-film video:hover{transform:none!important;scale:1!important}
+.case-creative .creative-stagenote{width:100%;max-width:490px}
+.creative-mini-controls{
+  display:flex;align-items:center;gap:9px;
+  padding:8px 14px 10px;
+  background:#080f20;
+  border-top:1px solid #ffffff12;
+  color:#c7d5eb;
+}
+.creative-mini-button{
+  width:34px;height:34px;flex:0 0 34px;
+  display:grid;place-items:center;
+  background:#1f304e;border:1px solid #354b6b;color:#e6efff;
+  font-size:13px;border-radius:9px;cursor:pointer;
+  transition:background .2s ease,border-color .2s ease;
+}
+.creative-mini-button:hover{background:#2e4267;border-color:#4c6796}
+.creative-mini-button:focus-visible,.creative-mini-progress:focus-visible{outline:2px solid #96bfff;outline-offset:3px}
+.creative-mini-progress-wrap{flex:1 1 auto;min-width:36px;display:flex;align-items:center}
+.creative-mini-progress{width:100%;height:22px;margin:0;cursor:pointer;accent-color:#8eaee4}
+.creative-mini-time{font:600 10px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:.025em;color:#a6bbd9;white-space:nowrap;flex:none}
+.creative-mini-sound{font-size:18px}
+.case-creative .creative-chapters{padding:9px 12px}
+@media(max-width:550px){
+  .case-creative .creative-frame{max-width:100%}
+  .creative-mini-controls{gap:6px;padding:7px 9px}
+  .creative-mini-time{font-size:9px}
+  .creative-mini-button{width:32px;height:32px;flex-basis:32px}
+}
+/* A thinner, expressive DK signature: high-contrast serif, fine hairlines and
+   restrained sheen. No external font download. */
+.dk-la-head-avatar,.dk-la-launch-icon,.dk-la-greeting-icon{
+  font-family:"Bodoni MT",Didot,"Times New Roman",Georgia,serif!important;
+  font-style:italic!important;
+  font-weight:400!important;
+  letter-spacing:-.14em!important;
+  text-indent:-.12em;
+  font-size:22px!important;
+  line-height:1.05!important;
+  color:#f5f8ff!important;
+  border:1px solid #adc8ec70!important;
+  background:linear-gradient(145deg,#365684,#182a49)!important;
+  text-shadow:0 1px 12px #bdd7ff48;
+  box-shadow:inset 0 1px 0 #ffffff48,0 2px 10px #071a3427!important;
+}
+.dk-la-launch-icon{font-size:25px!important}
+.dk-la-greeting-icon{font-size:17px!important;color:#f7fbff!important}
+@media(prefers-reduced-motion:reduce){.creative-mini-button{transition:none}}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#contact">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов<br><span class="gradient">Автоматизирую бизнес</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Направления работы ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#contact">Обсудить свою задачу ↗</a></p></header>
@@ -1115,12 +1177,20 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
     <div class="creative-frame">
       <div class="creative-frame-top"><span class="creative-live-dot"></span><span>РЕКЛАМНЫЙ AI-ПРОДАКШН</span><span class="creative-frame-time">00:10 · 16:9</span></div>
       <div class="creative-film" id="creative-film">
-        <video id="creative-video" playsinline controls preload="none" poster="assets/academy-ai-poster.jpg" aria-label="Десятисекундное рекламное AI-видео для приёмной кампании Президентской академии">
+        <video id="creative-video" playsinline webkit-playsinline controlsList="nofullscreen noremoteplayback nodownload" disablePictureInPicture disableRemotePlayback preload="none" poster="assets/academy-ai-poster.jpg" aria-label="Десятисекундное рекламное AI-видео для приёмной кампании Президентской академии">
           <source src="assets/academy-ai-promo.mp4" type="video/mp4">
           Ваш браузер не поддерживает видео. 
         </video>
-        <button class="creative-play" id="creative-play" type="button" aria-label="Включить ролик со звуком"><span class="creative-play-icon">▶</span><span>СМОТРЕТЬ ПРОМО</span><small>Открыть ролик</small></button>
+        <button class="creative-play" id="creative-play" type="button" aria-label="Воспроизвести рекламный ролик"><span class="creative-play-icon">▶</span><span>СМОТРЕТЬ ПРОМО</span><small>10 секунд · внутри страницы</small></button>
         <div class="creative-film-placeholder" id="creative-film-placeholder" aria-hidden="true"><div class="creative-film-mark">ПРЕЗИДЕНТСКАЯ АКАДЕМИЯ</div><div class="creative-film-caption">КАЛИНИНГРАД<br><strong>ВАМ К НАМ</strong></div></div>
+      </div>
+      <div class="creative-mini-controls" role="group" aria-label="Управление рекламным видеороликом">
+        <button type="button" class="creative-mini-button" id="creative-toggle" aria-label="Воспроизвести рекламный ролик" aria-pressed="false"><span aria-hidden="true">▶</span></button>
+        <label class="creative-mini-progress-wrap" for="creative-progress"><span class="sr-only">Позиция воспроизведения</span>
+          <input id="creative-progress" class="creative-mini-progress" type="range" min="0" max="10" value="0" step="0.1" aria-label="Перемотка рекламного видео">
+        </label>
+        <output class="creative-mini-time" id="creative-timer" for="creative-progress">00:00 / 00:10</output>
+        <button type="button" class="creative-mini-button creative-mini-sound" id="creative-sound" aria-label="Выключить звук" aria-pressed="true"><span aria-hidden="true">♪</span></button>
       </div>
       <div class="creative-chapters" aria-label="Этапы видеокреатива">
         <button type="button" class="creative-chapter is-active" data-creative-seek="0" aria-pressed="true"><span>00:00</span> Хук</button>
@@ -1642,15 +1712,75 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
 </script><script>
 (function(){
  const film=document.getElementById('creative-film'),video=document.getElementById('creative-video'),button=document.getElementById('creative-play'),status=document.getElementById('creative-status');
- if(!film||!video||!button||!status)return;
+ const toggle=document.getElementById('creative-toggle'),sound=document.getElementById('creative-sound'),progress=document.getElementById('creative-progress'),timer=document.getElementById('creative-timer');
+ if(!film||!video||!button||!status||!toggle||!sound||!progress||!timer)return;
  const chapters=Array.from(document.querySelectorAll('[data-creative-seek]'));
+ // Keep the low-resolution advertising example inside its compact preview. Never
+ // expose native fullscreen, remote playback or picture-in-picture controls.
+ video.controls=false;
+ video.playsInline=true;
+ video.disablePictureInPicture=true;
+ video.disableRemotePlayback=true;
+ const clock=seconds=>{const s=Math.max(0,Math.floor(Number(seconds)||0));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
  function activeChapter(seconds){chapters.forEach(ch=>{const on=Number(ch.dataset.creativeSeek)===seconds;ch.classList.toggle('is-active',on);ch.setAttribute('aria-pressed',String(on))});}
- function play(){film.classList.add('is-playing');video.muted=false;const p=video.play();if(p&&typeof p.catch==='function')p.catch(()=>{film.classList.remove('is-playing');status.textContent='Нажмите кнопку воспроизведения на видео, если браузер блокирует звук.'});}
- button.addEventListener('click',()=>{status.textContent='Идёт воспроизведение рекламного AI-ролика';play()});
- chapters.forEach(ch=>ch.addEventListener('click',function(){const seek=Number(this.dataset.creativeSeek);activeChapter(seek);const jump=()=>{try{video.currentTime=seek}catch(e){}play()};if(video.readyState===0){video.load();video.addEventListener('loadedmetadata',jump,{once:true})}else jump()}));
- video.addEventListener('timeupdate',()=>{if(!video.duration)return;const t=video.currentTime;activeChapter(t>=8?8:t>=4?4:0)});
- video.addEventListener('ended',()=>{film.classList.remove('is-playing');status.textContent='Ролик завершён. Можно посмотреть ещё раз.';activeChapter(0)});
- video.addEventListener('error',()=>{film.classList.add('is-failed');film.classList.remove('is-playing');status.textContent='Видео ещё публикуется. Попробуйте позже.';});
+ function syncPlayState(){
+   const playing=!video.paused&&!video.ended;
+   toggle.querySelector('span').textContent=playing?'Ⅱ':'▶';
+   toggle.setAttribute('aria-label',playing?'Приостановить ролик':'Воспроизвести рекламный ролик');
+   toggle.setAttribute('aria-pressed',String(playing));
+   film.classList.toggle('is-playing',playing);
+ }
+ function syncSound(){
+   sound.querySelector('span').textContent=video.muted?'♪̸':'♪';
+   sound.setAttribute('aria-label',video.muted?'Включить звук':'Выключить звук');
+   sound.setAttribute('aria-pressed',String(!video.muted));
+ }
+ function syncProgress(){
+   const length=Number.isFinite(video.duration)&&video.duration>0?video.duration:10;
+   progress.max=String(length);
+   if(!progress.matches(':active'))progress.value=String(Math.min(length,video.currentTime||0));
+   timer.textContent=clock(video.currentTime)+' / '+clock(length);
+   const time=video.currentTime||0;
+   activeChapter(time>=8?8:time>=4?4:0);
+ }
+ function play(){
+   film.classList.add('is-playing');
+   const result=video.play();
+   if(result&&typeof result.catch==='function')result.catch(()=>{
+     syncPlayState();
+     status.textContent='Воспроизведение заблокировано браузером. Нажмите ▶ ещё раз.';
+   });
+ }
+ button.addEventListener('click',()=>{status.textContent='Воспроизводится рекламный ролик · только внутри страницы';play()});
+ toggle.addEventListener('click',()=>{if(video.paused||video.ended)play();else video.pause()});
+ sound.addEventListener('click',()=>{video.muted=!video.muted;syncSound()});
+ progress.addEventListener('input',()=>{
+   const seek=Number(progress.value);
+   if(Number.isFinite(seek)){try{video.currentTime=seek}catch(e){}}
+   syncProgress();
+ });
+ chapters.forEach(ch=>ch.addEventListener('click',function(){
+   const seek=Number(this.dataset.creativeSeek);
+   activeChapter(seek);
+   const jump=()=>{try{video.currentTime=seek}catch(e){}syncProgress();play()};
+   if(video.readyState===0){video.load();video.addEventListener('loadedmetadata',jump,{once:true})}else jump();
+ }));
+ video.addEventListener('loadedmetadata',syncProgress);
+ video.addEventListener('durationchange',syncProgress);
+ video.addEventListener('timeupdate',syncProgress);
+ video.addEventListener('play',syncPlayState);
+ video.addEventListener('pause',syncPlayState);
+ video.addEventListener('volumechange',syncSound);
+ video.addEventListener('ended',()=>{
+   syncPlayState();film.classList.remove('is-playing');
+   status.textContent='Ролик завершён. Можно посмотреть ещё раз.';
+   activeChapter(0);
+ });
+ video.addEventListener('error',()=>{
+   film.classList.add('is-failed');film.classList.remove('is-playing');
+   status.textContent='Видео временно недоступно.';
+ });
+ syncPlayState();syncSound();syncProgress();
 })();
 </script><script>
 (function(){
