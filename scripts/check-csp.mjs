@@ -8,7 +8,7 @@ if (!csp) throw new Error('Missing Content-Security-Policy meta tag');
 const directive = name => csp.split(';').map(x=>x.trim()).find(x=>x.startsWith(name+' ')) || '';
 const sha = s => "'sha256-" + crypto.createHash('sha256').update(s, 'utf8').digest('base64') + "'";
 const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
-  .filter(([,attrs])=>!attrs.includes('application/ld+json'));
+  .filter(([,attrs])=>!attrs.includes('application/ld+json') && !/\bsrc\s*=/.test(attrs));
 const styleBlocks = [...html.matchAll(/<style(?:\s[^>]*)?>([\s\S]*?)<\/style>/gi)];
 
 if (scripts.length < 1 || styleBlocks.length < 1) throw new Error('Missing expected inline scripts or styles');
