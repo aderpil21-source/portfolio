@@ -578,18 +578,43 @@ retry.addEventListener('click',()=>{fallingBack=false;setVisible(error,false);vi
  const scene=document.getElementById('cinematic-scene'),video=document.getElementById('cinematic-video');
  const replay=document.getElementById('cinematic-replay'),bar=document.getElementById('cinematic-progress-fill');
  if(!scene||!video||!replay||!bar)return;
- let started=false,pausedByView=false,observer=null;
+ let started=false,pausedByView=false,observer=null,pending=false;
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
               window.matchMedia('(max-width: 700px)').matches ||
               Boolean(navigator.connection&&navigator.connection.saveData);
- function load(){const src=video.querySelector('source');if(src&&src.dataset.src&&!src.hasAttribute('src')){src.setAttribute('src',src.dataset.src);video.load();}}
+ // Prefer clean, attribution-free picture assets once uploaded; keep existing originals as a fallback.
+ const cleanVideo='assets/academy-architecture-bg-clean.mp4';
+ const cleanPoster='assets/academy-architecture-poster-clean.jpg';
+ async function fileExists(path){
+   try{
+     const res=await fetch(new URL(path,document.baseURI),{method:'HEAD',cache:'no-store'});
+     return res.ok&&res.status===200;
+   }catch(e){return false;}
+ }
+ const ready=Promise.all([fileExists(cleanVideo),fileExists(cleanPoster)]).then(([videoReady,posterReady])=>{
+   if(posterReady)video.poster=new URL(cleanPoster,document.baseURI).href;
+   const source=video.querySelector('source');
+   if(source&&videoReady)source.dataset.src=cleanVideo;
+   return videoReady;
+ }).catch(()=>false);
+ function load(){
+   const src=video.querySelector('source');
+   if(src&&src.dataset.src&&!src.hasAttribute('src')){
+     src.setAttribute('src',src.dataset.src);video.load();
+   }
+ }
  function start(replayFromStart){
-   load();
-   if(replayFromStart){try{video.currentTime=0}catch(e){}}
-   scene.classList.remove('is-finished');
-   const p=video.play();
-   if(p&&typeof p.catch==='function')p.catch(()=>{replay.textContent='▶ Посмотреть сборку';});
-   started=true;pausedByView=false;
+   if(pending)return;
+   pending=true;
+   ready.then(()=>{
+     pending=false;
+     load();
+     if(replayFromStart){try{video.currentTime=0}catch(e){}}
+     scene.classList.remove('is-finished');
+     const p=video.play();
+     if(p&&typeof p.catch==='function')p.catch(()=>{replay.textContent='▶ Посмотреть сборку';});
+     started=true;pausedByView=false;
+   });
  }
  video.addEventListener('timeupdate',()=>{const x=Math.min(1,Math.max(0,video.currentTime/(video.duration||10)));bar.style.transform='scaleX('+x+')';});
  video.addEventListener('ended',()=>{scene.classList.add('is-finished');replay.textContent='↻ Повторить сборку';bar.style.transform='scaleX(1)';});
