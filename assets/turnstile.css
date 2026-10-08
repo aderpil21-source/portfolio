@@ -1,0 +1,7 @@
+/* Cloudflare Turnstile: compact, accessible, and responsive. Loaded only when the client uses the contact assistant. */
+.dk-la-turnstile{max-width:100%;margin:9px 0 6px;padding:8px 0 0}
+.dk-la-turnstile[hidden]{display:none!important}
+.dk-la-turnstile-slot{max-width:100%;min-height:2px}
+.dk-la-turnstile-slot iframe{max-width:100%;border:0}
+.dk-la-turnstile small{display:block;margin-top:5px;color:#6f8199;font-size:11px;line-height:1.45}
+@media(max-width:390px){.dk-la-turnstile{margin:7px 0 5px}.dk-la-turnstile-slot{max-width:calc(100vw - 74px)}}
