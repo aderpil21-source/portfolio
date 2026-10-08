@@ -766,6 +766,42 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
   .case .tag{display:inline-block}
   :is(.case .tag,.freshman-mini-features span,.brief-tip,.freshman-mini-footnote,.sales-spot,.news-results-footnote):hover{scale:1.15;z-index:5}
 }
+
+/* Multi-channel demo is intentionally blank on the right before saving.
+   Desktop reserves the result column's dimensions to avoid scroll jumps.
+   On narrow screens hide the unused column to avoid kilometres of empty space. */
+.case-news{opacity:1!important;transform:none!important}
+.case-news .news-distribution-results[data-revealed="false"]{
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+.case-news .news-distribution-results[data-revealed="true"]{
+  visibility:visible;
+}
+.news-platform{
+  transition:opacity .28s cubic-bezier(.22,1,.36,1),visibility 0s linear .28s;
+}
+.news-platform[data-state="idle"],
+.news-platform[data-state="pending"],
+.news-platform[data-state="skipped"]{
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+}
+.news-platform[data-state="published"]{
+  visibility:visible;
+  opacity:1;
+  transition:opacity .32s cubic-bezier(.22,1,.36,1),visibility 0s;
+}
+@media(max-width:860px){
+  .case-news .news-distribution-results[data-revealed="false"]{display:none!important}
+  .news-platform[data-state="idle"],
+  .news-platform[data-state="pending"],
+  .news-platform[data-state="skipped"]{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .news-platform{transition:none!important}
+}
 </style></head><body>
 <nav class="nav"><a href="#top"><strong>Денис Кац</strong></a><div class="nav-links"><a href="#work">Проекты</a><a href="#about">Обо мне</a><a href="#brief">Заказать</a></div></nav>
 <main id="top"><header class="hero"><div class="eyebrow">МАРКЕТИНГ · AI · РАЗРАБОТКА · АВТОМАТИЗАЦИЯ</div><h1>Привлекаю клиентов<br><span class="gradient">Автоматизирую бизнес</span></h1><p class="lead">Связываю рекламу, сайт, заявки, AI-ассистентов и оплату в понятную систему. Беру на себя разработку, внедрение и сопровождение — от первого обращения до результата.</p><div class="actions"><a class="btn" href="#solutions">Что я решаю для бизнеса ↓</a><a class="btn secondary" href="#work">Посмотреть все проекты ↗</a></div><p class="hero-subnote">Маркетинг · Разработка · Автоматизация · AI-видео · SEO. <a class="hero-inline-contact" href="#brief">Обсудить свою задачу ↗</a></p></header>
@@ -1008,7 +1044,7 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
 <div id="pay-complete-step" class="pay-complete" hidden aria-live="polite"><div class="success-ring">✓</div><h4>Демонстрация завершена</h4><p>Так выглядит финальный этап сценария после подтверждения операции в приложении банка.</p><div class="status-list"><span>Данные получателя <b>Заполнены</b></span><span>Сумма <b id="pay-sum-result">40 000 ₽</b></span><span>Реальный перевод <b>Не выполнялся</b></span><span>Подтверждение центру <b>Не отправлялось</b></span></div><button class="pay-reset" id="pay-repeat" type="button">← Ещё раз</button></div>
 <div class="pay-disclaimer">Только интерактивная иллюстрация. Никакие деньги не списываются.</div></div></div></article>
 
-<article class="project feature case case-news reveal" id="news" aria-labelledby="news-heading">
+<article class="project feature case case-news" id="news" aria-labelledby="news-heading">
  <div class="news-distribution" id="news-distribution-board">
   <div class="news-distribution-heading"><div><span class="news-distribution-eyebrow"><span class="news-live-light"></span> КОНТЕНТ ДЛЯ НЕСКОЛЬКИХ КАНАЛОВ</span><h4>Одна новость<br><span>Три площадки</span></h4><p>Создайте новость один раз, отметьте каналы и посмотрите, как выглядят итоговые публикации.</p></div></div>
   <div class="news-flow-grid">
@@ -1039,7 +1075,7 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
      <div class="news-demo-status" id="news-preview-result" aria-live="polite">Готово к демонстрации. Материалы появятся справа после нажатия.</div>
     </div>
    </div>
-   <div class="news-distribution-results">
+   <div class="news-distribution-results" data-revealed="false" aria-hidden="true" inert>
       <div class="news-results-top"><div><span class="news-result-dot"></span><strong id="news-delivery-title">Ожидается публикация</strong></div><span id="news-delivery-count">0 / 3</span></div>
       <div class="news-platform-stack">
        <section class="news-platform news-platform-vk" data-publish-channel="vk" data-state="idle" aria-label="Демонстрация публикации ВКонтакте">
@@ -1294,7 +1330,7 @@ body:has(.dk-lead-assistant[data-open=true]) .portfolio-wayback{opacity:0;pointe
  </div>
 </section></main>
 <footer class="wrap footer"><span>© 2026 Денис Кац · Разработка и автоматизация</span><a href="mailto:oxcidix@gmail.com">oxcidix@gmail.com</a></footer>
-<script>const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>observer.observe(e));</script><script>
+<script>const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.025});document.querySelectorAll('.reveal').forEach(e=>observer.observe(e));</script><script>
 const botExample={
  admission:['Как узнать свой уникальный код?','Назовите ФИО — я помогу найти уникальный код для проверки списков. В этом демо персональные данные не запрашиваются.'],
  lists:['Где я в конкурсных списках?','Помогу найти конкурсные списки по уровню образования и направлению, чтобы не искать нужный документ вручную.'],
@@ -1402,6 +1438,13 @@ document.querySelectorAll('[data-guide]').forEach(btn=>btn.addEventListener('cli
  const publishButton=document.getElementById('news-preview-button');
  const repeatButton=document.getElementById('news-repeat-button');
  const status=document.getElementById('news-preview-result');
+ const results=board.querySelector('.news-distribution-results');
+ function showResults(show){
+   results.dataset.revealed=show?'true':'false';
+   results.setAttribute('aria-hidden',String(!show));
+   results.inert=!show;
+ }
+
  const count=document.getElementById('news-delivery-count');
  const title=document.getElementById('news-delivery-title');
  const head=document.getElementById('news-demo-headline');
@@ -1423,6 +1466,7 @@ document.querySelectorAll('[data-guide]').forEach(btn=>btn.addEventListener('cli
  function reset(){
   cancelTimers();
   board.classList.remove('is-publishing','is-published');
+  showResults(false);
   for(const c of platformEntries){
     c.card.dataset.state='idle';
     c.card.querySelector('.news-platform-status').textContent=c.input.checked?'Ожидает сохранения':'Канал не выбран';
@@ -1443,6 +1487,7 @@ document.querySelectorAll('[data-guide]').forEach(btn=>btn.addEventListener('cli
   const selected=platformEntries.filter(c=>c.input.checked);
   board.classList.remove('is-published');
   board.classList.add('is-publishing');
+  showResults(selected.length>0);
   publishButton.disabled=true;
   publishButton.innerHTML='<span>◌</span> Сохраняем новость…';
   title.textContent='Размещение по каналам';
