@@ -1,0 +1,7 @@
+{
+  "instructions": "Create docs/ai-orchestrator-smoke.md with a short, accurate explanation of the deterministic verification gates. Do not edit any other file. Do not claim Jev, Luna or Sol model APIs were called.",
+  "allowed_paths": [
+    "docs/ai-orchestrator-smoke.md"
+  ],
+  "apply_to_branch": true
+}
