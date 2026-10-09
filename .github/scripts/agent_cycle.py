@@ -28,7 +28,8 @@ def prompt_for(task, policy, *, error=""):
     )
 
 def default_generate(prompt, attempt, output_dir):
-    output = Path(output_dir) / ("copilot-" + str(attempt) + ".txt")
+    # Keep agent transcript OUTSIDE the uploaded patch artifact directory.
+    output = Path(os.environ.get("RUNNER_TEMP", "/tmp")) / ("copilot-agent-" + str(attempt) + ".txt")
     argv = [
         "copilot", "-p", prompt, "--model", "auto", "--no-ask-user",
         "--available-tools=view,glob,grep,edit,create,apply_patch",
