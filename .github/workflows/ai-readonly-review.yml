@@ -49,25 +49,25 @@ jobs:
         run: |
           set -euo pipefail
           case "$COMPLEXITY" in
-            simple) MODEL="gpt-6-luna"; FALLBACK="claude-haiku-4.5" ;;
-            coding) MODEL="gpt-6.1-sol"; FALLBACK="gpt-5.3-codex" ;;
-            architecture) MODEL="gpt-6-astra"; FALLBACK="gpt-5.4" ;;
+            simple) LABEL="Luna"; MODEL=""; FALLBACK="Copilot default" ;;
+            coding) LABEL="Sol"; MODEL=""; FALLBACK="Copilot default" ;;
+            architecture) LABEL="Astra"; MODEL=""; FALLBACK="Copilot default" ;;
             *) echo "Invalid complexity"; exit 2 ;;
           esac
-          echo "Selected model: $MODEL (alternative if manually reconfigured: $FALLBACK)"
+          echo "Routing tier: $LABEL; using available Copilot default model (specific model IDs not verified)"
           python3 - <<'PY'
           import os
           task = os.environ['REVIEW_TASK'][:300]
           with open('/tmp/ai-prompt.txt','w') as f:
               f.write("Provide a concise READ-ONLY review. Do not edit files, execute commands, access secrets or external URLs. Identify up to 3 actionable issues with file paths. If you cannot inspect files safely, say so. Request: "+task)
           PY
-          copilot -p "$(cat /tmp/ai-prompt.txt)" --model "$MODEL" --max-ai-credits 30 --no-ask-user > /tmp/ai-review.txt
+          copilot -p "$(cat /tmp/ai-prompt.txt)" --no-ask-user > /tmp/ai-review.txt
           test -s /tmp/ai-review.txt
           {
             echo "## Routed AI review"
-            echo "Selected model: \`$MODEL\`"
-            echo "Fallback candidate (not automatically invoked): \`$FALLBACK\`"
-            echo "Session soft limit: 30 AI Credits (minimum allowed by Copilot CLI)"
+            echo "Routing tier: \`$LABEL\`; actual model: Copilot default (not independently verified)"
+            echo "No retries or automatic fallback calls"
+            echo "Session limit: GitHub account budgets and 5-minute job timeout"
             echo '~~~'
             head -c 12000 /tmp/ai-review.txt
             echo
