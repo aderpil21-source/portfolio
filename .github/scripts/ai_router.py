@@ -16,11 +16,13 @@ def classify(task):
         return "LUNA_MEDIUM"
     return "LUNA_LOW"
 
-def decide(*, checks_passed, scope_verified, attempts, security_sensitive=False, unresolved=False):
+def decide(*, checks_passed, scope_verified, attempts, behavior_verified=False, security_sensitive=False, unresolved=False):
     """Never ask an LLM to overrule failing deterministic checks."""
-    if checks_passed and scope_verified and not unresolved:
+    if security_sensitive:
+        return "ESCALATE"
+    if checks_passed and scope_verified and behavior_verified and not unresolved:
         return "COMPLETE"
-    if security_sensitive or attempts >= 2:
+    if attempts >= 2:
         return "ESCALATE"
     if not checks_passed:
         return "RETRY"
@@ -34,11 +36,22 @@ def validate_jev(choice, confidence, allowed=ACTIONS, threshold=0.75):
         return "VERIFY"
     return choice
 
+def guarded_jev(choice, confidence, **evidence):
+    """Jev cannot override deterministic failures or claim unsupported completion."""
+    local = decide(**evidence)
+    external = validate_jev(choice, confidence)
+    if external == "COMPLETE" and local != "COMPLETE":
+        return local
+    if local == "ESCALATE" and external != "ESCALATE":
+        return local
+    return external
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", default="")
     parser.add_argument("--checks-passed", action="store_true")
     parser.add_argument("--scope-verified", action="store_true")
+    parser.add_argument("--behavior-verified", action="store_true")
     parser.add_argument("--attempts", type=int, default=0)
     parser.add_argument("--security-sensitive", action="store_true")
     parser.add_argument("--unresolved", action="store_true")
@@ -47,10 +60,11 @@ def main():
         parser.error("attempts cannot be negative")
     lane = classify(args.task)
     action = decide(checks_passed=args.checks_passed, scope_verified=args.scope_verified,
-                    attempts=args.attempts, security_sensitive=args.security_sensitive,
+                    attempts=args.attempts, behavior_verified=args.behavior_verified,
+                    security_sensitive=args.security_sensitive,
                     unresolved=args.unresolved)
     print(json.dumps({"lane": lane, "action": action,
-                      "model": "copilot-default-only",
+                      "model": "copilot-auto",
                       "jev": "not-connected", "reasoning_level": "advisory-only"}))
 
 if __name__ == "__main__":
