@@ -5,6 +5,10 @@ on:
       - '.github/scripts/ai_router.py'
       - '.github/scripts/test_ai_router.py'
       - '.github/workflows/orchestrator-checks.yml'
+      - '.github/scripts/agent_checks.py'
+      - '.github/scripts/test_agent_checks.py'
+      - '.github/ai-task.json'
+      - '.github/workflows/ai-implement-scoped.yml'
 permissions:
   contents: read
 jobs:
@@ -21,9 +25,17 @@ jobs:
           python-version: '3.12'
       - name: Router unit tests (no AI credits)
         run: python -m unittest discover -s .github/scripts -p 'test_ai_router.py' -v
+      - name: Validate allowed AI task
+        run: |
+          python - <<'PY'
+          import json,sys
+          sys.path.insert(0,'.github/scripts')
+          from agent_checks import validate_task
+          with open('.github/ai-task.json') as f: validate_task(json.load(f))
+          PY
       - name: Syntax and diff checks
         run: |
-          python -m py_compile .github/scripts/ai_router.py .github/scripts/test_ai_router.py
+          python -m py_compile .github/scripts/ai_router.py .github/scripts/test_ai_router.py .github/scripts/agent_checks.py .github/scripts/test_agent_checks.py
           git diff --check "$(git merge-base HEAD origin/main)" HEAD
       - name: Demonstrate routing without AI
         run: |
