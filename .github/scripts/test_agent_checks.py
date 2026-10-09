@@ -35,6 +35,12 @@ class AgentChecksTests(unittest.TestCase):
     def test_disallow_many_paths(self):
         with self.assertRaises(ValueError):
             m.validate_task({"instructions":"Write a concise note","allowed_paths":["docs/%s.md"%i for i in range(9)],"apply_to_branch":True})
+    def test_disallow_many_attempts(self):
+        with self.assertRaises(ValueError):
+            m.validate_task({"instructions":"Write a concise note","allowed_paths":["docs/test.md"],"apply_to_branch":True,"max_attempts":3})
+    def test_disallow_boolean_attempts(self):
+        with self.assertRaises(ValueError):
+            m.validate_task({"instructions":"Write a concise note","allowed_paths":["docs/test.md"],"apply_to_branch":True,"max_attempts":True})
     def test_disallow_empty_task(self):
         with self.assertRaises(ValueError):
             m.validate_task({"instructions":"","allowed_paths":["docs/test.md"],"apply_to_branch":True})
