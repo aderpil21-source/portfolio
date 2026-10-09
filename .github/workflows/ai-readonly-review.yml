@@ -1,8 +1,7 @@
 name: AI read-only review (routed)
 on:
   pull_request:
-    paths:
-      - '.github/workflows/ai-readonly-review.yml'
+    types: [labeled]
   workflow_dispatch:
     inputs:
       task:
@@ -27,7 +26,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   ai-review:
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'automation/copilot-readonly-ai')
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'automation/copilot-readonly-ai' && github.event.label.name == 'ai-review-request')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -43,7 +42,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
-          REVIEW_TASK: ${{ inputs.task || 'Review portfolio accessibility and mobile layout' }}
+          REVIEW_TASK: ${{ inputs.task || 'Review the pull request for accessibility, mobile layout, and security issues; report up to 3 concrete findings.' }}
           COMPLEXITY: ${{ inputs.complexity || 'simple' }}
         shell: bash
         run: |
@@ -64,7 +63,7 @@ jobs:
           copilot -p "$(cat /tmp/ai-prompt.txt)" --no-ask-user > /tmp/ai-review.txt
           test -s /tmp/ai-review.txt
           {
-            echo "## Routed AI review"
+            echo "## Routed AI review (requested by PR label)"
             echo "Routing tier: \`$LABEL\`; actual model: Copilot default (not independently verified)"
             echo "No retries or automatic fallback calls"
             echo "Session limit: GitHub account budgets and 5-minute job timeout"
