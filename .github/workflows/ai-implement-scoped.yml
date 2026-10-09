@@ -3,6 +3,8 @@ on:
   pull_request:
     types: [edited]
 permissions: {}
+env:
+  PYTHONDONTWRITEBYTECODE: '1'
 concurrency:
   group: ai-implementation-${{ github.event.pull_request.number }}
   cancel-in-progress: false
