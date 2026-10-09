@@ -19,3 +19,28 @@ html{scroll-behavior:auto}body{width:100%;overflow-x:clip}main{max-width:100%;ov
 }
 @media(max-width:700px){body.contact-visible .dk-la-launch{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*:before,*:after{animation:none!important;transition:none!important}.reveal,.motion-tile{opacity:1!important;transform:none!important}.premium-text .word{opacity:1!important}}
+
+/* One motion owner per element; keep reading order and card edges stable. */
+html{scrollbar-gutter:stable}
+.reveal,.reveal.visible{transform:none;transition:none}
+.sales-solutions-grid,.sales-offers-grid,.projects,.proof-links,.services-grid,.engineering-grid,.premium-process{grid-auto-flow:row}
+.sales-solution-card,.sales-offer,.services-grid>a,.engineering-grid>a,.case-copy{transition:box-shadow .25s ease,border-color .25s ease}
+.project.case:hover,.sales-solution-card:hover,.sales-offer:hover,.services-grid>a:hover,.engineering-grid>a:hover{transform:none;scale:1}
+.sales-solution-icon:empty,.demo-action-hint-icon:empty,.dk-la-launch-arrow:empty,.contact-stage-primary>b:empty{display:none}
+.sales-solution-card h3{max-width:none;text-wrap:balance}
+.section h2,.case .copy h3{text-wrap:balance}
+.dk-lead-assistant[data-open=true] .dk-la-launch,body.contact-visible .dk-la-launch{display:none}
+.dk-la-panel{position:fixed;bottom:max(22px,env(safe-area-inset-bottom));right:clamp(12px,2.6vw,31px);min-height:0;max-height:calc(100dvh - 44px)}
+.dk-la-body{min-height:0;overscroll-behavior:contain}
+@media(max-width:700px){
+ .dk-la-launch{display:none}
+ .dk-la-panel{left:14px;right:14px;width:auto;bottom:calc(88px + env(safe-area-inset-bottom));max-height:calc(100dvh - 112px - env(safe-area-inset-bottom) - env(safe-area-inset-top))}
+ .hero{padding-top:44px;padding-bottom:44px}
+ .hero .hero-subnote{max-width:290px;line-height:1.7}
+ .contact-stage-process{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ .contact-stage-process i{display:none}
+ .contact-stage-process span{padding:10px 4px;text-align:center;min-width:0;font-size:10px}
+ .sales-solution-card,.sales-offer{min-height:0}
+ .case .links{gap:10px 18px}
+ .dk-la-tasks button{overflow-wrap:anywhere}
+}

@@ -73,10 +73,12 @@
  function show(open){
   if(open&&panel.hidden)panelOpener=document.activeElement;
   root.dataset.open=String(open);panel.hidden=!open;launch.setAttribute('aria-expanded',String(open));
+  el('contact-start-assistant')?.setAttribute('aria-expanded',String(open));
   if(open){close.focus({preventScroll:true});if(session)poll()}
   else{stop();const destination=panelOpener?.isConnected&&panelOpener.getClientRects().length?panelOpener:el('contact-start-assistant');destination?.focus({preventScroll:true})}
  }
  launch.addEventListener('click',()=>show(panel.hidden));close.addEventListener('click',()=>show(false));
+ el('contact-start-assistant')?.addEventListener('click',()=>show(true));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)show(false)});
  function select(v){category=v;choices.querySelectorAll('[data-la-task]').forEach(b=>{const active=b.dataset.laTask===v;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active))});el('dk-la-choice-label').textContent=v==='Другая задача'?'Своя задача':v;el('dk-la-answer-text').textContent=replies[v]||replies['Другая задача'];answer.hidden=false;note(status,'Опишите задачу. Ответ Дениса появится в этом чате.');send.textContent='Отправить Денису в Telegram ';initTurnstile().catch(()=>{});scrollInner()}
  choices.addEventListener('click',e=>{const b=e.target.closest('[data-la-task]');if(b)select(b.dataset.laTask)});
