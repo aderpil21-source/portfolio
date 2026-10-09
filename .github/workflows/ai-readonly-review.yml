@@ -1,0 +1,51 @@
+name: AI read-only review (manual)
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Review focus (no code changes)'
+        required: true
+        default: 'Review portfolio accessibility and mobile layout'
+        type: string
+permissions:
+  contents: read
+  copilot-requests: write
+concurrency:
+  group: ai-readonly-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install official Copilot CLI
+        run: npm install -g @github/copilot
+      - name: Read-only AI analysis
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+          REVIEW_TASK: ${{ inputs.task }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os
+          task = os.environ['REVIEW_TASK'][:300]
+          with open('/tmp/ai-prompt.txt','w') as f:
+              f.write("You are a read-only code reviewer. Analyze the checked-out repository. Never edit files, run commands, open external URLs, or reveal secrets. Provide concise findings and concrete file paths. The preferred routing labels are Luna for small changes, Sol for coding, Astra for architecture; these are labels only, not proof of model identity. User request: "+task)
+          PY
+          copilot -p "$(cat /tmp/ai-prompt.txt)" --no-ask-user > /tmp/ai-review.txt
+          {
+            echo '## AI review (no files changed)'
+            echo 'Results are advisory; model identity is determined by Copilot availability, not routing labels.'
+            echo '~~~'
+            head -c 15000 /tmp/ai-review.txt
+            echo
+            echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"
