@@ -24,13 +24,18 @@
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     const link = event.target.closest('a[href^="#"]');
     if (!link || link.target || link.hasAttribute('download')) return;
-    const target = document.getElementById(link.hash.slice(1));
+    let id;
+    try { id = decodeURIComponent(link.hash.slice(1)); } catch { return; }
+    const target = document.getElementById(id);
     if (!target) return;
     event.preventDefault();
     const distance = Math.abs(target.getBoundingClientRect().top);
     const navigate = () => {
-      history.pushState(null, '', link.hash);
-      target.scrollIntoView({ behavior: reduced.matches || distance > innerHeight * 1.5 ? 'instant' : 'smooth', block: 'start' });
+      if (location.hash !== link.hash) history.pushState(null, '', link.hash);
+      const nav = document.querySelector('.nav');
+      const offset = nav ? nav.getBoundingClientRect().bottom + 20 : 88;
+      const top = target.id === 'top' ? 0 : Math.max(0, scrollY + target.getBoundingClientRect().top - offset);
+      scrollTo({ top, behavior: reduced.matches || distance > innerHeight * 1.5 ? 'instant' : 'smooth' });
       if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
       target.focus({ preventScroll: true });
     };
@@ -40,6 +45,7 @@
   });
   if (!window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
+  const paragraphOriginals = new Map([...document.querySelectorAll('.premium-text')].map(p => [p, p.textContent]));
   const media = gsap.matchMedia();
   media.add('(prefers-reduced-motion: no-preference)', () => {
     gsap.from('.hero > :is(.eyebrow,h1,.lead,.actions,.hero-subnote)', { y: 56, autoAlpha: 0, duration: 1.35, stagger: .16, ease: 'power3.out', clearProps: 'all' });
@@ -50,7 +56,9 @@
       gsap.fromTo(heading, { y: 48, opacity: .12 }, { y: 0, opacity: 1, duration: 1.05, ease: 'power3.out', scrollTrigger: { trigger: heading, start: 'top 91%', toggleActions: 'play none none reverse' } });
     });
     document.querySelectorAll('.sales-solutions-grid,.sales-offers-grid,.premium-process,.services-grid,.engineering-grid').forEach(grid => {
-      gsap.fromTo(grid.children, { y: 52, opacity: .12 }, { y: 0, opacity: 1, duration: .95, stagger: .12, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: grid, start: 'top 88%', toggleActions: 'play none none reverse' } });
+      [...grid.children].forEach((card, index) => {
+        gsap.fromTo(card, { y: 44, opacity: .15 }, { y: 0, opacity: 1, duration: .95, delay: innerWidth >= 900 ? (index % 3) * .1 : 0, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none reverse' } });
+      });
     });
     document.querySelectorAll('.project.case .case-copy').forEach(copy => {
       gsap.fromTo(copy, { y: 38, opacity: .2 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', clearProps: 'all', scrollTrigger: { trigger: copy, start: 'top 90%', toggleActions: 'play none none reverse' } });
@@ -59,7 +67,7 @@
       gsap.fromTo(visual, { scale: .9, y: 24 }, { scale: 1, y: 0, ease: 'none', scrollTrigger: { trigger: visual, start: 'top 95%', end: 'top 35%', scrub: .65 } });
     });
     document.querySelectorAll('.premium-text').forEach(paragraph => {
-      const original = paragraph.textContent;
+      const original = paragraphOriginals.get(paragraph);
       const accessible = document.createElement('span'); accessible.className = 'premium-sr-only'; accessible.textContent = original;
       paragraph.replaceChildren(accessible, ...original.trim().split(/\s+/).flatMap(word => {
         const span = document.createElement('span'); span.className = 'word'; span.textContent = word; span.setAttribute('aria-hidden', 'true');
@@ -76,8 +84,12 @@
         film.fromTo(scene.querySelector('.cinematic-content'), { y: 55, opacity: .4 }, { y: 0, opacity: 1, ease: 'none' }, 0);
       }
     });
-    return () => desktop.revert();
+    return () => {
+      desktop.revert();
+      paragraphOriginals.forEach((text, paragraph) => { paragraph.textContent = text; });
+    };
   });
   // Refresh geometry after locally hosted media has resolved.
-  document.querySelectorAll('img').forEach(img => { if (!img.complete) img.addEventListener('load', () => ScrollTrigger.refresh(), { once: true }); });
+  const refresh = gsap.delayedCall(.2, () => ScrollTrigger.refresh()).pause();
+  document.querySelectorAll('img').forEach(img => { if (!img.complete) img.addEventListener('load', () => refresh.restart(true), { once: true }); });
 })();

@@ -69,7 +69,13 @@
  function stop(){if(timer){clearTimeout(timer);timer=0}}
  function schedule(){stop();if(session&&!panel.hidden&&!document.hidden&&!expired)timer=setTimeout(poll,4500)}
  function scrollInner(){requestAnimationFrame(()=>{const pane=el('dk-la-body');if(pane)pane.scrollTop=pane.scrollHeight;messages.scrollTop=messages.scrollHeight})}
- function show(open){root.dataset.open=String(open);panel.hidden=!open;launch.setAttribute('aria-expanded',String(open));if(open){close.focus({preventScroll:true});if(session)poll()}else{stop();launch.focus({preventScroll:true})}}
+ let panelOpener=launch;
+ function show(open){
+  if(open&&panel.hidden)panelOpener=document.activeElement;
+  root.dataset.open=String(open);panel.hidden=!open;launch.setAttribute('aria-expanded',String(open));
+  if(open){close.focus({preventScroll:true});if(session)poll()}
+  else{stop();const destination=panelOpener?.isConnected&&panelOpener.getClientRects().length?panelOpener:el('contact-start-assistant');destination?.focus({preventScroll:true})}
+ }
  launch.addEventListener('click',()=>show(panel.hidden));close.addEventListener('click',()=>show(false));
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)show(false)});
  function select(v){category=v;choices.querySelectorAll('[data-la-task]').forEach(b=>{const active=b.dataset.laTask===v;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active))});el('dk-la-choice-label').textContent=v==='Другая задача'?'Своя задача':v;el('dk-la-answer-text').textContent=replies[v]||replies['Другая задача'];answer.hidden=false;note(status,'Опишите задачу. Ответ Дениса появится в этом чате.');send.textContent='Отправить Денису в Telegram ';initTurnstile().catch(()=>{});scrollInner()}
