@@ -1,0 +1,81 @@
+name: AI read-only review (routed)
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Read-only review request'
+        required: true
+        default: 'Review portfolio accessibility and mobile layout'
+        type: string
+      complexity:
+        description: 'Route to a model'
+        required: true
+        default: 'simple'
+        type: choice
+        options:
+          - simple
+          - coding
+          - architecture
+permissions:
+  contents: read
+  copilot-requests: write
+concurrency:
+  group: ai-readonly-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  ai-review:
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'automation/copilot-readonly-ai' && github.event.label.name == 'ai-review-request')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install official Copilot CLI
+        run: npm install -g @github/copilot
+      - name: Deterministic diff verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check "$(git merge-base HEAD origin/main)" HEAD
+          echo 'Diff whitespace check passed' >> "$GITHUB_STEP_SUMMARY"
+      - name: Select available Copilot model and run one AI review
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+          REVIEW_TASK: ${{ inputs.task || 'Review the pull request for accessibility, mobile layout, and security issues; report up to 3 concrete findings.' }}
+          COMPLEXITY: ${{ inputs.complexity || 'simple' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "$COMPLEXITY" in
+            simple) LABEL="Luna"; MODEL=""; FALLBACK="Copilot default" ;;
+            coding) LABEL="Sol"; MODEL=""; FALLBACK="Copilot default" ;;
+            architecture) LABEL="Astra"; MODEL=""; FALLBACK="Copilot default" ;;
+            *) echo "Invalid complexity"; exit 2 ;;
+          esac
+          echo "Routing tier: $LABEL; using available Copilot default model (specific model IDs not verified)"
+          python3 - <<'PY'
+          import os
+          task = os.environ['REVIEW_TASK'][:300]
+          with open('/tmp/ai-prompt.txt','w') as f:
+              f.write("Follow the project orchestration policy below where technically possible. This job is READ-ONLY: do not edit files, execute commands, access secrets or external URLs. Do not claim to have used Jev, Luna, or Sol: their actual endpoints are not configured. Give up to 3 actionable issues with file paths. Never claim completion without evidence.\\n\\n"+open(".github/AI_ORCHESTRATION.md").read()+"\\nRequest: "+task)
+          PY
+          copilot -p "$(cat /tmp/ai-prompt.txt)" --no-ask-user > /tmp/ai-review.txt
+          test -s /tmp/ai-review.txt
+          {
+            echo "## Routed AI review (requested by PR label)"
+            echo "Routing tier: \`$LABEL\`; actual model: Copilot default (not independently verified)"
+            echo "No retries or automatic fallback calls"
+            echo "Session limit: GitHub account budgets and 5-minute job timeout"
+            echo '~~~'
+            head -c 12000 /tmp/ai-review.txt
+            echo
+            echo '~~~'
+          } >> "$GITHUB_STEP_SUMMARY"

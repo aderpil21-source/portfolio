@@ -1,0 +1,8 @@
+{
+  "instructions": "Create docs/ai-orchestrator-cycle-smoke.md. Explain briefly that Copilot's selected model is auto, deterministic checks run before scoped branch-only commits, and neither Jev nor explicit Luna/Sol inference is active. Do not edit anything else.",
+  "allowed_paths": [
+    "docs/ai-orchestrator-cycle-smoke.md"
+  ],
+  "apply_to_branch": true,
+  "max_attempts": 1
+}
