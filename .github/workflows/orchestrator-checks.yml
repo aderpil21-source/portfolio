@@ -1,0 +1,32 @@
+name: Orchestrator deterministic checks
+on:
+  pull_request:
+    paths:
+      - '.github/scripts/ai_router.py'
+      - '.github/scripts/test_ai_router.py'
+      - '.github/workflows/orchestrator-checks.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Router unit tests (no AI credits)
+        run: python -m unittest discover -s .github/scripts -p 'test_ai_router.py' -v
+      - name: Syntax and diff checks
+        run: |
+          python -m py_compile .github/scripts/ai_router.py .github/scripts/test_ai_router.py
+          git diff --check "$(git merge-base HEAD origin/main)" HEAD
+      - name: Demonstrate routing without AI
+        run: |
+          python .github/scripts/ai_router.py --task "Change title text"
+          python .github/scripts/ai_router.py --task "Fix mobile layout"
+          python .github/scripts/ai_router.py --task "Review authentication security"
