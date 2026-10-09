@@ -1,4 +1,4 @@
-name: AI read-only review (PR test)
+name: AI read-only review (routed)
 on:
   pull_request:
     paths:
@@ -6,10 +6,19 @@ on:
   workflow_dispatch:
     inputs:
       task:
-        description: 'Review focus (no code changes)'
+        description: 'Read-only review request'
         required: true
         default: 'Review portfolio accessibility and mobile layout'
         type: string
+      complexity:
+        description: 'Route to a model'
+        required: true
+        default: 'simple'
+        type: choice
+        options:
+          - simple
+          - coding
+          - architecture
 permissions:
   contents: read
   copilot-requests: write
@@ -20,7 +29,7 @@ jobs:
   ai-review:
     if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'automation/copilot-readonly-ai')
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,26 +39,37 @@ jobs:
           node-version: '22'
       - name: Install official Copilot CLI
         run: npm install -g @github/copilot
-      - name: Read-only AI analysis
+      - name: Select actual model and run one AI review
         env:
           GH_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
           REVIEW_TASK: ${{ inputs.task || 'Review portfolio accessibility and mobile layout' }}
+          COMPLEXITY: ${{ inputs.complexity || 'simple' }}
         shell: bash
         run: |
           set -euo pipefail
+          case "$COMPLEXITY" in
+            simple) MODEL="gpt-6-luna"; FALLBACK="claude-haiku-4.5" ;;
+            coding) MODEL="gpt-6.1-sol"; FALLBACK="gpt-5.3-codex" ;;
+            architecture) MODEL="gpt-6-astra"; FALLBACK="gpt-5.4" ;;
+            *) echo "Invalid complexity"; exit 2 ;;
+          esac
+          echo "Selected model: $MODEL (alternative if manually reconfigured: $FALLBACK)"
           python3 - <<'PY'
           import os
           task = os.environ['REVIEW_TASK'][:300]
           with open('/tmp/ai-prompt.txt','w') as f:
-              f.write("You are a read-only code reviewer. Analyze the checked-out repository. Never edit files, run commands, open external URLs, or reveal secrets. Provide concise findings and concrete file paths. The preferred routing labels are Luna for small changes, Sol for coding, Astra for architecture; these are labels only, not proof of model identity. User request: "+task)
+              f.write("Provide a concise READ-ONLY review. Do not edit files, execute commands, access secrets or external URLs. Identify up to 3 actionable issues with file paths. If you cannot inspect files safely, say so. Request: "+task)
           PY
-          copilot -p "$(cat /tmp/ai-prompt.txt)" --no-ask-user > /tmp/ai-review.txt
+          copilot -p "$(cat /tmp/ai-prompt.txt)" --model "$MODEL" --max-ai-credits 30 --no-ask-user > /tmp/ai-review.txt
+          test -s /tmp/ai-review.txt
           {
-            echo '## AI review (no files changed)'
-            echo 'Results are advisory; model identity is determined by Copilot availability, not routing labels.'
+            echo "## Routed AI review"
+            echo "Selected model: \`$MODEL\`"
+            echo "Fallback candidate (not automatically invoked): \`$FALLBACK\`"
+            echo "Session soft limit: 30 AI Credits (minimum allowed by Copilot CLI)"
             echo '~~~'
-            head -c 15000 /tmp/ai-review.txt
+            head -c 12000 /tmp/ai-review.txt
             echo
             echo '~~~'
           } >> "$GITHUB_STEP_SUMMARY"
