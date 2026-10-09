@@ -1,0 +1,141 @@
+name: Scoped AI implementation (manual PR label)
+on:
+  pull_request:
+    types: [labeled]
+permissions: {}
+concurrency:
+  group: ai-implementation-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+jobs:
+  generate:
+    if: github.event.label.name == 'ai-implement-request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'automation/copilot-readonly-ai' && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    permissions:
+      contents: read
+      copilot-requests: write
+    steps:
+      - name: Checkout only isolated PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Validate task before AI credits are used
+        run: |
+          set -euo pipefail
+          test -z "$(git status --porcelain)"
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, '.github/scripts')
+          from agent_checks import validate_task
+          task=validate_task(json.loads(Path('.github/ai-task.json').read_text()))
+          print('Authorized files: '+', '.join(task['allowed_paths']))
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Copilot CLI
+        run: npm install -g @github/copilot
+      - name: Generate code in disposable working copy
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+          COPILOT_AUTO_UPDATE: 'false'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          task=json.loads(Path('.github/ai-task.json').read_text())
+          instructions=Path('.github/AI_ORCHESTRATION.md').read_text()
+          prompt=(
+            "You are implementing a single authorized repository task. Make the smallest correct "
+            "file changes ONLY in these paths: "+', '.join(task['allowed_paths'])+"\\n"
+            "Never modify workflows, secrets, git configuration, dependency manifests, or any other path. "
+            "Do not execute shell commands or use network tools. The CI runner will verify your diff "
+            "and run checks. You have only a read/write file tool subset. "
+            "Never claim to call Jev/Luna/Sol: unavailable models must not be impersonated.\\n"
+            "Task: "+task['instructions']+"\\n"
+            "Follow the user's orchestration principles as far as the available tools allow:\\n"+instructions
+          )
+          Path('/tmp/copilot-task.txt').write_text(prompt)
+          PY
+          copilot -p "$(cat /tmp/copilot-task.txt)" --model auto --no-ask-user \
+            --available-tools='view,glob,grep,edit,create,apply_patch' \
+            --allow-tool='read' --allow-tool='write' \
+            --deny-tool='shell' --deny-tool='url' > /tmp/copilot-output.txt
+          test -s /tmp/copilot-output.txt
+          echo 'Copilot generated output; deterministic validation follows.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify diff and produce replayable patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/ai-artifact"
+          python3 .github/scripts/agent_checks.py \
+            --task .github/ai-task.json \
+            --patch "$RUNNER_TEMP/ai-artifact/changes.patch" \
+            --evidence "$RUNNER_TEMP/ai-artifact/evidence.json"
+          echo '## Independent checks passed' >> "$GITHUB_STEP_SUMMARY"
+          cat "$RUNNER_TEMP/ai-artifact/evidence.json" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scoped-ai-patch-${{ github.run_id }}
+          path: ${{ runner.temp }}/ai-artifact/
+          if-no-files-found: error
+          retention-days: 2
+  apply:
+    needs: generate
+    if: github.event.label.name == 'ai-implement-request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'automation/copilot-readonly-ai' && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout exact PR commit
+        uses: actions/checkout@v4
+        with:
+          ref: automation/copilot-readonly-ai
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Reject concurrent branch changes
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          test "$(git branch --show-current)" = "automation/copilot-readonly-ai"
+      - uses: actions/download-artifact@v4
+        with:
+          name: scoped-ai-patch-${{ github.run_id }}
+          path: ${{ runner.temp }}/ai-artifact
+      - name: Apply only independently checked patch to isolated branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git apply --check "$RUNNER_TEMP/ai-artifact/changes.patch"
+          git apply "$RUNNER_TEMP/ai-artifact/changes.patch"
+          python3 .github/scripts/agent_checks.py \
+            --task .github/ai-task.json \
+            --patch "$RUNNER_TEMP/verified.patch" \
+            --evidence "$RUNNER_TEMP/verified.json"
+          cmp "$RUNNER_TEMP/ai-artifact/changes.patch" "$RUNNER_TEMP/verified.patch"
+          python3 - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+          task=json.loads(Path('.github/ai-task.json').read_text())
+          paths=task['allowed_paths']
+          subprocess.run(['git','add','--',*paths],check=True)
+          staged=subprocess.check_output(['git','diff','--cached','--name-only','-z']).decode().strip('\x00').split('\x00')
+          approved=json.loads(Path(__import__('os').environ['RUNNER_TEMP'],'verified.json').read_text())['diff_paths']
+          if sorted(staged)!=sorted(approved):
+              raise SystemExit('staged files differ from verified files')
+          subprocess.run(['git','diff','--cached','--check'],check=True)
+          PY
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -m 'ai: apply verified task-scoped changes'
+          git push origin HEAD:refs/heads/automation/copilot-readonly-ai
+          echo 'Patch committed to isolated PR branch; never merged to main.' >> "$GITHUB_STEP_SUMMARY"
