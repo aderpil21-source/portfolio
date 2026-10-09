@@ -1,14 +1,14 @@
-name: Scoped AI implementation (manual PR label)
+name: Scoped AI implementation (explicit PR request)
 on:
   pull_request:
-    types: [labeled]
+    types: [edited]
 permissions: {}
 concurrency:
   group: ai-implementation-${{ github.event.pull_request.number }}
   cancel-in-progress: false
 jobs:
   generate:
-    if: github.event.label.name == 'ai-implement-request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'automation/copilot-readonly-ai' && github.event.pull_request.base.ref == 'main'
+    if: contains(github.event.pull_request.body, '[RUN_SCOPED_AI]') && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'automation/copilot-readonly-ai' && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     timeout-minutes: 7
     permissions:
@@ -89,7 +89,7 @@ jobs:
           retention-days: 2
   apply:
     needs: generate
-    if: github.event.label.name == 'ai-implement-request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'automation/copilot-readonly-ai' && github.event.pull_request.base.ref == 'main'
+    if: contains(github.event.pull_request.body, '[RUN_SCOPED_AI]') && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'automation/copilot-readonly-ai' && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     timeout-minutes: 3
     permissions:
