@@ -33,12 +33,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Install official Copilot CLI
         run: npm install -g @github/copilot
-      - name: Select actual model and run one AI review
+      - name: Deterministic diff verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check "$(git merge-base HEAD origin/main)" HEAD
+          echo 'Diff whitespace check passed' >> "$GITHUB_STEP_SUMMARY"
+      - name: Select available Copilot model and run one AI review
         env:
           GH_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
@@ -58,7 +65,7 @@ jobs:
           import os
           task = os.environ['REVIEW_TASK'][:300]
           with open('/tmp/ai-prompt.txt','w') as f:
-              f.write("Provide a concise READ-ONLY review. Do not edit files, execute commands, access secrets or external URLs. Identify up to 3 actionable issues with file paths. If you cannot inspect files safely, say so. Request: "+task)
+              f.write("Follow the project orchestration policy below where technically possible. This job is READ-ONLY: do not edit files, execute commands, access secrets or external URLs. Do not claim to have used Jev, Luna, or Sol: their actual endpoints are not configured. Give up to 3 actionable issues with file paths. Never claim completion without evidence.\\n\\n"+open(".github/AI_ORCHESTRATION.md").read()+"\\nRequest: "+task)
           PY
           copilot -p "$(cat /tmp/ai-prompt.txt)" --no-ask-user > /tmp/ai-review.txt
           test -s /tmp/ai-review.txt
