@@ -45,7 +45,7 @@ jobs:
           node-version: '22'
       - name: Install Copilot CLI
         run: npm install -g @github/copilot
-      - name: Generate code in disposable working copy
+      - name: Bounded Copilot agent loop and deterministic validation
         env:
           GH_TOKEN: ${{ github.token }}
           GITHUB_TOKEN: ${{ github.token }}
@@ -53,41 +53,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import json
-          from pathlib import Path
-          task=json.loads(Path('.github/ai-task.json').read_text())
-          instructions=Path('.github/AI_ORCHESTRATION.md').read_text()
-          prompt=(
-            "You are implementing a single authorized repository task. Make the smallest correct "
-            "file changes ONLY in these paths: "+', '.join(task['allowed_paths'])+"\\n"
-            "Never modify workflows, secrets, git configuration, dependency manifests, or any other path. "
-            "Do not execute shell commands or use network tools. The CI runner will verify your diff "
-            "and run checks. You have only a read/write file tool subset. "
-            "Never claim to call Jev/Luna/Sol: unavailable models must not be impersonated.\\n"
-            "Task: "+task['instructions']+"\\n"
-            "Follow the user's orchestration principles as far as the available tools allow:\\n"+instructions
-          )
-          Path('/tmp/copilot-task.txt').write_text(prompt)
-          PY
-          copilot -p "$(cat /tmp/copilot-task.txt)" --model auto --no-ask-user \
-            --available-tools='view,glob,grep,edit,create,apply_patch' \
-            --allow-tool='read' --allow-tool='write' \
-            --deny-tool='shell' --deny-tool='url' > /tmp/copilot-output.txt
-          test -s /tmp/copilot-output.txt
-          echo 'Copilot generated output; deterministic validation follows.' >> "$GITHUB_STEP_SUMMARY"
-      - name: Verify diff and produce replayable patch
-        shell: bash
-        run: |
-          set -euo pipefail
           mkdir -p "$RUNNER_TEMP/ai-artifact"
-          python3 .github/scripts/agent_checks.py \
+          python3 .github/scripts/agent_cycle.py \
             --task .github/ai-task.json \
-            --patch "$RUNNER_TEMP/ai-artifact/changes.patch" \
-            --evidence "$RUNNER_TEMP/ai-artifact/evidence.json"
-          echo '## Independent checks passed' >> "$GITHUB_STEP_SUMMARY"
-          cat "$RUNNER_TEMP/ai-artifact/evidence.json" >> "$GITHUB_STEP_SUMMARY"
-          python3 .github/scripts/ai_router.py --checks-passed --scope-verified --attempts 1 >> "$GITHUB_STEP_SUMMARY"
+            --policy .github/AI_ORCHESTRATION.md \
+            --output "$RUNNER_TEMP/ai-artifact"
+          echo '## Scoped implementation and independent verification' >> "$GITHUB_STEP_SUMMARY"
+          cat "$RUNNER_TEMP/ai-artifact/cycle.json" >> "$GITHUB_STEP_SUMMARY"
           echo 'Behavioral acceptance is pending; no automatic COMPLETE claim.' >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         with:
