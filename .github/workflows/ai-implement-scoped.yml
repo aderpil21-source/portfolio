@@ -33,8 +33,12 @@ jobs:
           import sys
           sys.path.insert(0, '.github/scripts')
           from agent_checks import validate_task
+          from ai_router import classify
           task=validate_task(json.loads(Path('.github/ai-task.json').read_text()))
           print('Authorized files: '+', '.join(task['allowed_paths']))
+          print('Logical routing lane: '+classify(task['instructions'])+'; actual model: Copilot auto')
+          with open(__import__('os').environ['GITHUB_STEP_SUMMARY'], 'a') as report:
+              report.write('Logical route: '+classify(task['instructions'])+'; model selection: Copilot auto (not Jev/Luna/Sol).\\n')
           PY
       - uses: actions/setup-node@v4
         with:
@@ -83,6 +87,8 @@ jobs:
             --evidence "$RUNNER_TEMP/ai-artifact/evidence.json"
           echo '## Independent checks passed' >> "$GITHUB_STEP_SUMMARY"
           cat "$RUNNER_TEMP/ai-artifact/evidence.json" >> "$GITHUB_STEP_SUMMARY"
+          python3 .github/scripts/ai_router.py --checks-passed --scope-verified --attempts 1 >> "$GITHUB_STEP_SUMMARY"
+          echo 'Behavioral acceptance is pending; no automatic COMPLETE claim.' >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         with:
           name: scoped-ai-patch-${{ github.run_id }}
