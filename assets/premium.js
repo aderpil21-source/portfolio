@@ -49,22 +49,21 @@
   const media = gsap.matchMedia();
   media.add('(prefers-reduced-motion: no-preference)', () => {
     gsap.from('.hero > :is(.eyebrow,h1,.lead,.actions,.hero-subnote)', { y: 56, autoAlpha: 0, duration: 1.35, stagger: .16, ease: 'power3.out', clearProps: 'all' });
-    // The opening headline recedes as the next chapter enters, on phones too.
-    gsap.to('.hero h1', { y: -65, scale: .9, opacity: .15, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom 22%', scrub: .7 } });
+    // Keep the headline steady after its entrance; only one animation owns it.
     document.querySelectorAll('.section h2').forEach(heading => {
       if (heading.closest('.cinematic-scene')) return;
-      gsap.fromTo(heading, { y: 48, opacity: .12 }, { y: 0, opacity: 1, duration: 1.05, ease: 'power3.out', scrollTrigger: { trigger: heading, start: 'top 91%', toggleActions: 'play none none reverse' } });
+      gsap.fromTo(heading, { y: 48, opacity: .12 }, { y: 0, opacity: 1, duration: 1.05, ease: 'power3.out', scrollTrigger: { trigger: heading, start: 'top 91%', once: true } });
     });
     document.querySelectorAll('.sales-solutions-grid,.sales-offers-grid,.premium-process,.services-grid,.engineering-grid').forEach(grid => {
       [...grid.children].forEach((card, index) => {
-        gsap.fromTo(card, { y: 44, opacity: .15 }, { y: 0, opacity: 1, duration: .95, delay: innerWidth >= 900 ? (index % 3) * .1 : 0, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none reverse' } });
+        gsap.fromTo(card, { y: 44, opacity: .15 }, { y: 0, opacity: 1, duration: .95, delay: innerWidth >= 900 ? (index % 3) * .1 : 0, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: card, start: 'top 90%', once: true } });
       });
     });
     document.querySelectorAll('.project.case .case-copy').forEach(copy => {
-      gsap.fromTo(copy, { y: 38, opacity: .2 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', clearProps: 'all', scrollTrigger: { trigger: copy, start: 'top 90%', toggleActions: 'play none none reverse' } });
+      gsap.fromTo(copy, { y: 38, opacity: .2 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', clearProps: 'all', scrollTrigger: { trigger: copy, start: 'top 90%', once: true } });
     });
     document.querySelectorAll('.project.case > :is(.cat-visual,.site-visual,.form-visual,.pay-visual,.guide-visual,.creative-visual)').forEach(visual => {
-      gsap.fromTo(visual, { scale: .9, y: 24 }, { scale: 1, y: 0, ease: 'none', scrollTrigger: { trigger: visual, start: 'top 95%', end: 'top 35%', scrub: .65 } });
+      gsap.fromTo(visual, { opacity: .35 }, { opacity: 1, duration: .8, ease: 'power2.out', scrollTrigger: { trigger: visual, start: 'top 92%', once: true } });
     });
     document.querySelectorAll('.premium-text').forEach(paragraph => {
       const original = paragraphOriginals.get(paragraph);
@@ -75,17 +74,13 @@
       }));
       gsap.fromTo(paragraph.querySelectorAll('.word'), { opacity: .25 }, { opacity: 1, stagger: .08, ease: 'none', scrollTrigger: { trigger: paragraph, start: 'top 85%', end: 'bottom 48%', scrub: .4 } });
     });
-    const desktop = gsap.matchMedia();
-    desktop.add('(min-width: 900px)', () => {
-      const scene = document.querySelector('.cinematic-scene');
-      if (scene) {
-        const film = gsap.timeline({ scrollTrigger: { trigger: scene, start: 'center center', end: () => '+=' + Math.round(innerHeight * .8), pin: true, anticipatePin: 1, scrub: .7, invalidateOnRefresh: true } });
-        film.fromTo(scene.querySelector('.cinematic-video'), { scale: 1.2 }, { scale: 1, ease: 'none' }, 0);
-        film.fromTo(scene.querySelector('.cinematic-content'), { y: 55, opacity: .4 }, { y: 0, opacity: 1, ease: 'none' }, 0);
-      }
-    });
+    const scene = document.querySelector('.cinematic-scene');
+    if (scene) {
+      const film = gsap.timeline({ scrollTrigger: { trigger: scene, start: 'top 90%', end: 'center center', scrub: .7 } });
+      film.fromTo(scene.querySelector('.cinematic-video'), { scale: 1.06 }, { scale: 1, ease: 'none' }, 0);
+      film.fromTo(scene.querySelector('.cinematic-content'), { y: 24, opacity: .5 }, { y: 0, opacity: 1, ease: 'none' }, 0);
+    }
     return () => {
-      desktop.revert();
       paragraphOriginals.forEach((text, paragraph) => { paragraph.textContent = text; });
     };
   });
