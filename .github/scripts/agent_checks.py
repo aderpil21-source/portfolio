@@ -35,6 +35,9 @@ def validate_task(task):
         raise ValueError("Unsafe or duplicate task path")
     if task.get("apply_to_branch") is not True:
         raise ValueError("Explicit apply_to_branch=true required")
+    attempts = task.get("max_attempts", 1)
+    if type(attempts) is not int or attempts not in (1, 2):
+        raise ValueError("max_attempts must be 1 or 2")
     return task
 
 def git(*args):
