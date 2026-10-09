@@ -9,6 +9,8 @@ on:
       - '.github/scripts/test_agent_checks.py'
       - '.github/scripts/decision_adapter.py'
       - '.github/scripts/test_decision_adapter.py'
+      - '.github/scripts/agent_cycle.py'
+      - '.github/scripts/test_agent_cycle.py'
       - '.github/ai-task.json'
       - '.github/workflows/ai-implement-scoped.yml'
 permissions:
@@ -37,7 +39,7 @@ jobs:
           PY
       - name: Syntax and diff checks
         run: |
-          python -m py_compile .github/scripts/ai_router.py .github/scripts/test_ai_router.py .github/scripts/agent_checks.py .github/scripts/test_agent_checks.py .github/scripts/decision_adapter.py .github/scripts/test_decision_adapter.py
+          python -m py_compile .github/scripts/ai_router.py .github/scripts/test_ai_router.py .github/scripts/agent_checks.py .github/scripts/test_agent_checks.py .github/scripts/decision_adapter.py .github/scripts/test_decision_adapter.py .github/scripts/agent_cycle.py .github/scripts/test_agent_cycle.py
           git diff --check "$(git merge-base HEAD origin/main)" HEAD
       - name: Demonstrate routing without AI
         run: |
