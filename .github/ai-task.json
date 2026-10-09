@@ -1,7 +1,8 @@
 {
-  "instructions": "Create docs/ai-orchestrator-smoke.md with a short, accurate explanation of the deterministic verification gates. Do not edit any other file. Do not claim Jev, Luna or Sol model APIs were called.",
+  "instructions": "Create docs/ai-orchestrator-cycle-smoke.md. Explain briefly that Copilot's selected model is auto, deterministic checks run before scoped branch-only commits, and neither Jev nor explicit Luna/Sol inference is active. Do not edit anything else.",
   "allowed_paths": [
-    "docs/ai-orchestrator-smoke.md"
+    "docs/ai-orchestrator-cycle-smoke.md"
   ],
-  "apply_to_branch": true
+  "apply_to_branch": true,
+  "max_attempts": 1
 }
