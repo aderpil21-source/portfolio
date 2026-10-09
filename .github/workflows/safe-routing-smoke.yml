@@ -1,0 +1,28 @@
+name: Safe routing smoke test
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/safe-routing-smoke.yml'
+permissions:
+  contents: read
+concurrency:
+  group: safe-routing-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  routing-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check deterministic routing without AI calls
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          def route(kind):
+              return {"docs": "luna", "code": "sol", "architecture": "astra"}.get(kind, "manual-review")
+          assert route("docs") == "luna"
+          assert route("code") == "sol"
+          assert route("architecture") == "astra"
+          assert route("unknown") == "manual-review"
+          print("Routing smoke test passed; no model invoked, no API keys required.")
+          PY
